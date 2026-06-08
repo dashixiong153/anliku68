@@ -1,14 +1,7 @@
 /* ============================================================
  * 站点配置 —— 连接 Supabase 云数据库
- * ------------------------------------------------------------
- * 1. 到 https://supabase.com 创建一个免费项目
- * 2. 在 Project Settings → API 里复制 Project URL 和 anon public key
- * 3. 把下面两行的占位符替换为你的真实值,提交即可
- *
- * 说明:anon(匿名)公钥本就是给前端公开使用的,它受数据库
- *      行级安全策略(RLS)保护,可以安全地提交到 GitHub。
- *      只要保持占位符不变,网站会自动回退到本地 cases-data.js,
- *      因此在你配置完成前,GitHub Pages 上也能正常展示。
+ * anon(匿名)公钥受数据库行级安全策略(RLS)保护,可安全公开。
+ * 如需切换/清空,把下面两行改回 "YOUR_..." 即可回退本地数据。
  * ============================================================ */
-window.SUPABASE_URL = "YOUR_SUPABASE_URL";
-window.SUPABASE_ANON_KEY = "YOUR_SUPABASE_ANON_KEY";
+window.SUPABASE_URL = "https://abdghewvcwxvceusmagv.supabase.co";
+window.SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiZGdoZXd2Y3d4dmNldXNtYWd2Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA5MDMzMTAsImV4cCI6MjA5NjQ3OTMxMH0.1d771VrK_6nkR3PPdlbupXYVBIs4ITMF3fHyKlTvosg";
