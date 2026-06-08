@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1"/>
+<title>智慧课程案例库 · 管理后台</title>
+<style>
+:root{
+  --bg:oklch(0.22 0.03 200);--surface:oklch(0.27 0.03 200);--surface2:oklch(0.31 0.035 200);
+  --line:oklch(0.4 0.03 200);--ink:oklch(0.96 0.01 200);--ink2:oklch(0.78 0.02 200);
+  --primary:oklch(0.74 0.12 168);--primary-ink:oklch(0.24 0.05 168);--danger:oklch(0.66 0.16 25);
+  --soft:oklch(0.32 0.05 168);
+}
+*{box-sizing:border-box}
+body{margin:0;font:14px/1.6 -apple-system,"Segoe UI","Microsoft YaHei",system-ui,sans-serif;background:var(--bg);color:var(--ink)}
+button{font:inherit;cursor:pointer}
+a{color:var(--primary)}
+.wrap{max-width:1200px;margin:0 auto;padding:18px}
+header{display:flex;align-items:center;gap:14px;flex-wrap:wrap;padding:14px 18px;background:var(--surface);border-bottom:1px solid var(--line)}
+header h1{font-size:18px;margin:0;color:var(--ink)}
+header .who{margin-left:auto;color:var(--ink2);font-size:13px}
+.btn{background:var(--surface2);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:7px 14px}
+.btn:hover{border-color:var(--primary)}
+.btn:focus-visible{outline:2px solid var(--primary);outline-offset:2px}
+.btn.primary{background:var(--primary);color:var(--primary-ink);border-color:transparent;font-weight:600}
+.btn.danger{color:var(--danger);border-color:var(--danger)}
+.btn.sm{padding:4px 10px;font-size:12.5px;border-radius:6px}
+input,textarea,select{font:inherit;width:100%;background:var(--surface);border:1px solid var(--line);color:var(--ink);border-radius:8px;padding:8px 10px}
+input:focus,textarea:focus{outline:none;border-color:var(--primary)}
+label{display:block;font-size:12.5px;color:var(--ink2);margin:10px 0 4px}
+/* 登录 */
+.login{max-width:380px;margin:9vh auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px}
+.login h2{margin:0 0 4px;font-size:20px}
+.login p{margin:0 0 18px;color:var(--ink2);font-size:13px}
+.login .btn.primary{width:100%;margin-top:16px;padding:10px}
+.msg{margin-top:12px;font-size:13px;min-height:18px}
+.msg.err{color:var(--danger)}
+.msg.ok{color:var(--primary)}
+/* 工具条 */
+.toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin:16px 0}
+.toolbar .search{flex:1;min-width:200px}
+.count{color:var(--ink2);font-size:13px}
+/* 表格 */
+.tablewrap{overflow:auto;border:1px solid var(--line);border-radius:12px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:820px}
+th,td{padding:9px 12px;text-align:left;border-bottom:1px solid var(--line);vertical-align:top;font-size:13px}
+th{position:sticky;top:0;background:var(--surface2);color:var(--ink2);font-weight:600;z-index:1}
+tr:hover td{background:var(--soft)}
+td.ops{white-space:nowrap}
+.tag{display:inline-block;background:var(--soft);color:var(--ink);border-radius:5px;padding:1px 7px;font-size:11.5px}
+.empty,.loading{padding:40px;text-align:center;color:var(--ink2)}
+/* 弹窗 */
+.modal-bg{position:fixed;inset:0;background:oklch(0.15 0.02 200/0.7);display:none;align-items:flex-start;justify-content:center;padding:30px 16px;overflow:auto;z-index:50}
+.modal-bg.show{display:flex}
+.modal{background:var(--surface);border:1px solid var(--line);border-radius:14px;max-width:760px;width:100%}
+.modal h3{margin:0;padding:16px 20px;border-bottom:1px solid var(--line);font-size:17px;display:flex;align-items:center}
+.modal h3 .x{margin-left:auto;background:none;border:none;color:var(--ink2);font-size:22px;line-height:1}
+.modal .body{padding:18px 20px;max-height:64vh;overflow:auto}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:0 16px}
+.full{grid-column:1/-1}
+.modal .foot{padding:14px 20px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+.hint{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:12.5px;color:var(--ink2);margin-bottom:6px}
+.notcfg{max-width:620px;margin:10vh auto;background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:26px;line-height:1.8}
+.notcfg code{background:var(--surface2);padding:2px 6px;border-radius:5px}
+</style>
+</head>
+<body>
+
+<!-- 未配置提示 -->
+<div id="notConfigured" class="notcfg" style="display:none">
+  <h2 style="margin-top:0">⚙️ 尚未连接云数据库</h2>
+  <p>管理后台需要连接 Supabase 才能使用。请先：</p>
+  <ol>
+    <li>在 <a href="https://supabase.com" target="_blank" rel="noopener">supabase.com</a> 创建免费项目；</li>
+    <li>在 SQL Editor 执行 <code>supabase/schema.sql</code> 与 <code>supabase/seed.sql</code>；</li>
+    <li>把 <code>config.js</code> 里的 URL 和 anon key 换成你的真实值；</li>
+    <li>在 Authentication → Users 里添加一个管理员账号(邮箱+密码)。</li>
+  </ol>
+  <p>详见仓库 <code>README.md</code>。</p>
+</div>
+
+<!-- 登录 -->
+<div id="loginView" class="login" style="display:none">
+  <h2>管理后台登录</h2>
+  <p>智慧课程案例库 · 案例数据维护</p>
+  <label for="email">邮箱</label>
+  <input id="email" type="email" autocomplete="username" placeholder="admin@example.com"/>
+  <label for="pwd">密码</label>
+  <input id="pwd" type="password" autocomplete="current-password" placeholder="••••••••"/>
+  <button id="loginBtn" class="btn primary">登录</button>
+  <div id="loginMsg" class="msg"></div>
+</div>
+
+<!-- 主界面 -->
+<div id="appView" style="display:none">
+  <header>
+    <h1>智慧课程案例库 · 管理后台</h1>
+    <a class="btn sm" href="index.html" target="_blank" rel="noopener">查看前台 ↗</a>
+    <span class="who" id="whoami"></span>
+    <button id="logoutBtn" class="btn sm">退出登录</button>
+  </header>
+  <div class="wrap">
+    <div class="toolbar">
+      <input id="search" class="search" placeholder="搜索:学校 / 课程 / 教师 / 专业 / 荣誉"/>
+      <button id="addBtn" class="btn primary">+ 新增案例</button>
+      <span class="count" id="count"></span>
+    </div>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th style="width:54px">编号</th><th style="width:150px">学校</th><th>课程/案例</th>
+          <th style="width:90px">教师</th><th style="width:120px">专业</th><th style="width:120px">操作</th>
+        </tr></thead>
+        <tbody id="rows"><tr><td colspan="6" class="loading">加载中…</td></tr></tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<!-- 编辑/新增弹窗 -->
+<div class="modal-bg" id="editModal">
+  <div class="modal">
+    <h3 id="editTitle">编辑案例 <button class="x" id="editClose" aria-label="关闭">×</button></h3>
+    <div class="body">
+      <div class="hint">缺失信息请如实留空或填“待核实”,请勿编造教师、荣誉、链接等数据。</div>
+      <div class="grid2" id="formGrid"></div>
+    </div>
+    <div class="foot">
+      <button class="btn" id="editCancel">取消</button>
+      <button class="btn primary" id="editSave">保存</button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="assets/data-layer.js"></script>
+<script>
+const $=s=>document.querySelector(s);
+// 字段定义:[key, 标签, 是否长文本]
+const FORM=[
+  ["id","原始编号",false],["school","学校 *",false],["level","办学层次",false],
+  ["teacher","教师",false],["teacherTitle","职称",false],["course","课程/案例名称",true],
+  ["major","专业",false],["honor","荣誉",true],["keywords","关键词",true],
+  ["knowledge","知识图谱/知识点",true],["ai","AI 应用",true],["data","数据/学情闭环",true],
+  ["simulation","虚拟仿真",true],["url","链接",false],["source","来源平台",true],
+  ["citations","引用",true],["score","评分说明",true],["notes","备注",true]
+];
+let client=null, all=[], editingPk=null;
+
+function show(id){["notConfigured","loginView","appView"].forEach(x=>$("#"+x).style.display="none");$("#"+id).style.display="block";}
+function esc(s){return (s==null?"":String(s)).replace(/[&<>]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;'}[m]));}
+
+async function boot(){
+  if(!window.SCDB || !SCDB.isConfigured()){show("notConfigured");return;}
+  client=SCDB.getClient();
+  const {data:{session}}=await client.auth.getSession();
+  if(session){await enterApp(session);}else{show("loginView");}
+}
+
+$("#loginBtn").addEventListener("click",login);
+$("#pwd").addEventListener("keydown",e=>{if(e.key==="Enter")login();});
+async function login(){
+  const email=$("#email").value.trim(), password=$("#pwd").value;
+  const msg=$("#loginMsg"); msg.className="msg"; msg.textContent="登录中…";
+  const {data,error}=await client.auth.signInWithPassword({email,password});
+  if(error){msg.className="msg err";msg.textContent="登录失败:"+error.message;return;}
+  await enterApp(data.session);
+}
+$("#logoutBtn").addEventListener("click",async()=>{await client.auth.signOut();location.reload();});
+
+async function enterApp(session){
+  show("appView");
+  $("#whoami").textContent=session.user.email;
+  await loadRows();
+}
+
+async function loadRows(){
+  $("#rows").innerHTML='<tr><td colspan="6" class="loading">加载中…</td></tr>';
+  const cases=await SCDB.fetchCases().catch(e=>{alert("加载失败:"+e.message);return[];});
+  all=cases||[];
+  render();
+}
+
+function render(){
+  const q=$("#search").value.trim().toLowerCase();
+  const list=q? all.filter(c=>[c.id,c.school,c.course,c.teacher,c.major,c.honor].join(" ").toLowerCase().includes(q)) : all;
+  $("#count").textContent="共 "+all.length+" 条"+(q?(" · 命中 "+list.length):"");
+  if(!list.length){$("#rows").innerHTML='<tr><td colspan="6" class="empty">没有匹配的案例</td></tr>';return;}
+  $("#rows").innerHTML=list.map(c=>`<tr>
+    <td><span class="tag">${esc(c.id)}</span></td>
+    <td>${esc(c.school)}</td>
+    <td>${esc(c.course||"（未命名）")}</td>
+    <td>${esc(c.teacher||"—")}</td>
+    <td>${esc((c.major||"").split("/")[0]||"—")}</td>
+    <td class="ops">
+      <button class="btn sm" data-edit="${c._pk}">编辑</button>
+      <button class="btn sm danger" data-del="${c._pk}">删除</button>
+    </td></tr>`).join("");
+  $("#rows").querySelectorAll("[data-edit]").forEach(b=>b.addEventListener("click",()=>openEdit(b.dataset.edit)));
+  $("#rows").querySelectorAll("[data-del]").forEach(b=>b.addEventListener("click",()=>delCase(b.dataset.del)));
+}
+$("#search").addEventListener("input",render);
+
+function buildForm(c){
+  c=c||{};
+  $("#formGrid").innerHTML=FORM.map(f=>{
+    const [k,lab,long]=f;
+    const v=esc(c[k]||"");
+    const cls=long?"full":"";
+    const ctrl=long?`<textarea id="f_${k}" rows="${k==="course"||k==="honor"?2:3}">${v}</textarea>`
+                   :`<input id="f_${k}" value="${v}"/>`;
+    return `<div class="${cls}"><label for="f_${k}">${lab}</label>${ctrl}</div>`;
+  }).join("");
+}
+function readForm(){
+  const o={};FORM.forEach(f=>{o[f[0]]=$("#f_"+f[0]).value.trim();});return o;
+}
+function openModal(){$("#editModal").classList.add("show");}
+function closeModal(){$("#editModal").classList.remove("show");}
+$("#editClose").addEventListener("click",closeModal);
+$("#editCancel").addEventListener("click",closeModal);
+$("#editModal").addEventListener("click",e=>{if(e.target.id==="editModal")closeModal();});
+
+$("#addBtn").addEventListener("click",()=>{editingPk=null;$("#editTitle").firstChild.textContent="新增案例 ";buildForm({});openModal();});
+function openEdit(pk){const c=all.find(x=>String(x._pk)===String(pk));if(!c)return;editingPk=c._pk;$("#editTitle").firstChild.textContent="编辑案例 ";buildForm(c);openModal();}
+
+$("#editSave").addEventListener("click",async()=>{
+  const data=readForm();
+  if(!data.school){alert("「学校」为必填项");return;}
+  const row=SCDB.caseToRow(data);
+  const btn=$("#editSave");btn.disabled=true;btn.textContent="保存中…";
+  let res;
+  if(editingPk==null){
+    if(!row.sort_order){row.sort_order=9000+all.length+1;}
+    res=await client.from("cases").insert([row]);
+  }else{
+    res=await client.from("cases").update(row).eq("id",editingPk);
+  }
+  btn.disabled=false;btn.textContent="保存";
+  if(res.error){alert("保存失败:"+res.error.message);return;}
+  closeModal();await loadRows();
+});
+
+async function delCase(pk){
+  const c=all.find(x=>String(x._pk)===String(pk));if(!c)return;
+  if(!confirm(`确认删除案例「${c.course||c.school}」?此操作不可撤销。`))return;
+  const {error}=await client.from("cases").delete().eq("id",pk);
+  if(error){alert("删除失败:"+error.message);return;}
+  await loadRows();
+}
+
+boot();
+</script>
+</body>
+</html>

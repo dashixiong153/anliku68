@@ -1,0 +1,1449 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>智慧课程建设案例库</title>
+<style>
+:root{
+  /* premium warm-ivory neutrals paired with deep jade + gold (high-end, not blue) */
+  --bg:oklch(0.984 0.006 110); --bg2:oklch(0.996 0.003 110);
+  --surface:oklch(0.999 0.0015 110); --surface2:oklch(0.970 0.008 130);
+  --ink:oklch(0.255 0.022 175); --ink2:oklch(0.41 0.02 172);
+  --muted:oklch(0.55 0.018 168); --muted2:oklch(0.70 0.015 168);
+  --line:oklch(0.918 0.009 150); --line2:oklch(0.865 0.013 150);
+  /* committed accent: deep jade / emerald */
+  --primary:oklch(0.505 0.115 162); --primary-d:oklch(0.42 0.115 162); --primary-soft:oklch(0.95 0.035 165);
+  --cyan:oklch(0.73 0.115 172); --teal:oklch(0.60 0.09 188); --teal-soft:oklch(0.955 0.03 185);
+  --green:oklch(0.63 0.13 150); --green-soft:oklch(0.955 0.04 150);
+  --gold:oklch(0.74 0.125 76); --gold-soft:oklch(0.957 0.05 80);
+  --coral:oklch(0.64 0.16 28); --purple:oklch(0.55 0.14 300);
+  /* deep jade-charcoal header / 3D stage */
+  --hd1:oklch(0.235 0.045 172); --hd2:oklch(0.295 0.052 158); --hd-line:oklch(0.43 0.055 165);
+  --shadow:0 18px 44px oklch(0.40 0.06 168 / 0.13); --shadow-s:0 3px 12px oklch(0.40 0.06 168 / 0.07);
+  --radius:16px; --ease:cubic-bezier(.22,1,.36,1);
+  --paper:oklch(0.993 0.004 110);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{font-family:"Microsoft YaHei","PingFang SC","Segoe UI",system-ui,Arial,sans-serif;
+  color:var(--ink);background:
+   radial-gradient(1200px 540px at 6% -10%,oklch(0.50 0.16 266 / 0.06),transparent 60%),
+   radial-gradient(1000px 480px at 98% -6%,oklch(0.70 0.13 210 / 0.05),transparent 58%),
+   linear-gradient(180deg,var(--bg),var(--bg2));
+  background-attachment:fixed;min-height:100dvh;line-height:1.65;font-size:14px;-webkit-font-smoothing:antialiased}
+.wrap{max-width:1280px;margin:0 auto;padding:0 24px}
+a{color:var(--primary);text-decoration:none}
+.muted{color:var(--muted)}
+.one-line{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+button:focus,a:focus,input:focus,[tabindex]:focus{outline:none}
+button:focus-visible,a:focus-visible,input:focus-visible,.chip:focus-visible,.dd-btn:focus-visible,
+.navitem:focus-visible,.prov:focus-visible,.svgmap path:focus-visible,[tabindex]:focus-visible{
+  outline:2.5px solid var(--primary);outline-offset:2px;border-radius:9px}
+@media (prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}.map3d{transform:none!important}}
+.skip{position:absolute;left:-999px;top:8px;z-index:300;background:var(--primary);color:#fff;padding:8px 14px;border-radius:8px}
+.skip:focus{left:24px}
+
+/* badges / tags */
+.tag{display:inline-flex;align-items:center;gap:5px;font-size:12px;padding:3px 10px;border-radius:999px;background:var(--surface2);border:1px solid var(--line);color:var(--ink2);white-space:nowrap}
+.tag.tech{background:var(--primary-soft);border-color:oklch(0.88 0.04 266);color:var(--primary-d)}
+.tag.model{background:var(--teal-soft);border-color:oklch(0.86 0.05 196);color:oklch(0.40 0.09 196)}
+.tag.feat{background:oklch(0.96 0.03 292);border-color:oklch(0.88 0.05 292);color:oklch(0.46 0.13 292)}
+.badge{font-size:11px;font-weight:700;padding:3px 9px;border-radius:7px;white-space:nowrap;border:1px solid transparent}
+.b-nat{background:var(--gold-soft);color:oklch(0.45 0.11 65);border-color:oklch(0.86 0.08 75)}
+.b-prov{background:var(--primary-soft);color:var(--primary-d);border-color:oklch(0.86 0.06 266)}
+.b-bench{background:var(--teal-soft);color:oklch(0.40 0.09 196);border-color:oklch(0.85 0.06 196)}
+.b-good{background:var(--green-soft);color:oklch(0.43 0.11 150);border-color:oklch(0.86 0.07 150)}
+.b-pass{background:var(--surface2);color:var(--muted);border-color:var(--line)}
+.b-pot{background:var(--gold-soft);color:oklch(0.50 0.10 70);border-color:oklch(0.87 0.07 75)}
+.pill{font-size:11px;padding:2px 9px;border-radius:6px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+.rec{font-size:11px;font-weight:800;padding:3px 8px;border-radius:7px;letter-spacing:.04em;border:1px solid transparent}
+.rec-S{background:var(--gold);color:oklch(0.30 0.06 60)}
+.rec-A{background:var(--primary);color:var(--paper)}
+.rec-B{background:var(--surface2);color:var(--ink2);border-color:var(--line2)}
+.rec-C{background:var(--surface2);color:var(--muted);border-color:var(--line)}
+.tag.goal{background:var(--gold-soft);border-color:oklch(0.87 0.07 75);color:oklch(0.46 0.10 62);font-weight:600}
+.plan-sec{margin-bottom:15px}.plan-sec h6{font-size:14px;color:var(--ink);font-weight:800;margin-bottom:5px}.plan-sec p{font-size:13px;color:var(--ink2);line-height:1.72}
+.ppt-ol{padding-left:20px;font-size:13px;color:var(--ink2);display:grid;grid-template-columns:1fr 1fr;gap:5px 20px;margin-top:4px}
+.ptabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.ptab{font-size:12.5px;padding:8px 13px;border-radius:9px;border:1px solid var(--line2);background:var(--surface);color:var(--ink2);cursor:pointer;font-weight:600;min-height:38px}
+.ptab:hover{border-color:var(--primary);color:var(--primary)}
+.ptab.on{background:var(--primary);color:var(--paper);border-color:transparent}
+.pitch-text p{font-size:13.5px;color:var(--ink2);line-height:1.85;margin-bottom:11px}
+.parse-hint{margin:-6px 0 16px;display:flex;gap:8px;flex-wrap:wrap;align-items:center;font-size:12px;color:var(--muted)}
+.parse-hint .pk{cursor:pointer;padding:4px 11px;border-radius:999px;border:1px dashed var(--primary);color:var(--primary-d);background:var(--primary-soft);transition:.15s}
+.parse-hint .pk.on{border-style:solid;background:var(--primary);color:var(--paper)}
+.ins-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:16px}
+.ins-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px 18px;box-shadow:var(--shadow-s)}
+.ins-t{font-size:14px;font-weight:800;color:var(--ink);margin-bottom:12px;display:flex;align-items:center;justify-content:space-between}
+.ins-t span{font-size:11px;color:var(--muted);font-weight:600}
+.ins-bar{display:grid;grid-template-columns:96px 1fr 32px;align-items:center;gap:10px;padding:5px 5px;border-radius:8px;cursor:pointer;transition:background .15s var(--ease)}
+.ins-bar:hover{background:var(--surface2)}
+.ins-bar.on{background:var(--primary-soft)}
+.ins-l{font-size:12.5px;color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ins-track{height:9px;background:var(--surface2);border-radius:6px;overflow:hidden}
+.ins-track i{display:block;height:100%;border-radius:6px;background:var(--primary);transition:width .4s var(--ease)}
+.ins-n{font-size:12px;font-weight:700;color:var(--primary-d);text-align:right;font-variant-numeric:tabular-nums}
+.dn-wrap{display:flex;gap:14px;align-items:center}
+.donut{width:138px;height:138px;flex-shrink:0;filter:drop-shadow(0 5px 12px oklch(0.4 0.05 168/.16))}
+.donut .ds{transition:opacity .25s var(--ease),stroke-width .2s var(--ease);cursor:pointer}
+.donut .ds:hover{stroke-width:22}
+.donut .ds.dim{opacity:.22}
+.dn-total{font-size:25px;font-weight:800;fill:var(--ink);text-anchor:middle;font-variant-numeric:tabular-nums}
+.dn-lbl{font-size:11px;fill:var(--muted);text-anchor:middle}
+.dn-legend{flex:1;display:flex;flex-direction:column;gap:4px;min-width:0}
+.dn-li{display:grid;grid-template-columns:12px 1fr auto 38px;gap:8px;align-items:center;font-size:12.5px;padding:4px 5px;border-radius:7px;cursor:pointer;transition:background .15s}
+.dn-li:hover{background:var(--surface2)}
+.dn-li.on{background:var(--primary-soft)}
+.dn-li i{width:11px;height:11px;border-radius:3px}
+.dn-li .nm{color:var(--ink2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.dn-li .ct{color:var(--ink);font-weight:700;font-variant-numeric:tabular-nums}
+.dn-li .pc{color:var(--muted);font-size:11px;text-align:right;font-variant-numeric:tabular-nums}
+/* 智能推荐 */
+.reco-panel{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:18px;box-shadow:var(--shadow-s);margin-bottom:18px}
+.reco-onebox{display:flex;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+.reco-onebox input{flex:1;min-width:240px;padding:12px 14px;border:1px solid var(--line2);border-radius:12px;font-size:14px;color:var(--ink);background:var(--surface);outline:none;transition:.18s}
+.reco-onebox input:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.reco-fields{display:flex;flex-direction:column;gap:13px}
+.rf-row{display:flex;gap:12px;align-items:flex-start;flex-wrap:wrap}
+.rf-label{font-size:12px;color:var(--muted);font-weight:700;min-width:72px;padding-top:7px}
+.rf-kw{flex:1;min-width:220px;padding:9px 12px;border:1px solid var(--line2);border-radius:10px;font-size:13.5px;color:var(--ink);outline:none;background:var(--surface)}
+.rf-kw:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.reco-actions{display:flex;align-items:center;gap:12px;margin-top:16px;flex-wrap:wrap}
+.reco-card{display:grid;grid-template-columns:128px 1fr;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);overflow:hidden;margin-bottom:14px;box-shadow:var(--shadow-s);transition:box-shadow .2s var(--ease),transform .2s var(--ease)}
+.reco-card:hover{box-shadow:var(--shadow);transform:translateY(-2px)}
+.reco-rank{background:var(--surface2);padding:14px 12px;display:flex;flex-direction:column;gap:9px;align-items:center;justify-content:center;border-right:1px solid var(--line)}
+.prio{font-size:11px;font-weight:800;padding:4px 10px;border-radius:999px;text-align:center;white-space:nowrap}
+.prio-1{background:var(--gold);color:oklch(0.30 0.06 60)}
+.prio-2{background:var(--primary);color:var(--paper)}
+.prio-3{background:var(--teal-soft);color:oklch(0.40 0.09 196);border:1px solid oklch(0.85 0.06 196)}
+.prio-4{background:var(--surface2);color:var(--muted);border:1px solid var(--line2)}
+.reco-rank .match{font-size:11px;color:var(--muted);text-align:center}
+.reco-rank .match b{font-size:25px;color:var(--primary-d);display:block;font-variant-numeric:tabular-nums;line-height:1}
+.reco-main{padding:14px 16px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.reco-main .rc-title{font-size:15.5px;font-weight:700;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.reco-reasons{list-style:none;display:flex;flex-direction:column;gap:5px}
+.reco-reasons li{font-size:12.5px;color:var(--ink2);padding-left:18px;position:relative;line-height:1.6}
+.reco-reasons li::before{content:"✓";position:absolute;left:0;color:var(--green);font-weight:800}
+.rc-use{font-size:12.5px;color:var(--primary-d);background:var(--primary-soft);border-radius:8px;padding:6px 10px;font-weight:600}
+.hero-cta{display:inline-flex;align-items:center;gap:8px;margin-bottom:22px}
+@media(max-width:560px){.reco-card{grid-template-columns:1fr}.reco-rank{flex-direction:row;justify-content:flex-start;border-right:none;border-bottom:1px solid var(--line)}}
+.btn{border:1px solid var(--line2);background:var(--surface);color:var(--ink2);padding:9px 16px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600;transition:.18s var(--ease);min-height:38px}
+.btn:hover{border-color:var(--primary);color:var(--primary)}
+.btn:active{transform:translateY(1px)}
+.btn.primary{background:var(--primary);border-color:var(--primary);color:var(--paper)}
+.btn.primary:hover{background:var(--primary-d);border-color:var(--primary-d);color:var(--paper)}
+.btn.ghost{background:transparent}
+
+/* ============ HEADER (dark tech) ============ */
+header.top{position:sticky;top:0;z-index:200;background:linear-gradient(118deg,var(--hd1),var(--hd2));border-bottom:1px solid var(--hd-line);box-shadow:0 8px 28px oklch(0.2 0.06 266/.28)}
+header.top::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:.5;
+  background-image:linear-gradient(oklch(0.8 0.1 210/.06) 1px,transparent 1px),linear-gradient(90deg,oklch(0.8 0.1 210/.06) 1px,transparent 1px);
+  background-size:30px 30px;mask:radial-gradient(120% 160% at 80% -20%,#000,transparent 70%)}
+.top .bar{position:relative;display:flex;align-items:center;gap:20px;max-width:1280px;margin:0 auto;padding:12px 24px;flex-wrap:wrap}
+.logo{display:flex;align-items:center;gap:13px}
+.logo .mark{width:46px;height:46px;border-radius:13px;display:grid;place-items:center;flex-shrink:0;
+  background:linear-gradient(145deg,var(--cyan),var(--primary));box-shadow:0 0 0 1px oklch(0.7 0.13 210/.4),0 8px 22px oklch(0.5 0.16 266/.5)}
+.logo .mark svg{width:25px;height:25px;stroke:var(--paper)}
+.logo h1{font-size:19px;letter-spacing:.3px;color:var(--paper);white-space:nowrap;font-weight:800}
+.logo .sub{font-size:12px;color:oklch(0.82 0.05 250);white-space:nowrap}
+nav.menu{display:flex;gap:3px;margin-left:8px;flex-wrap:wrap}
+nav.menu button{position:relative;display:inline-flex;align-items:center;gap:7px;background:transparent;border:none;color:oklch(0.85 0.04 250);padding:9px 14px;border-radius:10px;cursor:pointer;font-size:14px;font-weight:600;transition:.18s;min-height:40px}
+nav.menu button svg{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:1.8}
+nav.menu button:hover{color:var(--paper);background:oklch(1 0 0/.08)}
+nav.menu button.active{color:var(--paper);background:oklch(1 0 0/.13)}
+nav.menu button.active::after{content:"";position:absolute;left:14px;right:14px;bottom:3px;height:2px;border-radius:2px;background:var(--cyan)}
+.search{margin-left:auto;position:relative;min-width:240px;flex:1;max-width:380px}
+.search input{width:100%;padding:11px 14px 11px 40px;border-radius:12px;border:1px solid oklch(1 0 0/.2);background:oklch(1 0 0/.12);color:var(--paper);font-size:14px;outline:none;transition:.2s}
+.search input::placeholder{color:oklch(0.82 0.04 250)}
+.search input:focus{border-color:var(--cyan);background:oklch(1 0 0/.18);box-shadow:0 0 0 3px oklch(0.7 0.13 210/.25)}
+.search .ic{position:absolute;left:13px;top:50%;transform:translateY(-50%);color:oklch(0.82 0.04 250);width:16px;height:16px}
+
+/* ============ HERO ============ */
+.hero{padding:34px 0 12px}
+.hero .eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.14em;color:var(--primary);font-weight:700;margin-bottom:12px;background:var(--primary-soft);padding:5px 12px;border-radius:999px}
+.hero h2{font-size:clamp(22px,4vw,32px);line-height:1.2;margin-bottom:8px;color:var(--ink);font-weight:800;letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hero h2 .em{color:var(--primary)}
+.hero p{color:var(--ink2);margin-bottom:22px;font-size:14.5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;max-width:100%}
+.statbar{display:flex;flex-wrap:wrap;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-s);overflow:hidden}
+.statbar .item{flex:1 1 158px;padding:16px 20px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:3px;transition:background .2s var(--ease)}
+.statbar .item:hover{background:var(--surface2)}
+.statbar .item.lead{background:linear-gradient(140deg,var(--primary-soft),oklch(0.96 0.03 210))}
+.statbar .v{font-size:27px;font-weight:800;color:var(--ink);line-height:1;font-variant-numeric:tabular-nums}
+.statbar .item.lead .v{color:var(--primary-d)}
+.statbar .l{font-size:13px;color:var(--ink2);font-weight:600;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.statbar .l svg{width:14px;height:14px;stroke:var(--primary);fill:none;stroke-width:1.8}
+.statbar .extra{font-size:11px;color:var(--muted);white-space:nowrap}
+@media (max-width:680px){.statbar .item{flex-basis:50%;border-bottom:1px solid var(--line)}}
+
+/* ============ SECTION ============ */
+section{padding:22px 0}
+.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:16px;flex-wrap:wrap}
+.sec-head h3{font-size:20px;color:var(--ink);font-weight:800;white-space:nowrap;display:flex;align-items:center;gap:9px}
+.sec-head h3 .hi{width:26px;height:26px;border-radius:8px;display:grid;place-items:center;background:var(--primary-soft)}
+.sec-head h3 .hi svg{width:16px;height:16px;stroke:var(--primary);fill:none;stroke-width:1.9}
+.sec-head .tip{font-size:12px;color:var(--muted);white-space:nowrap}
+.sec-head .line{flex:1;height:1px;background:linear-gradient(90deg,var(--line2),transparent)}
+.modesw{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:13px;padding:5px;gap:5px;box-shadow:var(--shadow-s)}
+.modesw button{display:inline-flex;align-items:center;gap:7px;border:none;background:transparent;color:var(--ink2);padding:9px 18px;border-radius:9px;cursor:pointer;font-size:14px;font-weight:600;transition:.2s;min-height:40px}
+.modesw button svg{width:16px;height:16px;stroke:currentColor;fill:none;stroke-width:1.8}
+.modesw button.active{color:var(--paper);background:var(--primary)}
+
+/* ============ FILTER DROPDOWNS ============ */
+.filters{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:18px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-s)}
+.filters .ftitle{font-size:12px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px}
+.filters .ftitle svg{width:15px;height:15px;stroke:var(--primary);fill:none;stroke-width:1.8}
+.dd{position:relative}
+.dd-btn{display:inline-flex;align-items:center;gap:8px;height:40px;padding:0 13px;border:1px solid var(--line2);border-radius:11px;background:var(--surface);color:var(--ink2);cursor:pointer;font-size:13.5px;font-weight:600;transition:.18s}
+.dd-btn:hover{border-color:var(--primary);color:var(--primary)}
+.dd.open .dd-btn{border-color:var(--primary);color:var(--primary);box-shadow:0 0 0 3px var(--primary-soft)}
+.dd-btn .chev{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:2;transition:transform .2s var(--ease)}
+.dd.open .dd-btn .chev{transform:rotate(180deg)}
+.dd-cnt{min-width:18px;height:18px;padding:0 5px;border-radius:9px;background:var(--primary);color:var(--paper);font-size:11px;font-weight:700;display:none;align-items:center;justify-content:center}
+.dd-cnt.show{display:inline-flex}
+.dd-panel{position:absolute;top:calc(100% + 8px);left:0;z-index:150;width:max-content;min-width:230px;max-width:min(92vw,440px);background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);padding:14px;opacity:0;transform:translateY(-6px) scale(.98);pointer-events:none;transition:.18s var(--ease)}
+.dd.open .dd-panel{opacity:1;transform:none;pointer-events:auto}
+.dd-panel.right{left:auto;right:0}
+.dd-chips{display:flex;flex-wrap:wrap;gap:7px}
+.dd-grp{font-size:11px;color:var(--muted);font-weight:700;margin:8px 2px 6px;letter-spacing:.04em}
+.dd-grp:first-child{margin-top:0}
+.chip{font-size:12.5px;padding:6px 12px;border-radius:999px;border:1px solid var(--line2);background:var(--surface2);color:var(--ink2);cursor:pointer;transition:.15s;user-select:none}
+.chip:hover{color:var(--primary);border-color:var(--primary)}
+.chip.on{background:var(--primary);color:var(--paper);border-color:transparent}
+.filters .count-pill{margin-left:auto;color:var(--muted);font-size:13px;white-space:nowrap}
+.filters .count-pill b{color:var(--primary-d)}
+
+/* ============ 3D MAP ============ */
+.map-toolbar{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+.viewsw{display:inline-flex;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:4px;gap:4px;box-shadow:var(--shadow-s)}
+.viewsw button{display:inline-flex;align-items:center;gap:6px;border:none;background:transparent;color:var(--ink2);padding:8px 13px;border-radius:8px;cursor:pointer;font-size:13px;font-weight:600;transition:.18s;min-height:36px}
+.viewsw button svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+.viewsw button.active{color:var(--primary);background:var(--primary-soft)}
+.legend{display:flex;gap:11px;flex-wrap:wrap;margin-left:auto}
+.legend span{display:inline-flex;align-items:center;gap:5px;font-size:11px;color:var(--muted)}
+.legend i{width:12px;height:12px;border-radius:4px;display:inline-block}
+.fs-btn{display:inline-flex;align-items:center;gap:6px}
+.fs-btn svg{width:15px;height:15px;stroke:currentColor;fill:none;stroke-width:1.8}
+
+.map-stage{position:relative;border:1px solid oklch(0.34 0.02 235);border-radius:var(--radius);overflow:hidden;
+  background:radial-gradient(120% 130% at 50% -16%,oklch(0.255 0.022 232),oklch(0.155 0.014 236) 64%,oklch(0.115 0.01 240))}
+.map-stage::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background-image:linear-gradient(oklch(0.85 0.02 220/.05) 1px,transparent 1px),linear-gradient(90deg,oklch(0.85 0.02 220/.05) 1px,transparent 1px);
+  background-size:40px 40px;mask:radial-gradient(95% 95% at 50% 46%,#000,transparent 84%)}
+.nanhai-inset{position:absolute;right:14px;bottom:14px;z-index:3;width:118px;border:1px solid oklch(0.55 0.03 230/.6);border-radius:8px;background:oklch(0.20 0.018 234/.7);padding:4px 4px 2px;backdrop-filter:blur(2px)}
+.nanhai-inset svg{display:block;width:100%;height:auto}
+.nanhai-inset .nl{font-size:10px;color:oklch(0.82 0.03 220);text-align:center;letter-spacing:.08em;padding-bottom:1px}
+.map-anno{position:absolute;z-index:4;transform:translate(-50%,-104%);pointer-events:none;max-width:230px;background:oklch(0.16 0.015 236/.94);border:1px solid var(--cyan);border-radius:11px;padding:9px 11px;box-shadow:0 10px 26px oklch(0.1 0.02 240/.6);opacity:0;transition:opacity .2s}
+.map-anno.show{opacity:1}
+.map-anno .ah{font-size:12px;font-weight:800;color:var(--paper);margin-bottom:6px;display:flex;align-items:center;gap:6px;white-space:nowrap}
+.map-anno .ah b{color:var(--cyan)}
+.map-anno .ar{display:flex;justify-content:space-between;gap:12px;font-size:11.5px;color:oklch(0.88 0.02 220);line-height:1.7;white-space:nowrap}
+.map-anno .ar span:last-child{color:var(--cyan);font-weight:700;font-variant-numeric:tabular-nums}
+.map-anno .amore{font-size:10.5px;color:oklch(0.7 0.02 220);margin-top:4px}
+.map-anno::after{content:"";position:absolute;left:50%;bottom:-7px;transform:translateX(-50%);border:7px solid transparent;border-top-color:var(--cyan)}
+#geoView{position:relative;width:100%;height:540px;z-index:2}
+#map3dCanvas{display:block;width:100%;height:100%;cursor:grab;touch-action:none}
+#map3dCanvas:active{cursor:grabbing}
+.map-hint{position:absolute;left:16px;bottom:12px;z-index:3;font-size:11.5px;color:oklch(0.84 0.04 250);display:flex;align-items:center;gap:7px;pointer-events:none}
+.map-hint svg{width:14px;height:14px;stroke:currentColor;fill:none;stroke-width:1.8}
+.map-stage:fullscreen{border-radius:0}
+.map-stage:fullscreen #geoView{height:100vh}
+.fs-exit{position:absolute;top:16px;right:16px;z-index:5;display:none;align-items:center;gap:6px;background:oklch(1 0 0/.14);border:1px solid oklch(1 0 0/.25);color:var(--paper);padding:8px 13px;border-radius:10px;cursor:pointer;font-size:13px;font-weight:600}
+.map-stage:fullscreen .fs-exit{display:inline-flex}
+#listView{margin:12px}
+.maptip{position:fixed;z-index:260;background:var(--ink);color:var(--paper);font-size:12px;padding:6px 10px;border-radius:8px;pointer-events:none;opacity:0;transition:.1s;box-shadow:var(--shadow);white-space:nowrap}
+.maptip.show{opacity:1}
+
+/* region card list (fallback view) */
+.region-block{margin-bottom:14px}
+.region-block h4{font-size:13px;margin-bottom:9px;display:flex;align-items:center;gap:8px;color:var(--ink);white-space:nowrap}
+.region-block h4 .dot{width:11px;height:11px;border-radius:4px}
+.prov-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:9px}
+.prov{position:relative;border:1px solid var(--line);border-radius:12px;padding:10px 9px;cursor:pointer;transition:.18s;overflow:hidden;background:var(--surface)}
+.prov:hover{transform:translateY(-3px);box-shadow:var(--shadow-s)}
+.prov.active{border-color:var(--primary);box-shadow:0 6px 16px oklch(0.50 0.16 266/.22)}
+.prov.empty{opacity:.55}
+.prov .pn{font-size:14px;font-weight:700;color:var(--ink);white-space:nowrap}
+.prov .pc{font-size:11px;color:var(--muted)}
+.prov .heat{position:absolute;left:0;bottom:0;height:3px;border-radius:3px}
+#listView{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;box-shadow:var(--shadow-s)}
+
+/* results region (below map / major) */
+.res-head{display:flex;align-items:baseline;gap:10px;margin:18px 0 14px;flex-wrap:wrap}
+.res-head .pname{font-size:20px;font-weight:800;color:var(--ink);white-space:nowrap}
+.res-head .meta{color:var(--muted);font-size:13px}
+
+/* ============ MAJOR PICKERS ============ */
+.pick-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:14px;background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-s)}
+.pick-row .plabel-t{font-size:12px;color:var(--muted);font-weight:700;display:flex;align-items:center;gap:6px}
+.pick-row .plabel-t svg{width:15px;height:15px;stroke:var(--primary);fill:none;stroke-width:1.8}
+.dd-btn.wide{min-width:180px;justify-content:space-between}
+.dd-btn[disabled]{opacity:.5;cursor:not-allowed}
+.navitem{display:flex;justify-content:space-between;align-items:center;gap:10px;padding:8px 11px;border-radius:9px;cursor:pointer;font-size:13.5px;color:var(--ink2);transition:.15s;white-space:nowrap}
+.navitem:hover{background:var(--surface2);color:var(--ink)}
+.navitem.active{background:var(--primary-soft);color:var(--primary-d);font-weight:700}
+.navitem .cnt{font-size:11px;color:var(--muted);background:var(--surface2);padding:1px 7px;border-radius:8px}
+.navitem.active .cnt{color:var(--paper);background:var(--primary)}
+.track-h{font-size:11px;font-weight:800;padding:6px 10px;border-radius:8px;margin:10px 2px 6px;letter-spacing:.05em;white-space:nowrap}
+.track-h:first-child{margin-top:0}
+.track-bk{background:var(--primary-soft);color:var(--primary-d)}
+.track-gz{background:var(--teal-soft);color:oklch(0.40 0.09 196)}
+.track-tx{background:oklch(0.95 0.035 292);color:oklch(0.46 0.13 292)}
+.dd-scroll{max-height:340px;overflow:auto}
+
+/* ============ CARDS ============ */
+.cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:16px;display:flex;flex-direction:column;gap:10px;transition:transform .2s var(--ease),box-shadow .2s var(--ease),border-color .2s;position:relative;box-shadow:var(--shadow-s)}
+.card:hover{transform:translateY(-4px);box-shadow:var(--shadow);border-color:oklch(0.86 0.05 266)}
+.card .pos{position:absolute;top:-9px;left:14px;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;background:var(--ink);color:var(--paper)}
+.card .ctop{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-top:4px}
+.card .cname{font-size:15.5px;font-weight:700;line-height:1.4;color:var(--ink);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .school{font-size:13px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.card .majr{color:var(--teal);font-weight:600}
+.card .row{display:flex;gap:7px;flex-wrap:wrap;align-items:center}
+.card .honor{font-size:12px;color:var(--ink2);display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;background:var(--surface2);border-radius:9px;padding:7px 10px}
+.card .cfoot{display:flex;gap:8px;margin-top:auto;padding-top:4px}
+.card .cfoot .btn{flex:1;text-align:center;font-size:13px;padding:8px;justify-content:center;display:flex;align-items:center}
+.link-state{font-size:11px;display:inline-flex;align-items:center;gap:5px}
+.link-state svg{width:13px;height:13px;stroke:currentColor;fill:none;stroke-width:1.8}
+.link-ok{color:var(--green)} .link-no{color:var(--muted2)}
+
+/* empty */
+.empty{text-align:center;padding:46px 20px;background:var(--surface);border:1px dashed var(--line2);border-radius:var(--radius)}
+.empty .em{width:46px;height:46px;margin:0 auto 12px;stroke:var(--muted2);fill:none;stroke-width:1.5}
+.empty h4{font-size:17px;margin-bottom:8px;color:var(--ink)}
+.empty p{color:var(--muted);max-width:560px;margin:0 auto 16px;white-space:pre-line}
+.empty .acts{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+/* modal */
+.modal-bg{position:fixed;inset:0;background:oklch(0.22 0.05 266/.5);backdrop-filter:blur(5px);z-index:400;display:none;align-items:flex-start;justify-content:center;padding:40px 18px;overflow:auto}
+.modal-bg.show{display:flex;animation:fade .25s}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+.modal{width:min(880px,100%);background:var(--surface);border:1px solid var(--line);border-radius:20px;box-shadow:0 30px 80px oklch(0.22 0.06 266/.3);animation:rise .3s var(--ease)}
+@keyframes rise{from{transform:translateY(20px) scale(.99);opacity:0}to{transform:none;opacity:1}}
+.modal .mhead{padding:22px 24px;border-bottom:1px solid var(--line);position:relative;background:linear-gradient(180deg,var(--primary-soft),transparent);border-radius:20px 20px 0 0}
+.modal .mhead .x{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:10px;border:1px solid var(--line2);background:var(--surface);color:var(--ink2);cursor:pointer;font-size:18px}
+.modal .mhead h3{font-size:20px;padding-right:44px;color:var(--ink)}
+.modal .mhead .sc{color:var(--muted);font-size:14px;margin-top:6px}
+.modal .mbody{padding:22px 24px;display:flex;flex-direction:column;gap:22px}
+.warn{background:var(--gold-soft);border:1px solid oklch(0.86 0.08 75);border-radius:12px;padding:13px 15px;color:oklch(0.42 0.10 60);font-size:13px}
+.kv{display:grid;grid-template-columns:repeat(2,1fr);gap:1px;background:var(--line);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.kv .cell{background:var(--surface);padding:11px 14px}
+.kv .cell .k{font-size:11px;color:var(--muted);margin-bottom:3px}
+.kv .cell .v{font-size:14px;word-break:break-word;color:var(--ink)}
+.block h5{font-size:15px;margin-bottom:10px;color:var(--ink);display:flex;align-items:center;gap:8px;font-weight:700}
+.block h5 svg{width:17px;height:17px;stroke:var(--primary);fill:none;stroke-width:1.9}
+.dimtable{width:100%;border-collapse:collapse;font-size:13px}
+.dimtable td{border:1px solid var(--line);padding:9px 12px;vertical-align:top;color:var(--ink2)}
+.dimtable td.kk{width:120px;color:var(--muted);background:var(--surface2);font-weight:600}
+.reflist{list-style:none;display:flex;flex-direction:column;gap:8px}
+.reflist li{background:var(--surface2);border:1px solid var(--line);border-radius:10px;padding:10px 13px;font-size:13px;position:relative;padding-left:32px;color:var(--ink2)}
+.reflist li::before{content:"✓";position:absolute;left:12px;color:var(--green);font-weight:800}
+.modal .mfoot{padding:16px 24px;border-top:1px solid var(--line);display:flex;gap:10px;justify-content:flex-end}
+
+/* compare */
+.cmpbar{position:fixed;bottom:0;left:0;right:0;z-index:180;transform:translateY(110%);transition:transform .3s var(--ease);background:var(--surface);border-top:1px solid var(--line);box-shadow:0 -10px 30px oklch(0.22 0.06 266/.12)}
+.cmpbar.show{transform:none}
+.cmpbar .inner{max-width:1280px;margin:0 auto;padding:13px 24px;display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.cmpbar .slots{display:flex;gap:10px;flex:1;flex-wrap:wrap}
+.cmpslot{background:var(--surface2);border:1px solid var(--line2);border-radius:10px;padding:8px 12px;font-size:13px;display:flex;align-items:center;gap:8px;max-width:260px;color:var(--ink2)}
+.cmpslot .rm{cursor:pointer;color:var(--coral);font-weight:700}
+.cmpslot.ph{border-style:dashed;color:var(--muted2)}
+.cmp-modal{width:min(1060px,100%)}
+.cmptable{width:100%;border-collapse:collapse;font-size:13px}
+.cmptable th,.cmptable td{border:1px solid var(--line);padding:10px 12px;vertical-align:top;text-align:left;color:var(--ink2)}
+.cmptable th{background:var(--primary-soft);color:var(--ink);position:sticky;top:0}
+.cmptable td.dim{background:var(--surface2);font-weight:600;color:var(--muted);width:128px}
+.cmp-concl{background:var(--teal-soft);border:1px solid oklch(0.86 0.05 196);border-radius:12px;padding:14px 16px;margin-top:18px}
+.cmp-concl h5{color:oklch(0.40 0.09 196);margin-bottom:8px}
+.cmp-concl ul{padding-left:18px;font-size:13px;display:flex;flex-direction:column;gap:5px;color:var(--ink2)}
+
+/* suggestions */
+.sugg-insight{background:linear-gradient(120deg,var(--primary-soft),var(--teal-soft));border:1px solid oklch(0.88 0.04 250);border-radius:var(--radius);padding:18px 22px;margin-bottom:22px}
+.sugg-insight .h{font-size:15px;font-weight:700;color:var(--ink);margin-bottom:6px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.sugg-insight .h svg{width:16px;height:16px;stroke:var(--primary);fill:none;stroke-width:1.9}
+.sugg-insight .t{font-size:13.5px;color:var(--ink2)}
+/* ===== 优化新增样式 ===== */
+.ins-list{margin:8px 0 0;padding-left:18px;display:flex;flex-direction:column;gap:7px}
+.ins-list li{font-size:13px;color:var(--ink2);line-height:1.7}
+.ins-list b{color:var(--ink)}
+.ins-foot{margin-top:10px;font-size:12px;color:var(--muted)}
+.cred{display:inline-flex;align-items:center;gap:4px;font-size:11.5px;padding:2px 8px;border-radius:999px;border:1px solid var(--line2);white-space:nowrap;cursor:default}
+.cred::before{content:"";width:6px;height:6px;border-radius:50%;background:currentColor;opacity:.8}
+.cred.cr-a{color:oklch(0.5 0.12 162);background:oklch(0.95 0.04 162)}
+.cred.cr-b{color:oklch(0.55 0.11 80);background:oklch(0.95 0.05 85)}
+.cred.cr-c{color:oklch(0.55 0.14 35);background:oklch(0.95 0.05 40)}
+.summary-block{background:linear-gradient(120deg,var(--primary-soft),transparent);border-radius:12px;padding:14px 16px}
+.sum-list li{line-height:1.75}
+.tier-wrap{display:flex;flex-direction:column;gap:8px}
+.tier{display:flex;align-items:flex-start;gap:8px;flex-wrap:wrap}
+.tier-l{flex:none;font-size:11.5px;font-weight:600;padding:3px 9px;border-radius:8px;white-space:nowrap}
+.tier-l.t-low{color:oklch(0.46 0.11 162);background:oklch(0.94 0.05 162)}
+.tier-l.t-mid{color:oklch(0.5 0.1 235);background:oklch(0.94 0.04 235)}
+.tier-l.t-high{color:oklch(0.52 0.13 35);background:oklch(0.94 0.05 40)}
+.risk-list li{line-height:1.7}
+.rflag{font-size:11px;padding:1px 7px;border-radius:999px;background:oklch(0.94 0.05 40);color:oklch(0.52 0.13 35);align-self:center}
+.rb-details{margin:10px 0 4px;border:1px solid var(--line);border-radius:10px;overflow:hidden}
+.rb-details summary{cursor:pointer;padding:8px 12px;font-size:12.5px;font-weight:600;color:var(--primary);background:var(--surface2);user-select:none}
+.rb-details[open] summary{border-bottom:1px solid var(--line)}
+.rb-table{width:100%;border-collapse:collapse;font-size:12px}
+.rb-table th,.rb-table td{padding:6px 10px;border-bottom:1px solid var(--line);text-align:left;color:var(--ink2)}
+.rb-table th{background:var(--surface2);color:var(--muted);font-weight:600}
+.rb-table td.num{text-align:right;font-variant-numeric:tabular-nums;font-weight:600;color:var(--ink);white-space:nowrap}
+.rb-table td.ds{color:var(--muted);font-size:11.5px}
+.rb-table tr.neg td.num{color:oklch(0.52 0.13 35)}
+.rb-table tr.pos td.num{color:oklch(0.48 0.11 162)}
+.rb-table tr.tot td{font-weight:700;color:var(--ink);background:var(--primary-soft);border-top:2px solid var(--line2)}
+.strat-chips .chip.strat{border-style:dashed}
+.strat-chips .chip.strat.on{border-style:solid}
+.strat-desc{font-size:12px;color:var(--muted);margin-top:8px;padding-left:2px}
+.card-reason{font-size:12px;color:var(--ink2);background:var(--surface2);border-left:3px solid var(--primary);padding:6px 10px;border-radius:0 8px 8px 0;margin:8px 0;line-height:1.6}
+.map-themes{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-top:10px}
+.mt-label{font-size:12.5px;color:var(--muted);font-weight:600}
+.mt{font-size:12.5px;padding:5px 12px;border-radius:999px;border:1px solid var(--line2);background:var(--surface);color:var(--ink2);cursor:pointer;transition:.15s}
+.mt:hover{border-color:var(--primary);color:var(--primary)}
+.mt.on{background:var(--primary);color:var(--paper);border-color:var(--primary)}
+.active-cond{display:none;align-items:center;gap:8px;flex-wrap:wrap;margin:2px 0 14px}
+.active-cond.show{display:flex}
+.active-cond.hidden{display:none!important}
+.ac-l{font-size:12px;color:var(--muted);font-weight:600}
+.ac-chip{display:inline-flex;align-items:center;gap:6px;font-size:12px;padding:4px 10px;border-radius:999px;background:var(--primary-soft);color:var(--ink);cursor:pointer;border:1px solid var(--line2)}
+.ac-chip i{font-style:normal;color:var(--muted);font-size:13px}
+.ac-chip:hover i{color:oklch(0.52 0.13 35)}
+.ac-clear{font-size:12px;background:none;border:none;color:var(--primary);cursor:pointer;text-decoration:underline;padding:2px 4px}
+.maptip{white-space:normal;max-width:200px;line-height:1.55}
+.maptip .th-row{display:block;font-size:11px;opacity:.92;margin-top:2px}
+.maptip .th-tip{display:block;font-size:10.5px;opacity:.7;margin-top:3px}
+.plan-opts{padding:14px 24px 4px;border-bottom:1px solid var(--line)}
+.po-row{display:flex;gap:12px;flex-wrap:wrap;margin-top:10px}
+.po{display:flex;flex-direction:column;gap:4px;font-size:12px;color:var(--muted)}
+.po-wide{flex:1;min-width:180px}
+.po select,.po input{padding:7px 10px;border:1px solid var(--line2);border-radius:8px;background:var(--surface);color:var(--ink);font-size:13px}
+.seg-copy{float:right;font-size:11px;font-weight:500;background:var(--surface2);border:1px solid var(--line);color:var(--primary);border-radius:6px;padding:2px 8px;cursor:pointer}
+.seg-copy:hover{background:var(--primary-soft)}
+.pitch-text .pq{color:oklch(0.5 0.1 60)}
+.pitch-text .pa{color:var(--ink2)}
+.pitch-text .pp b{color:var(--primary)}
+.cmptable td.dim{position:sticky;left:0;z-index:1}
+.dim-list{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow-s);overflow:hidden}
+.dim-row{display:grid;grid-template-columns:74px 1fr;gap:22px;padding:24px 26px;border-bottom:1px solid var(--line);transition:background .2s var(--ease)}
+.dim-row:last-child{border-bottom:none}
+.dim-row:hover{background:var(--surface2)}
+.dim-row .lead{display:flex;flex-direction:column;gap:10px}
+.dim-row .idx{font-size:13px;font-weight:800;letter-spacing:.12em;color:var(--acc,var(--primary));font-variant-numeric:tabular-nums}
+.dim-row .ic{width:30px;height:30px;border-radius:9px;display:grid;place-items:center;background:color-mix(in oklch,var(--acc,var(--primary)) 14%,transparent)}
+.dim-row .ic svg{width:18px;height:18px;stroke:var(--acc,var(--primary));fill:none;stroke-width:1.8}
+.dim-row .body h4{font-size:17px;color:var(--ink);margin-bottom:3px;font-weight:800;white-space:nowrap}
+.dim-row .body .sub{font-size:12.5px;color:var(--muted);margin-bottom:15px}
+.dim-row .body ul{list-style:none;display:grid;grid-template-columns:1fr 1fr;gap:11px 28px}
+.dim-row .body li{font-size:13px;color:var(--ink2);padding-left:18px;position:relative;line-height:1.65}
+.dim-row .body li::before{content:"";position:absolute;left:0;top:9px;width:6px;height:6px;border-radius:2px;background:var(--acc,var(--primary))}
+.dim-row .body li b{color:var(--ink);font-weight:700}
+@media(max-width:720px){.dim-row{grid-template-columns:1fr;gap:14px;padding:20px}.dim-row .lead{flex-direction:row;align-items:center}.dim-row .body ul{grid-template-columns:1fr}}
+
+footer{padding:24px 0 60px;color:var(--muted);font-size:12px;border-top:1px solid var(--line);margin-top:18px}
+.notice{font-size:12px;color:var(--ink2);background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:12px 16px;display:flex;gap:12px;align-items:center;flex-wrap:wrap;box-shadow:var(--shadow-s);margin-bottom:14px}
+.toast{position:fixed;bottom:90px;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:11px 20px;border-radius:12px;z-index:500;opacity:0;transition:.3s;pointer-events:none;box-shadow:var(--shadow)}
+.toast.show{opacity:1}
+.hidden{display:none!important}
+::-webkit-scrollbar{width:9px;height:9px}
+::-webkit-scrollbar-thumb{background:var(--line2);border-radius:6px}
+::-webkit-scrollbar-thumb:hover{background:var(--muted2)}
+@media (max-width:560px){.kv{grid-template-columns:1fr}.search{min-width:100%;order:5}}
+</style>
+</head>
+<body>
+<a class="skip" href="#explore">跳到主内容</a>
+
+<header class="top">
+  <div class="bar">
+    <div class="logo">
+      <div class="mark"><svg viewBox="0 0 24 24" fill="none"><path d="M3 7l9-4 9 4-9 4-9-4z" stroke-width="1.8" stroke-linejoin="round"/><path d="M7 9.5V14c0 1.5 2.5 3 5 3s5-1.5 5-3V9.5" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M21 7v5" stroke-width="1.8" stroke-linecap="round"/></svg></div>
+      <div>
+        <h1>智慧课程建设案例库</h1>
+        <div class="sub">职业教育 · 应用型本科 · 智慧课程标杆导航平台</div>
+      </div>
+    </div>
+    <nav class="menu" id="navMenu">
+      <button data-go="reco"><svg viewBox="0 0 24 24"><path d="M12 3l2.3 6.2L21 11l-5.3 2.2L13 21l-2.3-6.2L4 12l6.7-1.8L12 3z" stroke-linejoin="round"/></svg>智能推荐</button>
+      <button data-go="map" class="active"><svg viewBox="0 0 24 24"><path d="M9 4l6 2 5-2v14l-5 2-6-2-5 2V6l5-2z" stroke-linejoin="round"/><path d="M9 4v14M15 6v14" stroke-linecap="round"/></svg>地图找案例</button>
+      <button data-go="major"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4z" stroke-linejoin="round"/><path d="M7 10v5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-5" stroke-linecap="round"/></svg>专业找案例</button>
+      <button data-go="compareOpen"><svg viewBox="0 0 24 24"><path d="M5 4v16M19 4v16M5 9h6M13 15h6" stroke-linecap="round"/></svg>案例对比</button>
+      <button data-go="insight"><svg viewBox="0 0 24 24"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6" stroke-linecap="round" stroke-linejoin="round"/></svg>数据洞察</button>
+      <button data-go="about"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 11v5M12 7.5h.01" stroke-linecap="round" stroke-linejoin="round"/></svg>项目说明</button>
+    </nav>
+    <div class="search">
+      <svg class="ic" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>
+      <input id="globalSearch" placeholder="搜索学校 / 课程 / 专业 / 技术…" autocomplete="off" aria-label="全局搜索"/>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero" id="overview">
+    <span class="eyebrow">国家专业目录 · 多维智慧课程导航</span>
+    <h2><span class="em">智慧课程标杆案例库</span></h2>
+    <p>描述需求即得推荐 · 地图挑省 · 专业逐级 · 案例对标 · 一键转方案与话术</p>
+    <div class="hero-cta"><button class="btn primary" id="heroReco"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" style="vertical-align:-3px"><path d="M12 3l2.3 6.2L21 11l-5.3 2.2L13 21l-2.3-6.2L4 12l6.7-1.8L12 3z" stroke-linejoin="round"/></svg> 一句话智能推荐案例</button></div>
+    <div class="statbar" id="stats"></div>
+  </section>
+
+  <section id="explore">
+    <div class="sec-head">
+      <h3><span class="hi"><svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg></span>案例检索</h3>
+      <span class="tip">中国地图点击 · 专业目录逐级</span>
+      <div class="line"></div>
+      <div class="modesw" id="modeSwitch">
+        <button data-mode="reco"><svg viewBox="0 0 24 24"><path d="M12 3l2.3 6.2L21 11l-5.3 2.2L13 21l-2.3-6.2L4 12l6.7-1.8L12 3z" stroke-linejoin="round"/></svg>智能推荐</button>
+        <button data-mode="map" class="active"><svg viewBox="0 0 24 24"><path d="M9 4l6 2 5-2v14l-5 2-6-2-5 2V6l5-2z" stroke-linejoin="round"/></svg>地图找案例</button>
+        <button data-mode="major"><svg viewBox="0 0 24 24"><path d="M3 8l9-4 9 4-9 4-9-4z" stroke-linejoin="round"/></svg>专业找案例</button>
+      </div>
+    </div>
+
+    <div class="filters" id="filterBar"></div>
+    <div class="active-cond" id="activeCond"></div>
+    <div class="parse-hint hidden" id="parseHint"></div>
+
+    <!-- MAP MODE -->
+    <div id="mapMode">
+      <div class="map-toolbar">
+        <div class="viewsw" id="viewSwitch">
+          <button data-view="geo" class="active"><svg viewBox="0 0 24 24"><path d="M4 7l8-3 8 3v10l-8 3-8-3V7z" stroke-linejoin="round"/><path d="M12 4v16" stroke-linecap="round"/></svg>立体地图</button>
+          <button data-view="list"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h16M4 18h16" stroke-linecap="round"/></svg>区域列表</button>
+        </div>
+        <button class="btn ghost fs-btn" id="fsBtn"><svg viewBox="0 0 24 24"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5" stroke-linecap="round" stroke-linejoin="round"/></svg>全屏地图</button>
+        <div class="legend" id="mapLegend"></div>
+      </div>
+      <div class="map-themes" id="mapThemes"><span class="mt-label">地图找标杆：</span></div>
+      <div class="map-stage" id="mapStage">
+        <button class="fs-exit" id="fsExit">退出全屏 (Esc)</button>
+        <div id="geoView"></div>
+        <div id="listView" class="hidden"></div>
+        <div class="nanhai-inset" id="nanhaiInset"></div>
+        <div class="map-anno" id="mapAnno"></div>
+        <div class="map-hint"><svg viewBox="0 0 24 24"><path d="M12 3v3M12 18v3M3 12h3M18 12h3M6 6l2 2M16 16l2 2M18 6l-2 2M8 16l-2 2" stroke-linecap="round"/><circle cx="12" cy="12" r="3.5"/></svg>拖拽旋转 · 滚轮缩放 · 点击省份查看案例（高度越高案例越多）</div>
+      </div>
+      <div class="res-head">
+        <span class="pname" id="provName">全部省份</span>
+        <span class="meta" id="provMeta"></span>
+      </div>
+      <div id="mapResults"></div>
+    </div>
+
+    <!-- MAJOR MODE -->
+    <div id="majorMode" class="hidden">
+      <div class="pick-row">
+        <span class="plabel-t"><svg viewBox="0 0 24 24"><path d="M4 6h16M4 12h10M4 18h7" stroke-linecap="round"/></svg>按专业目录筛选</span>
+        <div class="dd" data-dd="cat">
+          <button class="dd-btn wide" id="catBtn"><span class="lbl">选择专业大类</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="dd-panel"><div class="dd-scroll" id="catList"></div></div>
+        </div>
+        <div class="dd" data-dd="sub">
+          <button class="dd-btn wide" id="subBtn" disabled><span class="lbl">细分专业</span><svg class="chev" viewBox="0 0 24 24"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+          <div class="dd-panel"><div class="dd-scroll" id="subList"></div></div>
+        </div>
+        <span class="count-pill muted" id="majPickHint">选择专业后，案例展示在下方</span>
+      </div>
+      <div class="res-head">
+        <span class="pname" id="majTitle">请选择专业</span>
+        <span class="meta" id="majMeta"></span>
+      </div>
+      <div id="majorResults"></div>
+    </div>
+
+    <!-- RECO MODE -->
+    <div id="recoMode" class="hidden">
+      <div class="reco-panel">
+        <div class="reco-onebox">
+          <input id="recoText" placeholder="一句话描述需求，例如：给一所高职院校的护理专业建设智慧课程，含 AI助教 与 虚拟仿真" autocomplete="off"/>
+          <button class="btn primary" id="recoParseBtn">智能识别</button>
+        </div>
+        <div class="reco-fields" id="recoFields"></div>
+        <div class="reco-actions">
+          <button class="btn primary" id="recoRun">生成推荐</button>
+          <button class="btn ghost" id="recoReset">重置</button>
+          <span class="muted" id="recoHint">填写专业/课程、学校类型、建设目标或技术，或用一句话描述需求，再生成 Top 推荐</span>
+        </div>
+      </div>
+      <div id="recoResults"></div>
+    </div>
+  </section>
+
+  <!-- SUGGESTION -->
+  <section id="insight">
+    <div class="sec-head"><h3><span class="hi"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6" stroke-linecap="round" stroke-linejoin="round"/></svg></span>案例数据洞察</h3><span class="tip">点击任意条目即可筛选 / 定位案例</span><div class="line"></div></div>
+    <div id="insightLead"></div>
+    <div class="ins-grid" id="insightGrid"></div>
+  </section>
+
+  <footer>
+    <div class="notice">
+      <span>数据库可更新：上传由「知识库.xlsx」导出的 JSON 数据即可刷新案例库。</span>
+      <button class="btn" onclick="document.getElementById('uploadJson').click()">上传数据更新</button>
+      <input type="file" id="uploadJson" accept=".json,.js" class="hidden"/>
+    </div>
+    <div>智慧课程建设案例库 · 案例数据来源于公开渠道，仅供课程建设借鉴参考 · 未核实信息均标注“待核实”</div>
+  </footer>
+</main>
+
+<div class="cmpbar" id="cmpBar">
+  <div class="inner">
+    <strong style="white-space:nowrap">案例对比 <span class="muted" id="cmpCount">0/3</span></strong>
+    <div class="slots" id="cmpSlots"></div>
+    <button class="btn" id="cmpClear">清空</button>
+    <button class="btn primary" id="cmpStart">开始对比</button>
+  </div>
+</div>
+
+<div class="modal-bg" id="detailModal"><div class="modal" id="detailBox"></div></div>
+<div class="modal-bg" id="cmpModal"><div class="modal cmp-modal" id="cmpBox"></div></div>
+<div class="modal-bg" id="planModal"><div class="modal" id="planBox"></div></div>
+<div class="modal-bg" id="pitchModal"><div class="modal" id="pitchBox"></div></div>
+<div class="modal-bg" id="aboutModal"><div class="modal" id="aboutBox"></div></div>
+<div class="maptip" id="mapTip"></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script src="assets/three.min.js"></script>
+<script src="assets/OrbitControls.js"></script>
+<script src="assets/china-map.js"></script>
+<script src="assets/cases-data.js"></script>
+<!-- 后端数据库:Supabase 客户端 + 站点配置(anon key 受 RLS 保护,可公开) -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="config.js"></script>
+<script src="assets/data-layer.js"></script>
+<script>
+/* ================= 数据派生（与知识库字段一一对应，不编造） ================= */
+const SCHOOL_PROVINCE = {
+"上海电影艺术职业学院":"上海","中南大学":"湖南","中南林业科技大学":"湖南","中南民族大学":"湖北",
+"中原工学院":"河南","中国农业大学":"北京","中国地质大学（武汉）":"湖北","中国石油大学（华东）":"山东",
+"中国矿业大学":"江苏","中国计量大学":"浙江","乌鲁木齐职业大学":"新疆","云南师范大学":"云南",
+"佛山职业技术学院":"广东","兰州博文科技学院":"甘肃","兰州大学":"甘肃","内蒙古医科大学":"内蒙古",
+"内蒙古建筑职业技术学院":"内蒙古","内蒙古民族幼儿师范高等专科学校":"内蒙古","北京建筑大学":"北京",
+"北京科技大学":"北京","北京航空航天大学":"北京","北方工业大学":"北京","北方民族大学":"宁夏",
+"北部湾大学":"广西","华北水利水电大学":"河南","南京中医药大学":"江苏","南京交通职业技术学院":"江苏",
+"南京大学":"江苏","南华大学":"湖南","合肥大学":"安徽","吉林大学":"吉林","吉林工商学院":"吉林",
+"同济大学":"上海","哈尔滨医科大学":"黑龙江","哈尔滨工业大学":"黑龙江","四川交通职业技术学院":"四川",
+"四川化工职业技术学院":"四川","四川师范大学":"四川","复旦大学":"上海","天津科技大学":"天津",
+"宁夏医科大学":"宁夏","宁夏大学":"宁夏","安徽三联学院":"安徽","安徽医科大学":"安徽",
+"安徽城市管理职业学院":"安徽","安徽大学":"安徽","安徽工业大学":"安徽","安徽工程大学":"安徽",
+"安徽师范大学":"安徽","安徽科技学院":"安徽","安徽艺术学院":"安徽","安徽财经大学":"安徽",
+"安阳师范学院":"河南","宣城职业技术学院":"安徽","山东协和学院":"山东","山东师范大学":"山东",
+"山东理工大学":"山东","山东理工职业学院":"山东","山东科技大学":"山东","山东第一医科大学":"山东",
+"山东航空学院":"山东","山西大学":"山西","广东医科大学":"广东","广州大学":"广东",
+"广州民航职业技术学院":"广东","广西中医药大学":"广西","广西医科大学":"广西","广西大学":"广西",
+"广西工商职业技术学院":"广西","徐州医科大学":"江苏","成都体育学院":"四川","成都大学":"四川",
+"成都理工大学":"四川","新疆农业职业技术大学":"新疆","新疆第二医学院":"新疆","昆明学院":"云南",
+"暨南大学":"广东","杭州科技职业技术学院":"浙江","桂林电子科技大学":"广西","江苏警官学院":"江苏",
+"河南师范大学":"河南","河南科技大学":"河南","河南科技学院":"河南","河南财经政法大学":"河南",
+"济南大学":"山东","浙江万里学院":"浙江","浙江传媒学院":"浙江","浙江大学":"浙江","浙江工业大学":"浙江",
+"浙江工商大学":"浙江","浙江师范大学":"浙江","浙江海洋大学":"浙江","浙江财经大学":"浙江",
+"浙江财经大学东方学院":"浙江","温州医科大学":"浙江","温州科技职业学院":"浙江","湖北大学":"湖北",
+"湖南中医药大学（益阳市中心医院）":"湖南","湖南大学":"湖南","湖南机电职业技术学院":"湖南",
+"湖南汽车工程职业大学":"湖南","湖南科技职业学院":"湖南","湖州学院":"浙江","滁州学院":"安徽",
+"烟台大学":"山东","燕山大学":"河北","皖南医学院":"安徽","福州大学":"福建","绍兴职业技术学院":"浙江",
+"聊城大学东昌学院":"山东","莆田学院":"福建","蚌埠医科大学":"安徽","蚌埠学院":"安徽",
+"西北农林科技大学":"陕西","西北民族大学":"甘肃","西南医科大学":"四川","西南民族大学":"四川",
+"西安交通大学":"陕西","西安电子科技大学":"陕西","西安邮电大学":"陕西","贵州医科大学":"贵州",
+"贵州大学":"贵州","辽宁工程技术大学":"辽宁","郑州大学":"河南","郑州科技学院":"河南",
+"郑州航空工业管理学院":"河南","重庆中医药学院":"重庆","重庆医科大学":"重庆","重庆电力高等专科学校":"重庆",
+"金陵科技学院":"江苏","长春工业大学":"吉林","长江大学":"湖北","长沙理工大学":"湖南",
+"阜阳师范大学":"安徽","陕西农林职业技术大学":"陕西","陕西国际商贸学院":"陕西","青岛城市学院":"山东",
+"青岛大学":"山东","青岛滨海学院":"山东","青岛理工大学":"山东","首都医科大学":"北京","马鞍山学院":"安徽",
+"齐齐哈尔工程学院":"黑龙江"
+};
+const REGIONS={"华北":["北京","天津","河北","山西","内蒙古"],"东北":["辽宁","吉林","黑龙江"],
+"华东":["上海","江苏","浙江","安徽","福建","江西","山东"],"华中":["河南","湖北","湖南"],
+"华南":["广东","广西","海南"],"西南":["重庆","四川","贵州","云南","西藏"],"西北":["陕西","甘肃","青海","宁夏","新疆"]};
+const REGION_RGB={"华北":[78,135,225],"东北":[38,170,162],"华东":[64,176,118],"华中":[224,168,78],"华南":[219,108,128],"西南":[138,118,222],"西北":[224,138,82]};
+const PROV_REGION={};Object.keys(REGIONS).forEach(r=>REGIONS[r].forEach(p=>PROV_REGION[p]=r));
+function shortProv(f){return f.replace("维吾尔","").replace("壮族","").replace("回族","").replace("特别行政区","").replace("自治区","").replace("省","").replace("市","");}
+
+const BK=["哲学","经济学","法学","教育学","文学","历史学","理学","工学","农学","医学","管理学","艺术学"];
+const GZ={"装备制造大类":"装备制造大类","农林牧渔大类":"农林牧渔大类","财经商贸大类":"财经商贸大类","教育与体育大类":"教育与体育大类","能源动力与材料大类":"能源动力与材料大类","土木建筑大类":"土木建筑大类","交通运输大类":"交通运输大类","资源环境与安全大类":"资源环境与安全大类","旅游大类":"旅游大类","电子信息类":"电子信息大类","艺术设计类":"文化艺术大类"};
+function deriveCategory(major){const m=(major||"").trim();let p=m;if(m.indexOf("/")>=0)p=m.split("/")[0].trim();
+  if(BK.includes(p))return{cat:p,track:"本科 · 学科门类"};
+  if(p==="马克思主义理论")return{cat:"法学",track:"本科 · 学科门类"};
+  if(GZ[p])return{cat:GZ[p],track:"高职 · 专业大类"};
+  if(p.endsWith("大类"))return{cat:p,track:"高职 · 专业大类"};
+  if(p.endsWith("类"))return{cat:p.replace(/类$/,"大类"),track:"高职 · 专业大类"};
+  if(p==="通识教育")return{cat:"通识教育课程",track:"通识 · 公共基础"};
+  return{cat:p||"未分类",track:"其他"};}
+const TRACK_ORDER={"本科 · 学科门类":0,"高职 · 专业大类":1,"通识 · 公共基础":2,"其他":3};
+const TRACK_CLASS={"本科 · 学科门类":"track-bk","高职 · 专业大类":"track-gz","通识 · 公共基础":"track-tx","其他":"track-tx"};
+function subMajorOf(major){if(!major)return"未分类";let s=major;if(s.indexOf("/")>=0)s=s.split("/").slice(1).join("/");
+  s=s.replace(/（[^）]*）/g,"").replace(/\([^)]*\)/g,"");s=s.split(/[；;、]/)[0].trim();return s||major.trim();}
+
+const TECH_DEFS=[
+["知识图谱",t=>/知识图谱/.test(t)],["问题图谱",t=>/问题图谱|问题链/.test(t)],
+["能力图谱",t=>/能力图谱|目标图谱|素质图谱/.test(t)],
+["AI助教",t=>/AI助教|ai助教|智能体|AI助学|AI助|AI学伴|大模型|生成式|智能问答|答疑机器人/.test(t)],
+["数字人",t=>/数字人|虚拟数字人|数字教师|虚拟教师/.test(t)],
+["虚拟仿真",t=>/虚拟仿真|数字孪生|VR|AR|虚拟现实|仿真实验|虚拟实验|元宇宙|虚拟展厅/.test(t)],
+["学情诊断",t=>/学情|学习画像|学习分析|数据画像|精准诊断|预警/.test(t)],
+["项目式教学",t=>/项目式|项目化|项目驱动|项目链/.test(t)],
+["岗课赛证",t=>/岗课赛证|岗赛证|课赛证/.test(t)],["课证融通",t=>/课证融通|课证融合|书证融通|1\+X/.test(t)],
+["混合式教学",t=>/混合式|线上线下|翻转课堂|SPOC|MOOC|慕课/.test(t)],
+["工作过程系统化",t=>/工作过程|工作流程系统化/.test(t)],["产教融合",t=>/产教融合|校企合作|产学|工学结合/.test(t)],
+["评价闭环",t=>/闭环|过程性评价|多元评价|评价体系/.test(t)]];
+function deriveTech(c){const t=[c.knowledge,c.ai,c.data,c.simulation,c.keywords,c.course].join(" ");const o=[];for(const[n,fn]of TECH_DEFS){if(fn(t))o.push(n);}return o;}
+const MODEL_TAGS=["项目式教学","岗课赛证","课证融通","混合式教学","工作过程系统化","产教融合"];
+
+function levelFlags(level){const L=level||"";return{raw:L||"待核实",is985:/985/.test(L),is211:/211/.test(L),isSyl:/双一流/.test(L),isVocBen:/职业本科|职教本科/.test(L),isAppBen:/应用型/.test(L),isPlainBen:/普通本科/.test(L),isNatGao:/国家双高|国家级双高/.test(L),isProvGao:/省级双高|省双高/.test(L),isGaozhi:/高职|专科/.test(L)};}
+function levelLabel(level){const f=levelFlags(level);if(f.is985)return"985 · 双一流";if(f.is211)return"211 · 双一流";if(f.isSyl)return"双一流";if(f.isVocBen)return"职业本科";if(f.isAppBen)return"应用型本科";if(f.isNatGao)return"国家级双高";if(f.isProvGao)return"省级双高";if(f.isGaozhi)return"普通高职";if(f.isPlainBen)return"普通本科";return f.raw;}
+function isResearchU(level){const f=levelFlags(level);return f.is985||f.is211||f.isSyl;}
+function deriveAward(c){const h=c.honor||"";if(!h||h==="未提及"||h==="待核实")return{label:"待核实",cls:"b-pass"};
+  if(/国家级一流|国家级.*一流|国家.*一流本科|国家级线上线下|国家级精品|国家级.*金课/.test(h))return{label:"国家级一流课程",cls:"b-nat"};
+  if(/国家级|全国.*特等奖|全国.*一等奖|教育部.*典型|教育部.*创新案例/.test(h))return{label:"国家级荣誉",cls:"b-nat"};
+  if(/省级一流|省.*一流本科|省级精品|省一等奖|省级.*示范|省级智慧课程|省.*一流课程/.test(h))return{label:"省级一流/示范",cls:"b-prov"};
+  if(/省级|省赛|省部级/.test(h))return{label:"省级荣誉",cls:"b-prov"};
+  if(/大会|优秀案例|典型案例/.test(h))return{label:"行业大会案例",cls:"b-good"};return{label:"已收录荣誉",cls:"b-good"};}
+function scoreNum(c){const m=(c.score||"").match(/(\d)(?:\.\d)?\s*分/);return m?parseInt(m[1]):0;}
+function deriveQuality(c){const a=deriveAward(c),s=scoreNum(c);if(a.label==="国家级一流课程"||a.label==="国家级荣誉")return{label:"标杆级",cls:"b-bench"};if(s>=5)return{label:"标杆级",cls:"b-bench"};if(s===4)return{label:"优秀级",cls:"b-good"};if(s===3)return{label:"合格级",cls:"b-pass"};if(s>0)return{label:"潜力案例",cls:"b-pot"};return{label:"待核实",cls:"b-pass"};}
+function featureTags(c){const k=(c.keywords||"").split(/[、,，；;]/).map(s=>s.trim()).filter(Boolean);return k.length?k.slice(0,4):["特色待核实"];}
+function valOr(v,fb){v=(v||"").trim();if(!v||v==="未提及"||v==="未查明")return fb;return v;}
+/* 建设目标（建设类型）派生 */
+const GOAL_ALL=["国家级一流课程","省级一流/精品","在线精品课程","课程思政示范","知识图谱课程","AI助教课程","虚拟仿真实训","混合式教学","产教融合","智慧课程"];
+function buildGoals(o){const g=[];const h=o.honor||"";const src=(o.source||"")+h;const t=o.tech;
+  if(/国家级一流|国家级.*一流|国家.*一流本科/.test(h))g.push("国家级一流课程");
+  if(/省.*一流|省级精品|省级.*示范课|省级智慧课程|省级.*精品/.test(h))g.push("省级一流/精品");
+  if(/在线开放|MOOC|慕课|在线精品|学银在线|智慧教育平台/.test(src))g.push("在线精品课程");
+  if(/课程思政/.test(h)||/课程思政|思政图谱/.test((o.knowledge||"")+(o.keywords||"")))g.push("课程思政示范");
+  if(t.includes("知识图谱"))g.push("知识图谱课程");
+  if(t.includes("AI助教"))g.push("AI助教课程");
+  if(t.includes("虚拟仿真"))g.push("虚拟仿真实训");
+  if(t.includes("混合式教学"))g.push("混合式教学");
+  if(t.includes("产教融合"))g.push("产教融合");
+  g.push("智慧课程");
+  return Array.from(new Set(g));}
+/* 推荐指数（客户展示价值）S/A/B/C */
+function recScore(o){let s=(QUALITY_ORDER[o.quality.label]||1)*1.6;
+  if(o.award.cls==="b-nat")s+=2.4;else if(o.award.cls==="b-prov")s+=1.4;else if(o.award.cls==="b-good")s+=0.6;
+  s+=Math.min(2.2,Math.max(0,o.techCount-2)*0.55);if(/^https?:/.test(o.url||""))s+=0.8;return Math.round(s*10)/10;}
+const REC_VALUE={S:"高",A:"较高",B:"中",C:"一般"};
+
+let CASES=[];
+function buildCases(){CASES=(window.RAW_CASES||[]).map((c,i)=>{const prov=SCHOOL_PROVINCE[c.school]||"待核实";const tech=deriveTech(c);const cc=deriveCategory(c.major);
+  const o={...c,_i:i,province:prov,region:PROV_REGION[prov]||"其他",category:cc.cat,track:cc.track,sub:subMajorOf(c.major),tech,techCount:tech.length,models:tech.filter(t=>MODEL_TAGS.includes(t)),feats:featureTags(c),levelLbl:levelLabel(c.level),lflags:levelFlags(c.level),research:isResearchU(c.level),award:deriveAward(c),quality:deriveQuality(c),score:scoreNum(c)};
+  o.goals=buildGoals(o);o._rs=recScore(o);return o;});
+  // 推荐指数按分位赋级：约 Top15% → S，次 30% → A，再 35% → B，余 C
+  const sorted=CASES.map(c=>c._rs).sort((a,b)=>b-a);const n=sorted.length||1;const at=p=>sorted[Math.min(n-1,Math.floor(n*p))];
+  const tS=at(0.15),tA=at(0.45),tB=at(0.80);
+  CASES.forEach(c=>{const s=c._rs;const grade=s>=tS?"S":s>=tA?"A":s>=tB?"B":"C";c.rec={grade,value:REC_VALUE[grade],score:s};});}
+
+/* ================= 状态 ================= */
+const state={mode:"map",mapView:"geo",province:null,category:null,sub:null,search:"",
+  filters:{region:new Set(),level:new Set(),tech:new Set(),quality:new Set(),goal:new Set()},compare:[],
+  reco:{kw:"",schoolType:null,goals:new Set(),tech:new Set(),region:null,strategy:"综合匹配",done:false}};
+const QUALITY_ORDER={"标杆级":5,"优秀级":4,"合格级":3,"潜力案例":2,"待核实":1};
+const $=s=>document.querySelector(s);const $$=s=>Array.from(document.querySelectorAll(s));
+function esc(s){return(s==null?"":String(s)).replace(/[&<>"']/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[m]));}
+function hl(t){const q=state.search.trim();let s=esc(t);if(q){const re=new RegExp("("+q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&')+")","gi");s=s.replace(re,'<mark style="background:oklch(0.92 0.12 90);color:oklch(0.4 0.1 70);border-radius:3px;padding:0 1px">$1</mark>');}return s;}
+function toast(m){const t=$("#toast");t.textContent=m;t.classList.add("show");clearTimeout(t._t);t._t=setTimeout(()=>t.classList.remove("show"),1900);}
+
+function passFilters(c){const f=state.filters;
+  if(f.region.size&&!f.region.has(c.region))return false;
+  if(f.level.size){let ok=false;f.level.forEach(L=>{const lf=c.lflags;if(L==="985"&&lf.is985)ok=true;else if(L==="211"&&lf.is211)ok=true;else if(L==="双一流"&&lf.isSyl)ok=true;else if(L==="职业本科"&&lf.isVocBen)ok=true;else if(L==="应用型本科"&&lf.isAppBen)ok=true;else if(L==="普通本科"&&lf.isPlainBen)ok=true;else if(L==="国家级双高"&&lf.isNatGao)ok=true;else if(L==="省级双高"&&lf.isProvGao)ok=true;else if(L==="普通高职"&&lf.isGaozhi)ok=true;});if(!ok)return false;}
+  if(f.tech.size){for(const t of f.tech){if(!c.tech.includes(t))return false;}}
+  if(f.quality.size&&!f.quality.has(c.quality.label))return false;
+  if(f.goal.size){let ok=false;f.goal.forEach(g=>{if(c.goals.includes(g))ok=true;});if(!ok)return false;}
+  if(state.search.trim()){const q=state.search.trim().toLowerCase();const hay=[c.school,c.course,c.major,c.sub,c.category,c.province,c.teacher,c.honor,c.keywords,c.tech.join(" ")].join(" ").toLowerCase();if(hay.indexOf(q)<0)return false;}
+  return true;}
+function sortCases(a){return a.slice().sort((x,y)=>{if(y.techCount!==x.techCount)return y.techCount-x.techCount;const qx=QUALITY_ORDER[x.quality.label]||0,qy=QUALITY_ORDER[y.quality.label]||0;if(qy!==qx)return qy-qx;return y.score-x.score;});}
+
+/* ================= 统计 ================= */
+const ICN={book:'<path d="M5 4h11a2 2 0 0 1 2 2v13l-3-2-3 2-3-2-4 2V4z" stroke-linejoin="round"/>',map:'<path d="M9 4l6 2 5-2v14l-5 2-6-2-5 2V6l5-2z" stroke-linejoin="round"/>',grad:'<path d="M3 8l9-4 9 4-9 4-9-4z" stroke-linejoin="round"/>',cpu:'<rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 1v3M15 1v3M9 20v3M15 20v3M1 9h3M1 15h3M20 9h3M20 15h3" stroke-linecap="round"/>',medal:'<circle cx="12" cy="9" r="5"/><path d="M9 13l-2 8 5-3 5 3-2-8" stroke-linejoin="round"/>',star:'<path d="M12 3l2.5 5.5 6 .5-4.5 4 1.5 6L12 16l-5.5 3 1.5-6-4.5-4 6-.5L12 3z" stroke-linejoin="round"/>'};
+function renderStats(){const provSet=new Set(CASES.filter(c=>c.province!=="待核实").map(c=>c.province));const catSet=new Set(CASES.map(c=>c.category));const techSet=new Set();CASES.forEach(c=>c.tech.forEach(t=>techSet.add(t)));const nat=CASES.filter(c=>c.award.cls==="b-nat").length;const prov=CASES.filter(c=>c.award.cls==="b-prov").length;const bench=CASES.filter(c=>c.quality.label==="标杆级").length;
+  const items=[{lead:1,n:CASES.length,i:ICN.book,l:"收录案例",e:"职教 · 应用型 · 本科"},{n:provSet.size,i:ICN.map,l:"覆盖省份",e:Object.keys(REGIONS).length+" 大区域"},{n:catSet.size,i:ICN.grad,l:"专业大类",e:"国家专业目录"},{n:techSet.size,i:ICN.cpu,l:"智慧技术",e:"图谱/AI/仿真"},{n:nat,i:ICN.medal,l:"国家级荣誉",e:"含一流课程"},{n:bench,i:ICN.star,l:"标杆级",e:"省级 "+prov+" 个"}];
+  $("#stats").innerHTML=items.map(it=>`<div class="item${it.lead?' lead':''}"><span class="v">${it.n}</span><span class="l"><svg viewBox="0 0 24 24" fill="none">${it.i}</svg>${it.l}</span><span class="extra">${it.e}</span></div>`).join("");}
+
+/* ================= 下拉筛选 ================= */
+const CHEV='<svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M6 9l6 6 6-6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+function renderFilterBar(){
+  const groups=[["region","区域",Object.keys(REGIONS)],["level","学校层次",["985","211","双一流","职业本科","应用型本科","普通本科","国家级双高","省级双高","普通高职"]],["tech","智慧技术",TECH_DEFS.map(d=>d[0])],["quality","质量等级",["标杆级","优秀级","合格级","潜力案例"]]];
+  const dd=(key,label,arr,right)=>`<div class="dd" data-dd="${key}"><button class="dd-btn"><span class="lbl">${label}</span><span class="dd-cnt" id="cnt-${key}"></span>${CHEV}</button><div class="dd-panel${right?' right':''}"><div class="dd-chips">${arr.map(v=>`<span class="chip" data-fk="${key}" data-fv="${esc(v)}">${esc(v)}</span>`).join("")}</div></div></div>`;
+  $("#filterBar").innerHTML=`<span class="ftitle"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 5h18l-7 8v6l-4 2v-8L3 5z" stroke-linejoin="round"/></svg>筛选</span>`
+    +dd("region","区域",groups[0][2])+dd("level","学校层次",groups[1][2])+dd("goal","建设目标",GOAL_ALL)+dd("tech","智慧技术",groups[2][2])+dd("quality","质量等级",groups[3][2],true)
+    +`<button class="btn ghost" id="clearFilters">清除</button><span class="count-pill" id="filterCount"></span>`;
+  $$("#filterBar .chip").forEach(ch=>ch.addEventListener("click",e=>{e.stopPropagation();const k=ch.dataset.fk,v=ch.dataset.fv,set=state.filters[k];if(set.has(v)){set.delete(v);ch.classList.remove("on");}else{set.add(v);ch.classList.add("on");}updateDDCounts();rerender();}));
+  $("#clearFilters").addEventListener("click",()=>{Object.values(state.filters).forEach(s=>s.clear());$$("#filterBar .chip").forEach(c=>c.classList.remove("on"));updateDDCounts();rerender();});
+}
+function updateDDCounts(){["region","level","goal","tech","quality"].forEach(k=>{const el=$("#cnt-"+k);if(!el)return;const n=state.filters[k].size;el.textContent=n;el.classList.toggle("show",n>0);});}
+function syncFilterChips(){$$("#filterBar .chip").forEach(ch=>{const set=state.filters[ch.dataset.fk];ch.classList.toggle("on",set&&set.has(ch.dataset.fv));});updateDDCounts();}
+function updateFilterCount(){const el=$("#filterCount");if(el)el.innerHTML=`命中 <b>${CASES.filter(passFilters).length}</b> 个案例`;}
+function closeAllDD(){$$(".dd.open").forEach(d=>{d.classList.remove("open");const b=d.querySelector(".dd-btn");if(b)b.setAttribute("aria-expanded","false");});}
+/* 一句话找案例：从自然语言识别 区域/层次/技术/建设目标，点按即应用筛选 */
+function renderParseHint(){const el=$("#parseHint");if(!el)return;const q=state.search.trim();
+  if(!q){el.classList.add("hidden");el.innerHTML="";return;}
+  const chips=[],seen=new Set();const add=(fk,fv,label)=>{const k=fk+":"+fv;if(seen.has(k))return;seen.add(k);chips.push({fk,fv,label});};
+  Object.keys(REGIONS).forEach(r=>{if(q.includes(r))add("region",r,"区域·"+r);});
+  Object.keys(PROV_REGION).forEach(p=>{if(q.includes(p))add("region",PROV_REGION[p],p+"·"+PROV_REGION[p]);});
+  [["高职","普通高职"],["职业本科","职业本科"],["职教本科","职业本科"],["应用型","应用型本科"],["普通本科","普通本科"],["双高","国家级双高"],["985","985"],["211","211"],["双一流","双一流"]].forEach(([k,v])=>{if(q.includes(k))add("level",v,"层次·"+v);});
+  [["知识图谱","知识图谱"],["问题图谱","问题图谱"],["问题链","问题图谱"],["能力图谱","能力图谱"],["AI助教","AI助教"],["智能体","AI助教"],["大模型","AI助教"],["数字人","数字人"],["虚拟仿真","虚拟仿真"],["数字孪生","虚拟仿真"],["仿真","虚拟仿真"],["学情","学情诊断"],["画像","学情诊断"],["项目式","项目式教学"],["岗课赛证","岗课赛证"],["课证融通","课证融通"],["混合式","混合式教学"],["线上线下","混合式教学"],["产教融合","产教融合"]].forEach(([k,v])=>{if(q.includes(k))add("tech",v,"技术·"+v);});
+  [["一流课程","国家级一流课程"],["国家级一流","国家级一流课程"],["精品","省级一流/精品"],["在线精品","在线精品课程"],["MOOC","在线精品课程"],["慕课","在线精品课程"],["思政","课程思政示范"],["知识图谱","知识图谱课程"],["AI助教","AI助教课程"],["虚拟仿真","虚拟仿真实训"],["产教融合","产教融合"]].forEach(([k,v])=>{if(q.includes(k))add("goal",v,"目标·"+v);});
+  if(!chips.length){el.classList.add("hidden");el.innerHTML="";return;}
+  el.classList.remove("hidden");
+  el.innerHTML=`<span>识别需求（点按即筛选）：</span>`+chips.map(ch=>`<span class="pk ${state.filters[ch.fk].has(ch.fv)?'on':''}" data-fk="${ch.fk}" data-fv="${esc(ch.fv)}">${esc(ch.label)}</span>`).join("");
+  $$("#parseHint .pk").forEach(p=>p.addEventListener("click",()=>{const set=state.filters[p.dataset.fk];if(set.has(p.dataset.fv))set.delete(p.dataset.fv);else set.add(p.dataset.fv);syncFilterChips();rerender();}));}
+
+/* ================= 卡片 ================= */
+const LINK_ON='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 15l6-6M10 6l1-1a4 4 0 0 1 6 6l-1 1M14 18l-1 1a4 4 0 0 1-6-6l1-1" stroke-linecap="round"/></svg>';
+function posTag(c,ctx){if(ctx==="exact")return"最匹配";if(ctx==="near")return"相近专业";if(c.techCount>=5)return"技术突出";if(c.quality.label==="标杆级")return"标杆参考";if(c.lflags.isGaozhi)return"同层次优先";return null;}
+function cardReason(c){const parts=[];parts.push(c.quality.label);const tg=c.tech.slice(0,3);if(tg.length)parts.push("命中"+tg.join("、"));const who=c.lflags.isGaozhi?"高职":c.lflags.isVocBen?"职业本科":c.lflags.isAppBen?"应用型本科":c.research?"（研究型，宜借鉴理念）":"普通本科";return `推荐理由：${parts.join(" · ")}，适合${who}同 / 相近专业借鉴。`;}
+function cardHtml(c,ctx){const pos=posTag(c,ctx);const linkOk=/^https?:\/\//.test(c.url||"");const tags=c.tech.slice(0,4).map(t=>`<span class="tag ${MODEL_TAGS.includes(t)?'model':'tech'}">${t}</span>`).join("");
+  const topGoal=c.goals.find(g=>g!=="智慧课程")||c.goals[0];
+  return `<div class="card">${pos?`<span class="pos">${pos}</span>`:""}
+    <div class="ctop"><div style="min-width:0">
+      <div class="cname" title="${esc(c.course||'待核实')}">${hl(c.course||"待核实")}</div>
+      <div class="school" title="${esc(c.school)}">${hl(c.school)} · <span class="majr">${esc(c.category)}·${hl(c.sub)}</span></div>
+    </div><span class="rec rec-${c.rec.grade}" title="客户展示推荐指数">荐 ${c.rec.grade}</span></div>
+    <div class="row"><span class="pill">${esc(c.levelLbl)}</span><span class="pill">${esc(c.province)}</span><span class="badge ${c.award.cls}">${c.award.label}</span><span class="badge ${c.quality.cls}">${c.quality.label}</span></div>
+    <div class="row"><span class="tag goal">${esc(topGoal)}</span>${tags||'<span class="tag">技术待核实</span>'}</div>
+    <div class="honor">🏆 ${hl((c.honor&&c.honor!=="未提及")?c.honor:"荣誉待核实")}</div>
+    <div class="card-reason">${esc(cardReason(c))}</div>
+    <div class="row"><span class="link-state ${linkOk?'link-ok':'link-no'}">${linkOk?LINK_ON+'含课程链接':'链接待核实'}</span><span class="cred ${credLevel(c).cls}" title="${esc(credLevel(c).tip)}">${credLevel(c).lv}</span></div>
+    <div class="cfoot"><button class="btn primary" onclick="openDetail(${c._i})">查看详情</button><button class="btn" onclick="addCompare(${c._i})">加入对比</button></div></div>`;}
+function renderCards(box,arr){if(!arr.length)return false;box.innerHTML=`<div class="cards">${arr.map(c=>cardHtml(c)).join("")}</div>`;return true;}
+
+/* ================= 3D 地图 ================= */
+function provinceCounts(){const m={};CASES.filter(passFilters).forEach(c=>{if(c.province!=="待核实")m[c.province]=(m[c.province]||0)+1;});return m;}
+function mix(rgb,ratio){const a=0.34+0.60*ratio;const r=Math.round(rgb[0]*a+255*(1-a)),g=Math.round(rgb[1]*a+255*(1-a)),b=Math.round(rgb[2]*a+255*(1-a));return `rgb(${r},${g},${b})`;}
+function renderLegend(){$("#mapLegend").innerHTML=Object.keys(REGION_RGB).map(r=>{const c=REGION_RGB[r];return `<span><i style="background:rgb(${c[0]},${c[1]},${c[2]})"></i>${r}</span>`;}).join("")+`<span><i style="background:oklch(0.5 0.02 266);opacity:.5"></i>暂无</span>`;}
+/* ---- 真 3D 可旋转立体地图（three.js） ---- */
+const M3={inited:false,_first:true,scene:null,camera:null,renderer:null,controls:null,group:null,meshes:[],byProv:{},labels:{},hoverProv:null,raycaster:null,pointer:null,S:0.16,cx0:0,cy0:0};
+function map3dParsePath(d){const rings=[];let cur=null;const re=/([ML])\s*(-?[\d.]+)\s+(-?[\d.]+)/g;let m;while((m=re.exec(d))){if(m[1]==="M"){cur=[];rings.push(cur);}cur.push([+m[2],+m[3]]);}return rings;}
+function deepCol(rgb,r){const f=0.62+0.40*r;return `rgb(${Math.round(Math.min(255,rgb[0]*f))},${Math.round(Math.min(255,rgb[1]*f))},${Math.round(Math.min(255,rgb[2]*f))})`;}
+function map3dDrawTag(c,name,count,rgb){const x=c.getContext("2d");const w=204,h=64,ox=6,oy=14,r=15;x.clearRect(0,0,c.width,c.height);
+  x.fillStyle="rgba(16,21,37,0.95)";x.beginPath();x.moveTo(ox+r,oy);x.arcTo(ox+w,oy,ox+w,oy+h,r);x.arcTo(ox+w,oy+h,ox,oy+h,r);x.arcTo(ox,oy+h,ox,oy,r);x.arcTo(ox,oy,ox+w,oy,r);x.closePath();x.fill();
+  x.lineWidth=2.5;x.strokeStyle=`rgba(${rgb[0]},${rgb[1]},${rgb[2]},0.95)`;x.stroke();
+  x.textBaseline="middle";x.fillStyle="#eaf1ff";x.font="bold 31px 'Microsoft YaHei',Arial";x.textAlign="left";x.fillText(name,ox+18,oy+h/2+1);
+  x.fillStyle=`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`;x.textAlign="right";x.fillText(String(count),ox+w-16,oy+h/2+1);}
+function map3dTag(name,count,rgb){const c=document.createElement("canvas");c.width=216;c.height=92;map3dDrawTag(c,name,count,rgb);
+  const tex=new THREE.CanvasTexture(c);tex.anisotropy=4;const mat=new THREE.SpriteMaterial({map:tex,depthTest:false,transparent:true});const sp=new THREE.Sprite(mat);sp.scale.set(16,6.8,1);sp.center.set(0.5,0);sp.renderOrder=20;return sp;}
+function map3dInit(){if(M3.inited)return;const host=$("#geoView");if(!host)return;
+  const G=window.CHINA_GEO;const W=host.clientWidth||900,H=host.clientHeight||540;
+  const sc=new THREE.Scene();
+  const cam=new THREE.PerspectiveCamera(46,W/H,0.1,2000);cam.position.set(0,82,178);
+  const rdr=new THREE.WebGLRenderer({antialias:true,alpha:true});rdr.setPixelRatio(Math.min(devicePixelRatio,2));rdr.setSize(W,H);
+  if(rdr.outputColorSpace!==undefined&&THREE.SRGBColorSpace)rdr.outputColorSpace=THREE.SRGBColorSpace;else if("outputEncoding"in rdr&&THREE.sRGBEncoding)rdr.outputEncoding=THREE.sRGBEncoding;
+  if(THREE.ACESFilmicToneMapping){rdr.toneMapping=THREE.ACESFilmicToneMapping;rdr.toneMappingExposure=1.06;}
+  rdr.domElement.id="map3dCanvas";host.innerHTML="";host.appendChild(rdr.domElement);
+  sc.add(new THREE.HemisphereLight(0xe2ecf5,0x0b0f14,0.66));
+  const key=new THREE.DirectionalLight(0xfff4e8,0.98);key.position.set(60,120,70);sc.add(key);
+  const fill=new THREE.DirectionalLight(0xbcd2e6,0.32);fill.position.set(-70,50,-50);sc.add(fill);
+  const acc=new THREE.PointLight(0x7fd8c4,0.45,600);acc.position.set(-20,90,40);sc.add(acc);
+  const gr=new THREE.Group();gr.rotation.x=-Math.PI/2;sc.add(gr);
+  const S=M3.S,VW=G.viewW,VH=G.viewH;const fx=px=>(px-VW/2)*S,fy=py=>(VH/2-py)*S;
+  Object.keys(G.paths).forEach(full=>{const sp=shortProv(full);const rgb=REGION_RGB[PROV_REGION[sp]]||[150,160,175];
+    const rings=map3dParsePath(G.paths[full]);const ms=[];
+    rings.forEach(r=>{if(r.length<3)return;const shape=new THREE.Shape();shape.moveTo(fx(r[0][0]),fy(r[0][1]));for(let i=1;i<r.length;i++)shape.lineTo(fx(r[i][0]),fy(r[i][1]));
+      const geo=new THREE.ExtrudeGeometry(shape,{depth:1,bevelEnabled:false});
+      const mat=new THREE.MeshStandardMaterial({color:new THREE.Color(`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`),roughness:0.58,metalness:0.22,emissive:new THREE.Color(`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`),emissiveIntensity:0.04});
+      const mesh=new THREE.Mesh(geo,mat);mesh.userData.prov=sp;mesh.scale.z=0.001;mesh.userData.targetH=0;gr.add(mesh);ms.push(mesh);M3.meshes.push(mesh);});
+    M3.byProv[sp]={meshes:ms,rgb};});
+  M3.scene=sc;M3.camera=cam;M3.renderer=rdr;M3.group=gr;
+  const ctr=new THREE.OrbitControls(cam,rdr.domElement);ctr.enableDamping=true;ctr.dampingFactor=0.08;ctr.enablePan=false;ctr.minDistance=70;ctr.maxDistance=340;ctr.maxPolarAngle=1.5;ctr.target.set(0,4,0);ctr.autoRotate=true;ctr.autoRotateSpeed=0.42;ctr.addEventListener("start",()=>{ctr.autoRotate=false;});M3.controls=ctr;
+  M3.raycaster=new THREE.Raycaster();M3.pointer=new THREE.Vector2();
+  const cv=rdr.domElement,tip=$("#mapTip");const counts0=provinceCounts();
+  cv.addEventListener("pointermove",e=>{const rect=cv.getBoundingClientRect();M3.pointer.x=((e.clientX-rect.left)/rect.width)*2-1;M3.pointer.y=-((e.clientY-rect.top)/rect.height)*2+1;
+    M3.raycaster.setFromCamera(M3.pointer,cam);const hit=M3.raycaster.intersectObjects(M3.meshes,false);const prov=hit.length?hit[0].object.userData.prov:null;
+    if(prov!==M3.hoverProv){M3.hoverProv=prov;applyMatStates();}
+    if(prov){tip.innerHTML=provHoverInfo(prov);tip.classList.add("show");tip.style.left=(e.clientX+14)+"px";tip.style.top=(e.clientY+14)+"px";cv.style.cursor="pointer";}
+    else{tip.classList.remove("show");cv.style.cursor="grab";}});
+  cv.addEventListener("pointerleave",()=>{tip.classList.remove("show");if(M3.hoverProv){M3.hoverProv=null;applyMatStates();}});
+  cv.addEventListener("click",()=>{M3.raycaster.setFromCamera(M3.pointer,cam);const hit=M3.raycaster.intersectObjects(M3.meshes,false);if(!hit.length){if(state.province){state.province=null;applyMatStates();renderMapResults();map3dFocus(null);hideSchoolAnno();}return;}const prov=hit[0].object.userData.prov;state.province=(state.province===prov)?null:prov;applyMatStates();renderMapResults();map3dFocus(state.province);if(state.province){showSchoolAnno(state.province);scrollToRes();}else hideSchoolAnno();});
+  window.addEventListener("resize",map3dResize);
+  M3._t=0;
+  M3._raycam=()=>cam;
+  (function loop(){M3._raf=requestAnimationFrame(loop);if(!host.offsetParent)return;M3._t+=0.03;
+    for(const m of M3.meshes){const t=m.userData.targetH||0;const d=t-m.scale.z;if(Math.abs(d)>0.005)m.scale.z+=d*0.16;}
+    for(const sp in M3.labels){const lab=M3.labels[sp];if(lab.pin.visible&&lab._m)lab.pin.position.z=lab._m.scale.z;}
+    if(state.province){const o=M3.byProv[state.province];if(o)o.meshes.forEach(m=>{m.material.emissiveIntensity=0.45+0.18*Math.sin(M3._t*2.4);});}
+    const cw=M3.camTween;if(cw&&cw.active){cw.t=Math.min(1,cw.t+0.025);const e=1-Math.pow(1-cw.t,4);ctr.target.lerpVectors(cw.fromT,cw.toT,e);cam.position.lerpVectors(cw.fromP,cw.toP,e);if(cw.t>=1)cw.active=false;}
+    if(M3.annoProv&&M3.labels[M3.annoProv]){const lab=M3.labels[M3.annoProv];const an=$("#mapAnno");M3.group.updateMatrixWorld();
+      const wp=M3.group.localToWorld(new THREE.Vector3(lab.pin.position.x,lab.pin.position.y,(lab._m.scale.z||4)+5)).project(cam);
+      if(wp.z<1){const w=cv.clientWidth,h=cv.clientHeight;an.style.left=((wp.x*0.5+0.5)*w)+"px";an.style.top=((-wp.y*0.5+0.5)*h)+"px";an.classList.add("show");}else an.classList.remove("show");}
+    ctr.update();rdr.render(sc,cam);})();
+  M3.inited=true;
+}
+function applyMatStates(){const counts=M3._counts||{};const max=Math.max(1,...Object.values(counts));
+  Object.keys(M3.byProv).forEach(sp=>{const o=M3.byProv[sp];const n=counts[sp]||0;const ratio=n/max;
+    const col=n===0?new THREE.Color("rgb(58,64,76)"):new THREE.Color(deepCol(o.rgb,ratio));
+    const sel=state.province===sp,hov=M3.hoverProv===sp;const h=(n===0?1.2:1.8+ratio*16)*(sel?1.22:1);
+    o.meshes.forEach(m=>{m.material.color.copy(col);m.material.emissive.copy(sel?new THREE.Color("rgb(150,238,205)"):col);if(!sel)m.material.emissiveIntensity=(hov?0.38:0.06);m.userData.targetH=h;if(M3._first)m.scale.z=h;});
+    const lab=M3.labels[sp];if(lab){lab._m=o.meshes[0];lab.pin.visible=n>0;}});}
+function map3dBuildLabels(){const G=window.CHINA_GEO,S=M3.S,VW=G.viewW,VH=G.viewH,LEAD=4.5;
+  Object.keys(G.centroids||{}).forEach(full=>{const sp=shortProv(full);const ct=G.centroids[full];if(!ct||!M3.byProv[sp])return;
+    const rgb=M3.byProv[sp].rgb;const pin=new THREE.Group();
+    const lg=new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0,0,0),new THREE.Vector3(0,0,LEAD)]);
+    const line=new THREE.Line(lg,new THREE.LineBasicMaterial({color:new THREE.Color(`rgb(${rgb[0]},${rgb[1]},${rgb[2]})`),transparent:true,opacity:0.5}));pin.add(line);
+    const tag=map3dTag(sp,0,rgb);tag.position.set(0,0,LEAD);pin.add(tag);
+    pin.position.set((ct[0]-VW/2)*S,(VH/2-ct[1])*S,2);pin.visible=false;M3.group.add(pin);
+    M3.labels[sp]={pin,tag,line,_m:M3.byProv[sp].meshes[0],_n:-1};});}
+function map3dUpdate(){M3._counts=provinceCounts();const first=M3._first;
+  Object.keys(M3.labels).forEach(sp=>{const n=M3._counts[sp]||0;const lab=M3.labels[sp];if(lab._n!==n){lab._n=n;const tex=lab.tag.material.map;map3dDrawTag(tex.image,sp,n,M3.byProv[sp].rgb);tex.needsUpdate=true;}});
+  applyMatStates();if(first){M3._first=false;for(const sp in M3.labels){const lab=M3.labels[sp];if(lab.pin.visible)lab.pin.position.z=lab._m.scale.z;}}}
+function map3dFocus(prov){if(!M3.inited)return;const cam=M3.camera,ctr=M3.controls;ctr.autoRotate=false;let toT,toP;
+  if(prov&&M3.labels[prov]){M3.group.updateMatrixWorld();const lab=M3.labels[prov];const lp=new THREE.Vector3(lab.pin.position.x,lab.pin.position.y,(lab._m.scale.z||4)*0.55);const wc=M3.group.localToWorld(lp.clone());toT=wc;const dir=cam.position.clone().sub(ctr.target);if(dir.lengthSq()<1)dir.set(0,0.5,1);dir.normalize();toP=wc.clone().add(dir.multiplyScalar(108));}
+  else{toT=new THREE.Vector3(0,4,0);toP=new THREE.Vector3(0,82,178);}
+  M3.camTween={active:true,t:0,fromT:ctr.target.clone(),toT,fromP:cam.position.clone(),toP};}
+function map3dResize(){if(!M3.inited)return;const host=$("#geoView");const W=host.clientWidth,H=host.clientHeight;if(!W||!H)return;M3.camera.aspect=W/H;M3.camera.updateProjectionMatrix();M3.renderer.setSize(W,H);}
+function renderGeoMap(){if(!window.THREE||!window.CHINA_GEO){$("#geoView").innerHTML='<div class="empty" style="background:transparent;border:none"><h4 style="color:#eef">立体地图组件未加载</h4><p style="color:#cfe">请确保 three.min.js / OrbitControls.js / china-map.js 与本网页同目录，或切换“区域列表”浏览。</p></div>';return;}
+  if(!M3.inited){map3dInit();map3dBuildLabels();renderNanhaiInset();}
+  map3dUpdate();requestAnimationFrame(map3dResize);}
+function renderNanhaiInset(){const el=$("#nanhaiInset");const nh=window.CHINA_GEO&&window.CHINA_GEO.nanhai;if(!el||!nh)return;
+  const land=nh.land.map(d=>`<path d="${d}" fill="oklch(0.56 0.07 168)" stroke="oklch(0.82 0.06 168)" stroke-width="0.6"/>`).join("");
+  const dash=nh.dash.map(d=>`<path d="${d}" fill="oklch(0.88 0.05 200)"/>`).join("");
+  el.innerHTML=`<svg viewBox="0 0 ${nh.w} ${nh.h}" preserveAspectRatio="xMidYMid meet">${dash}${land}</svg><div class="nl">南海诸岛</div>`;}
+function showSchoolAnno(prov){if(state.mapView!=="geo"){hideSchoolAnno();return;}const el=$("#mapAnno");if(!el)return;
+  const list=CASES.filter(c=>c.province===prov&&passFilters(c));const m={};list.forEach(c=>m[c.school]=(m[c.school]||0)+1);
+  const arr=Object.keys(m).sort((a,b)=>m[b]-m[a]);if(!arr.length){hideSchoolAnno();return;}
+  const rows=arr.slice(0,7).map(s=>`<div class="ar"><span>${esc(s.length>12?s.slice(0,12)+"…":s)}</span><span>${m[s]}</span></div>`).join("");
+  const more=arr.length>7?`<div class="amore">+${arr.length-7} 所高校（详见下方完整列表）</div>`:"";
+  el.innerHTML=`<div class="ah">${esc(prov)} · <b>${arr.length}</b> 所高校 · ${list.length} 例</div>${rows}${more}`;
+  M3.annoProv=prov;}
+function hideSchoolAnno(){M3.annoProv=null;const el=$("#mapAnno");if(el)el.classList.remove("show");}
+function provHoverInfo(prov){const list=CASES.filter(c=>c.province===prov&&passFilters(c));
+  if(!list.length)return `<b>${esc(prov)}</b><span class="th-row">暂无符合条件的案例</span>`;
+  const hq=list.filter(c=>c.quality.label==="标杆级"||c.award.cls==="b-nat").length;
+  const cc={};list.forEach(c=>cc[c.category]=(cc[c.category]||0)+1);const top=Object.keys(cc).sort((a,b)=>cc[b]-cc[a]).slice(0,2).join("、");
+  const schools=new Set(list.map(c=>c.school)).size;
+  return `<b>${esc(prov)}</b><span class="th-row">案例 ${list.length} · 高校 ${schools} · 高质量 ${hq}</span><span class="th-row">主要专业：${esc(top||"—")}</span><span class="th-tip">点击查看该省案例</span>`;}
+function renderListView(){const counts=provinceCounts();const max=Math.max(1,...Object.values(counts));let html="";for(const region of Object.keys(REGIONS)){const c=REGION_RGB[region];html+=`<div class="region-block"><h4><span class="dot" style="background:rgb(${c[0]},${c[1]},${c[2]})"></span>${region}</h4><div class="prov-grid">`;for(const p of REGIONS[region]){const n=counts[p]||0;const w=Math.round((n/max)*100);html+=`<div class="prov ${n===0?'empty':''} ${state.province===p?'active':''}" data-prov="${p}" style="${n>0?`background:${mix(c,n/max)}`:''}"><div class="pn">${p}</div><div class="pc">${n} 个案例</div>${n>0?`<div class="heat" style="width:${w}%;background:rgb(${c[0]},${c[1]},${c[2]})"></div>`:""}</div>`;}html+=`</div></div>`;}
+  $("#listView").innerHTML=html;$$("#listView .prov").forEach(el=>el.addEventListener("click",()=>{state.province=(state.province===el.dataset.prov)?null:el.dataset.prov;renderListView();renderMapResults();if(state.province)scrollToRes();}));}
+function renderMap(){renderLegend();if(state.mapView==="geo")renderGeoMap();else renderListView();}
+function scrollToRes(){const el=$("#provName");if(el)el.scrollIntoView({behavior:"smooth",block:"center"});}
+function renderMapResults(){const box=$("#mapResults");
+  if(state.province&&M3.inited&&state.mapView==="geo")showSchoolAnno(state.province);else hideSchoolAnno();
+  if(!state.province){const all=sortCases(CASES.filter(passFilters));$("#provName").textContent="全部省份";$("#provMeta").textContent=`点击地图省份精确定位 · 当前 ${all.length} 个案例`;renderCards(box,all.slice(0,12));if(all.length>12)box.innerHTML+=`<p class="muted" style="text-align:center;margin-top:14px">仅展示前 12 个，点击地图省份或使用筛选缩小范围</p>`;if(!all.length)box.innerHTML=emptyHtml("当前筛选条件下暂无案例。","请放宽筛选条件或切换检索维度。",[["清除全部筛选",()=>{Object.values(state.filters).forEach(s=>s.clear());syncFilterChips();rerender();}]]);return;}
+  const list=sortCases(CASES.filter(c=>c.province===state.province&&passFilters(c)));const schools=new Set(list.map(c=>c.school));
+  $("#provName").textContent=state.province;$("#provMeta").textContent=list.length?`${schools.size} 所高校 · ${list.length} 个案例`:"";
+  if(!list.length){box.innerHTML=emptyHtml("当前知识库中暂未收录该省份的智慧课程案例。","可切换到专业维度检索，或查看相邻省份案例。",[["切换到专业维度",()=>switchMode("major")],["查看全国标杆案例",()=>{state.filters.quality.add("标杆级");syncFilterChips();state.province=null;renderMap();renderMapResults();}]]);return;}renderCards(box,list);}
+
+/* ================= 专业模式（下拉 → 下方列表） ================= */
+function renderCatList(){const counts={},tracks={};CASES.filter(passFilters).forEach(c=>{counts[c.category]=(counts[c.category]||0)+1;tracks[c.category]=c.track;});
+  const cats=Object.keys(counts).sort((a,b)=>{const ta=TRACK_ORDER[tracks[a]],tb=TRACK_ORDER[tracks[b]];if(ta!==tb)return ta-tb;return counts[b]-counts[a];});
+  let html="",last=null;cats.forEach(cat=>{if(tracks[cat]!==last){last=tracks[cat];html+=`<div class="track-h ${TRACK_CLASS[last]}">${last}</div>`;}html+=`<div class="navitem ${state.category===cat?'active':''}" data-cat="${esc(cat)}"><span>${esc(cat)}</span><span class="cnt">${counts[cat]}</span></div>`;});
+  $("#catList").innerHTML=html||`<div class="navitem muted">无匹配大类</div>`;
+  $$("#catList .navitem[data-cat]").forEach(el=>el.addEventListener("click",()=>{state.category=el.dataset.cat;state.sub=null;closeAllDD();updateMajPickBtns();renderCatList();renderSubList();renderMajorResults();scrollToMajRes();}));}
+function renderSubList(){if(!state.category){$("#subList").innerHTML="";return;}const counts={};CASES.filter(c=>c.category===state.category&&passFilters(c)).forEach(c=>counts[c.sub]=(counts[c.sub]||0)+1);const subs=Object.keys(counts).sort((a,b)=>counts[b]-counts[a]);
+  $("#subList").innerHTML=`<div class="navitem ${state.sub===null?'active':''}" data-sub="__all__"><span>全部（${esc(state.category)}）</span><span class="cnt">${subs.reduce((s,k)=>s+counts[k],0)}</span></div>`+subs.map(s=>`<div class="navitem ${state.sub===s?'active':''}" data-sub="${esc(s)}"><span>${esc(s)}</span><span class="cnt">${counts[s]}</span></div>`).join("");
+  $$("#subList .navitem[data-sub]").forEach(el=>el.addEventListener("click",()=>{state.sub=el.dataset.sub==="__all__"?null:el.dataset.sub;closeAllDD();updateMajPickBtns();renderSubList();renderMajorResults();scrollToMajRes();}));}
+function updateMajPickBtns(){$("#catBtn").querySelector(".lbl").textContent=state.category||"选择专业大类";const sb=$("#subBtn");sb.disabled=!state.category;sb.querySelector(".lbl").textContent=state.category?(state.sub||"全部细分专业"):"细分专业";}
+function scrollToMajRes(){$("#majTitle").scrollIntoView({behavior:"smooth",block:"center"});}
+function renderMajorResults(){const box=$("#majorResults");
+  if(!state.category){box.innerHTML=emptyHtml("请选择专业大类","专业分类依据《国家专业目录》：本科按 12 个学科门类、高职按专业大类分轨呈现。选择后案例直接在此展示。",[]);$("#majTitle").textContent="请选择专业";$("#majMeta").textContent="";return;}
+  let pool=CASES.filter(c=>c.category===state.category&&passFilters(c));
+  if(state.sub){const same=sortCases(pool.filter(c=>c.sub===state.sub));const near=sortCases(pool.filter(c=>c.sub!==state.sub));const arr=[...same.map(c=>({c,ctx:"exact"})),...near.map(c=>({c,ctx:"near"}))];$("#majTitle").textContent=`${state.category} · ${state.sub}`;$("#majMeta").textContent=`精确匹配 ${same.length} 个 · 相近专业 ${near.length} 个`;if(!arr.length){box.innerHTML=majorEmpty();return;}box.innerHTML=`<div class="cards">${arr.map(o=>cardHtml(o.c,o.ctx)).join("")}</div>`;}
+  else{const sorted=sortCases(pool);$("#majTitle").textContent=state.category;$("#majMeta").textContent=`${sorted.length} 个案例`;if(!sorted.length){box.innerHTML=majorEmpty();return;}renderCards(box,sorted);}}
+function majorEmpty(){return emptyHtml("当前知识库中暂未收录该专业方向案例。","建议查看相近专业、放宽技术条件，或浏览同专业大类的其他案例。",[["查看同大类全部",()=>{state.sub=null;updateMajPickBtns();renderSubList();renderMajorResults();}],["清除技术筛选",()=>{state.filters.tech.clear();syncFilterChips();rerender();}]]);}
+
+/* ================= 空状态 ================= */
+function emptyHtml(title,desc,actions){const id="emp"+Math.random().toString(36).slice(2);setTimeout(()=>{(actions||[]).forEach((a,i)=>{const b=document.getElementById(id+"_"+i);if(b)b.onclick=a[1];});},0);
+  return `<div class="empty"><svg class="em" viewBox="0 0 24 24"><path d="M4 7h16v12H4z" stroke-linejoin="round"/><path d="M4 7l8 6 8-6" stroke-linecap="round"/></svg><h4>${esc(title)}</h4><p>${esc(desc)}</p><div class="acts">${(actions||[]).map((a,i)=>`<button class="btn primary" id="${id}_${i}">${esc(a[0])}</button>`).join("")}</div></div>`;}
+
+/* ================= 详情 ================= */
+function dimVal(v){v=(v||"").trim();return(!v||v==="未提及")?'<span class="muted">未明确提及</span>':esc(v);}
+function applicability(c){const o=[];if(c.lflags.isGaozhi)o.push("适合高职院校直接参考");if(c.lflags.isVocBen)o.push("适合职业本科进行拓展升级");if(c.lflags.isAppBen||c.lflags.isPlainBen)o.push("适合应用型本科借鉴教学理念与建设路径");if(c.research)o.push("来自学术研究型大学，建议优先借鉴理念或局部模块");if(!o.length)o.push("适合同类院校借鉴教学理念与技术架构");return o;}
+function refPoints(c){const p=[];if(c.tech.includes("知识图谱"))p.push("可借鉴其知识图谱对课程知识点、技能点、岗位能力点的映射方式");if(c.tech.includes("问题图谱"))p.push("可借鉴其问题链 / 问题图谱由浅入深的进阶式设计");if(c.tech.includes("AI助教"))p.push("可借鉴其 AI 助教在课前诊断、课中引导、课后反馈中的应用方式");if(c.tech.includes("虚拟仿真"))p.push("可借鉴其虚拟仿真对高风险、高成本、高复杂度场景的替代设计");if(c.models.length)p.push("可借鉴其「"+c.models.join(" / ")+"」的教学组织与评价一体化设计");if(c.tech.includes("学情诊断"))p.push("可借鉴其基于学情数据的「采集→诊断→调整」教学闭环");if(!p.length)p.push("可借鉴其课程整体建设思路与资源组织方式（细节建议结合原始资料核实）");return p.slice(0,5);}
+function techRoute(c){const has=t=>c.tech.includes(t);
+  if(has("虚拟仿真"))return{name:"虚拟仿真 + 情景模拟",desc:"实践场景难以真实复现的课程，用虚拟仿真 / 数字孪生替代高风险、高成本、高复杂度实训。"};
+  if(has("知识图谱")&&has("AI助教"))return{name:"知识图谱 + AI 助教",desc:"知识体系复杂的理论性课程：图谱组织知识脉络，AI 助教伴学答疑与个性化推送。"};
+  if(has("岗课赛证")||has("项目式教学")||c.lflags.isGaozhi||c.lflags.isVocBen)return{name:"任务驱动 + 智能评价",desc:"职业教育与应用型课程：以真实岗位任务驱动，智能评价贯穿学习全过程。"};
+  if(has("混合式教学"))return{name:"数字资源 + 混合式教学",desc:"已有资源基础、拟申报在线精品 / 一流课程的项目，强化线上线下融合。"};
+  if(/法学|管理|医学|教育/.test(c.category))return{name:"案例库 + 问答智能体",desc:"案例驱动型课程：构建结构化案例库与问答智能体，支撑研讨与决策训练。"};
+  return{name:"知识图谱 + AI 助教",desc:"以图谱组织课程知识，AI 助教支撑个性化学习与答疑。"};}
+const TM={"知识图谱":"课程知识图谱（知识点—技能点—能力点映射）","问题图谱":"问题链 / 问题图谱进阶设计","能力图谱":"能力 / 目标图谱体系","AI助教":"课程专属 AI 助教 / 智能体","数字人":"数字人 / 虚拟教师","虚拟仿真":"虚拟仿真实训场景","学情诊断":"学情画像与精准诊断","项目式教学":"项目式 / 任务化教学组织","岗课赛证":"岗课赛证融通设计","课证融通":"课证融通设计","混合式教学":"线上线下混合式流程","工作过程系统化":"工作过程系统化结构","产教融合":"产教融合 / 校企合作模块","评价闭环":"数据驱动评价闭环"};
+function transferModules(c){const o=c.tech.map(t=>TM[t]).filter(Boolean);return o.length?o:["课程资源组织方式与整体建设思路"];}
+/* ===== 优化：可迁移模块分级 / 数据可信度 / 案例摘要 / 借鉴风险 ===== */
+const TM_TIER={"知识图谱":1,"问题图谱":1,"能力图谱":1,"混合式教学":1,"评价闭环":1,"课证融通":1,
+  "AI助教":2,"学情诊断":2,"数字人":2,"项目式教学":2,"岗课赛证":2,"工作过程系统化":2,"产教融合":2,
+  "虚拟仿真":3};
+function transferTiers(c){const t={1:[],2:[],3:[]};c.tech.forEach(tag=>{if(TM[tag])t[TM_TIER[tag]||2].push(TM[tag]);});
+  if(!t[1].length&&!t[2].length&&!t[3].length)t[1].push("课程资源组织方式与整体建设思路");return t;}
+function credLevel(c){const linkOk=/^https?:\/\//.test(c.url||"");
+  const fields=[c.teacher,c.course,c.major,c.knowledge,c.honor,c.source];let filled=0;
+  fields.forEach(f=>{const v=(f==null?"":String(f)).trim();if(v&&!/^(未提及|待核实|未查明|未公开|无)$/.test(v))filled++;});
+  const ratio=filled/fields.length;
+  if(linkOk&&ratio>=0.8)return{lv:"链接可访问 · 字段较全",cls:"cr-a",tip:"原始链接可访问且关键字段较完整（系统自动评估，非人工核验）"};
+  if(linkOk)return{lv:"有链接 · 字段待补",cls:"cr-b",tip:"含可访问的原始链接，但部分字段缺失（系统自动评估）"};
+  if(ratio>=0.6)return{lv:"字段较全 · 缺链接",cls:"cr-b",tip:"关键字段较完整，但缺少可访问的原始链接（系统自动评估）"};
+  return{lv:"信息有限 · 需核实",cls:"cr-c",tip:"链接缺失且可用字段较少，用于客户展示前建议人工核实（系统自动评估）"};}
+function caseSummary(c){const o=[];const who=[];if(c.lflags.isGaozhi)who.push("高职");if(c.lflags.isVocBen)who.push("职业本科");if(c.lflags.isAppBen)who.push("应用型本科");if(c.lflags.isPlainBen&&!c.research)who.push("普通本科");if(c.research)who.push("研究型院校（建议借鉴理念）");
+  o.push(`<b>适合谁借鉴</b>：${who.length?who.join(" / "):"同类院校"}的「${esc(c.category)} · ${esc(c.sub)}」相关课程。`);
+  const tr=techRoute(c);o.push(`<b>最值得借鉴</b>：${esc(tr.name)}——${c.tech.length?esc(c.tech.slice(0,4).join("、")):"课程整体建设思路"}。`);
+  o.push(`<b>建设难度</b>：${diffLevel(c)}（覆盖 ${c.techCount} 项智慧技术${c.tech.includes("虚拟仿真")?"，含虚拟仿真，落地成本偏高":""}）。`);
+  o.push(`<b>推荐指数</b>：${c.rec.grade} 级（${c.rec.value}）——${c.award.label!=="待核实"?"已获「"+esc(c.award.label)+"」，":""}${c.quality.label}，展示与对标价值${c.rec.grade==="S"||c.rec.grade==="A"?"较高":"一般"}。`);
+  return o;}
+function riskNotes(c){const o=[];const cr=credLevel(c);
+  if(cr.cls==="cr-c")o.push("数据来源有限：原始链接缺失或字段较少，建议人工核实后再用于客户展示。");
+  else if(cr.cls==="cr-b")o.push("部分字段缺失：教师、链接或成果等信息不全，引用时注意标注「待核实」。");
+  if(c.tech.includes("虚拟仿真"))o.push("建设成本较高：虚拟仿真 / 数字孪生需平台与经费支撑，预算有限时建议优先迁移知识图谱、AI 助教等低成本模块。");
+  if(c.research)o.push("迁移落差：案例来自学术研究型大学，培养目标与实训条件可能与职业 / 应用型院校差异较大，不建议直接照搬。");
+  if((c.award.label==="待核实")&&!/^https?:\/\//.test(c.url||""))o.push("成效未量化：暂无公开成果与可访问链接，更适合作为思路参考而非标杆展示。");
+  if(c.techCount<=1)o.push("技术信息单薄：公开资料披露的智慧技术较少，可能存在「适合展示、落地细节待补」的情况。");
+  if(!o.length)o.push("整体风险较低：信息相对完整、技术路线清晰，可作为对标与展示的参考案例（仍建议结合本校实际核实细节）。");
+  return o;}
+function matchReasons(c){const r=[];
+  r.push(`<b>同层次借鉴</b>：同属「${esc(c.levelLbl)}」，办学定位与建设条件相近，适配度高`);
+  r.push(`<b>专业相关</b>：专业方向「${esc(c.category)} · ${esc(c.sub)}」，可作同 / 相近专业建设参考`);
+  if(c.tech.length)r.push(`<b>技术可迁移</b>：含 ${esc(c.tech.slice(0,4).join("、"))}，关键模块可复用到目标课程`);
+  if(c.award.cls==="b-nat"||c.award.cls==="b-prov")r.push(`<b>展示说服力</b>：已获「${esc(c.award.label)}」，具备标杆示范与客户说服力`);
+  if(c.research)r.push(`<b>使用提示</b>：来自研究型大学，建议借鉴理念 / 架构，避免直接照搬`);
+  return r.slice(0,5);}
+function planModules(c,budget){const t=transferTiers(c);let arr=[...t[1]];if(budget!=="低")arr=arr.concat(t[2]);if(budget==="高")arr=arr.concat(t[3]);if(!arr.length)arr=transferModules(c);return arr;}
+const PLAN_MODES=["快速方案","申报书方案","汇报型方案"];
+const PLAN_PURPOSE=["客户展示","立项申报","教师汇报","内部研讨"];
+const PLAN_BUDGET=["低","中","高"];
+const PLAN_PERIOD=["3 个月","6 个月","12 个月"];
+function genPlan(c,opts){opts=opts||{};const mode=opts.mode||"快速方案";const course=(opts.course||c.course||"本课程").trim()||"本课程";
+  const level=opts.level||c.levelLbl;const period=opts.period||"6 个月";const budget=opts.budget||"中";const purpose=opts.purpose||"客户展示";
+  const tr=techRoute(c);const st=discStyle(c.category);const goals=c.goals.filter(g=>g!=="智慧课程");const mods=planModules(c,budget);
+  const CN=["一","二","三","四","五","六","七","八","九","十","十一","十二"];
+  const bg=`面向${esc(c.category)}（${esc(c.sub)}）专业人才培养，结合「${esc(level)}」院校定位与数字化转型需求，依托智慧教学平台推进《${esc(course)}》智慧课程建设，提升教学质量与可展示成果。`;
+  const pain=`课程围绕${esc(st.scene)}展开，存在知识点离散、${c.tech.includes("虚拟仿真")?"实践场景难以真实复现":"过程性评价难量化"}、个性化学习支持不足等问题，需以数智化手段系统破解。`;
+  const obj=`建成${goals.length?goals.map(esc).join("、"):"智慧课程"}，形成可展示、可借鉴、可落地的成果（建设周期约 ${esc(period)}，预算强度：${esc(budget)}，方案用途：${esc(purpose)}）。`;
+  const route=`采用 <b>${esc(tr.name)}</b> 技术路线：${esc(tr.desc)}`;
+  const benchHead=`对标 <b>${esc(c.school)}</b> ·《${esc(c.course||"")}》（${esc(c.award.label)} · 推荐指数 ${c.rec.grade}）。主要可借鉴点：`;
+  const result=`形成学习成效提升与教学改革成果${c.award.label!=="待核实"?`，对标「${esc(c.award.label)}」`:""}，沉淀可认定的标志性成果，并转化为${esc(purpose)}材料。`;
+  const stages=[`第一阶段：搭建课程知识图谱与数字资源底座，完成核心知识点 / 技能点梳理`,`第二阶段：建设 ${mods.slice(0,3).join("、")||"核心智慧模块"}，开展课堂试用与迭代`,`第三阶段：完善数据评价闭环，沉淀成果并形成${esc(purpose)}材料`];
+  const innov=[`技术路线创新：${esc(tr.name)}`,`资源形态创新：${mods.slice(0,2).join("、")||"数字化课程资源"}`,`评价方式创新：数据驱动的「采集→诊断→推送→改进」闭环`];
+  const guard=[`组织保障：成立课程建设小组，明确分工与里程碑`,`平台保障：依托智慧教学平台与课程知识库`,`经费保障：按「${esc(budget)}」预算强度配置，优先投入低成本、高复用模块`];
+  const support=budget==="低"?["平台账号与基础数字资源支持","教师团队投入与培训"]:["智慧教学平台与算力 / 仿真资源支持","课程建设经费与校企协同资源","教师团队投入与激励机制"];
+  let raw;
+  if(mode==="申报书方案"){raw=[["建设基础",`${bg} 现有团队与资源具备开展智慧课程建设的基础条件。`],["问题分析",pain],["建设目标",obj],["建设内容",`围绕课程目标重点建设以下模块：`,mods],["技术路线",route],["实施计划",`建设周期约 ${esc(period)}，分三阶段推进：`,stages],["预期成果",result],["创新特色",`本课程建设的主要创新点：`,innov],["保障措施",`从组织、平台、经费多维度保障落地：`,guard]];}
+  else if(mode==="汇报型方案"){raw=[["为什么建",`${bg.replace(/，提升教学质量与可展示成果。$/,"。")} ${pain}`],["对标谁",benchHead,refPoints(c)],["建什么",`重点建设以下模块：`,mods],["怎么建",route],["有什么成果",result],["需要什么支持",`推进本方案需以下支持：`,support]];}
+  else{raw=[["建设背景",bg],["对标案例",benchHead,refPoints(c)],["建设目标",obj],["核心建设内容",`围绕课程目标重点建设以下模块：`,mods],["预期成果",result]];}
+  const secs=raw.map((s,i)=>[`${CN[i]}、${s[0]}`,s[1],s[2]]);
+  const ppt=raw.map(s=>s[0]);
+  let text=`《${course}》智慧课程建设方案（${mode} · 参考 ${c.school} 案例）\n用途：${purpose} · 层次：${level} · 周期：${period} · 预算：${budget}\n\n`;
+  secs.forEach(s=>{text+=s[0]+"\n"+s[1].replace(/<[^>]+>/g,"")+"\n";if(s[2])s[2].forEach((x,j)=>text+=`  ${j+1}. ${String(x).replace(/<[^>]+>/g,"")}\n`);text+="\n";});
+  text+="附：汇报 PPT 大纲\n"+ppt.map((p,i)=>`  第${i+1}页：${p}`).join("\n");
+  let html=secs.map(s=>`<div class="plan-sec"><h6>${esc(s[0])} <button class="seg-copy" data-copy="${esc((s[0]+"\n"+s[1].replace(/<[^>]+>/g,"")+(s[2]?"\n"+s[2].map((x,j)=>(j+1)+". "+String(x).replace(/<[^>]+>/g,"")).join("\n"):"")))}">复制本节</button></h6>`+(s[2]?`<p>${s[1]}</p><ul class="reflist">${s[2].map(x=>`<li>${esc(String(x))}</li>`).join("")}</ul>`:`<p>${s[1]}</p>`)+`</div>`).join("");
+  html+=`<div class="plan-sec"><h6>附：汇报 PPT 大纲</h6><ol class="ppt-ol">${ppt.map(p=>`<li>${esc(p)}</li>`).join("")}</ol></div>`;
+  return{html,text};}
+const AUD=[["领导","学校领导","政策契合 · 成果产出 · 示范价值"],["院长","二级学院院长","专业群建设 · 人才培养 · 产教融合"],["专业","专业负责人","课程落地 · 资源建设 · 教学实施"],["教师","一线教师","减负增效 · 课堂应用 · 评价便捷"],["企业","企业合作方","岗位能力 · 真实任务 · 就业导向"]];
+function genPitch(c,key){const a=AUD.find(x=>x[0]===key)||AUD[2];const tr=techRoute(c);
+  const open=`关于《${c.course||"该课程"}》的智慧课程建设，我们筛选了一个高匹配标杆案例供参考。`;
+  const body={
+   "领导":`${c.school} 的《${c.course||""}》已获 ${c.award.label}，是 ${c.levelLbl} 院校 ${c.category} 专业的标杆课程。它契合一流课程与智慧课程建设的政策导向，建设成果可量化、可展示、可申报，示范带动效应明显。`,
+   "院长":`该案例同属 ${c.category} 专业方向，其「${tr.name}」建设路径可迁移到本院专业群，支撑人才培养与产教融合，形成专业群课程建设的可复用范式。`,
+   "专业":`案例的 ${transferModules(c).slice(0,3).join("、")} 等模块可直接借鉴落地，资源组织与教学实施清晰，便于专业团队分工建设、快速见效。`,
+   "教师":`借助 AI 助教与数字资源可显著减负增效：课前自动诊断、课中智能互动、课后个性化答疑，评价更便捷、课堂应用门槛低。`,
+   "企业":`课程对接真实岗位任务与能力标准，${c.tech.includes("虚拟仿真")?"通过虚拟仿真还原真实工作场景，":""}强化学生岗位胜任力与就业导向，便于校企共建共评。`}[a[0]];
+  const close=`建议将该案例作为${a[0]==="领导"?"汇报主展示案例":"建设参考蓝本"}，结合本校实际改造为《${c.course||"目标课程"}》建设方案，下一步可输出对标分析表与方案初稿。`;
+  const QA={
+   "领导":["投入产出是否值得？会不会增加管理负担？",`该案例已获 ${c.award.label}，建设产出可申报、可展示、可认定，边际投入有限且示范带动效应明显，属于"投入可控、收益可见"的项目。`],
+   "院长":["是否会冲击现有专业建设节奏？",`方案以专业群课程联动方式推进，可与现有教学改革、教学成果奖申报衔接，是对现有专业建设的补强而非另起炉灶。`],
+   "专业":["教师能否落地？工作量有多大？",`已梳理可直接迁移的 ${transferModules(c).slice(0,3).join("、")} 等模块，并配套分阶段实施计划，团队可分工建设、低成本模块先行，落地压力可控。`],
+   "教师":["会不会让备课更麻烦？",`恰恰相反：AI 助教自动诊断与答疑、数字资源可复用，课前课中课后均有工具支撑，整体是减负而非增负。`],
+   "企业":["对企业有什么价值？",`课程对接真实岗位任务与能力标准${c.tech.includes("虚拟仿真")?"，并以虚拟仿真还原工作场景":""}，可校企共建共评、对接用人与人才储备需求。`]}[a[0]];
+  const promote=`促成下一步：① 确定目标课程与负责人；② 我方输出《${c.course||"目标课程"}》对标分析表与方案初稿；③ 安排一次方案对齐会，敲定建设节奏与分工。`;
+  const text=`【面向${a[1]}的展示话术】\n\n开场白：${open}\n\n核心卖点（${a[2]}）：${body}\n\n可能质疑：${QA[0]}\n回应话术：${QA[1]}\n\n收尾：${close}\n\n促成语：${promote}`;
+  const html=`<p><b>开场白</b>：${esc(open)}</p><p><b>核心卖点（${esc(a[2])}）</b>：${esc(body)}</p><p class="pq"><b>可能质疑</b>：${esc(QA[0])}</p><p class="pa"><b>回应话术</b>：${esc(QA[1])}</p><p><b>收尾</b>：${esc(close)}</p><p class="pp"><b>促成语</b>：${esc(promote)}</p>`;
+  return{text,html};}
+function openPlan(i,opts){const c=CASES[i];
+  opts=opts||{mode:"快速方案",course:c.course||"",level:c.levelLbl,period:"6 个月",budget:"中",purpose:"客户展示"};
+  window._planCtx={i,opts};const r=genPlan(c,opts);window._copyText=r.text;
+  const sel=(label,key,arr)=>`<label class="po"><span>${label}</span><select data-pk="${key}">${arr.map(v=>`<option ${opts[key]===v?"selected":""}>${esc(v)}</option>`).join("")}</select></label>`;
+  const tabs=PLAN_MODES.map(m=>`<button class="ptab ${opts.mode===m?'on':''}" data-mode="${m}">${m}</button>`).join("");
+  $("#planBox").innerHTML=`<div class="mhead"><button class="x" onclick="closeModal('planModal')" aria-label="关闭">×</button><h3>智慧课程建设方案（初稿）</h3><div class="sc">基于 ${esc(c.school)}·《${esc(c.course||"")}》 生成，供方案设计参考，请结合本校实际核实改造</div></div>
+  <div class="plan-opts"><div class="ptabs">${tabs}</div><div class="po-row"><label class="po po-wide"><span>目标课程</span><input id="planCourse" value="${esc(opts.course)}" placeholder="目标课程名称"/></label>${sel("学校层次","level",["高职","职业本科","应用型本科","普通本科","研究型"])}${sel("建设周期","period",PLAN_PERIOD)}${sel("预算强度","budget",PLAN_BUDGET)}${sel("方案用途","purpose",PLAN_PURPOSE)}</div></div>
+  <div class="mbody" id="planContent">${r.html}</div><div class="mfoot"><button class="btn" onclick="copyGen()">复制全文</button><button class="btn primary" onclick="closeModal('planModal')">关闭</button></div>`;
+  const rerun=()=>{const o=window._planCtx.opts;openPlan(window._planCtx.i,o);};
+  $$("#planBox .ptab").forEach(b=>b.addEventListener("click",()=>{window._planCtx.opts.mode=b.dataset.mode;rerun();}));
+  $$("#planBox select").forEach(s=>s.addEventListener("change",()=>{window._planCtx.opts[s.dataset.pk]=s.value;rerun();}));
+  const ci=$("#planCourse");if(ci)ci.addEventListener("change",()=>{window._planCtx.opts.course=ci.value;rerun();});
+  $$("#planBox .seg-copy").forEach(b=>b.addEventListener("click",()=>{navigator.clipboard&&navigator.clipboard.writeText(b.dataset.copy);toast("已复制本节内容");}));
+  $("#planModal").classList.add("show");}
+function openPitch(i,key){const c=CASES[i];key=key||"专业";const r=genPitch(c,key);window._copyText=r.text;
+  const tabs=AUD.map(a=>`<button class="ptab ${a[0]===key?'on':''}" onclick="openPitch(${i},'${a[0]}')">${a[1]}</button>`).join("");
+  $("#pitchBox").innerHTML=`<div class="mhead"><button class="x" onclick="closeModal('pitchModal')" aria-label="关闭">×</button><h3>案例展示话术</h3><div class="sc">${esc(c.school)}·《${esc(c.course||"")}》 · 面向不同对象的展示口径</div></div><div class="mbody"><div class="ptabs">${tabs}</div><div class="pitch-text">${r.html}</div></div><div class="mfoot"><button class="btn" onclick="copyGen()">复制话术</button><button class="btn primary" onclick="closeModal('pitchModal')">关闭</button></div>`;
+  $("#pitchModal").classList.add("show");}
+function copyGen(){const t=window._copyText||"";if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(t).then(()=>toast("已复制到剪贴板")).catch(()=>toast("复制失败，请手动选择"));else toast("浏览器不支持自动复制");}
+function openDetail(i){const c=CASES[i];const linkOk=/^https?:\/\//.test(c.url||"");
+  $("#detailBox").innerHTML=`<div class="mhead"><button class="x" onclick="closeModal('detailModal')" aria-label="关闭">×</button><h3>${esc(c.course||"待核实")}</h3><div class="sc">${esc(c.school)} · ${esc(c.levelLbl)} · ${esc(c.province)}（${esc(c.region)}）</div><div class="row" style="margin-top:10px"><span class="badge ${c.award.cls}">${c.award.label}</span><span class="badge ${c.quality.cls}">${c.quality.label}</span><span class="pill">技术覆盖 ${c.techCount} 项</span><span class="pill">${esc(c.track)}</span><span class="cred ${credLevel(c).cls}" title="${esc(credLevel(c).tip)}">可信度：${credLevel(c).lv}</span></div></div>
+  <div class="mbody">
+    <div class="block summary-block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 6h16M4 12h16M4 18h10" stroke-linecap="round"/></svg>案例摘要</h5><ul class="reflist sum-list">${caseSummary(c).map(p=>`<li>${p}</li>`).join("")}</ul></div>
+    ${c.research?`<div class="warn">⚠️ 该案例来自学术研究型大学（${esc(c.levelLbl)}），培养目标、资源条件和实训环境可能与职业院校存在差异，建议优先借鉴教学理念、技术架构或局部模块，不建议直接照搬。</div>`:""}
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5" stroke-linecap="round"/></svg>基本信息</h5><div class="kv">
+      <div class="cell"><div class="k">课程名称</div><div class="v">${esc(c.course||"待核实")}</div></div>
+      <div class="cell"><div class="k">学校 / 层次</div><div class="v">${esc(c.school)} · ${esc(c.levelLbl)}</div></div>
+      <div class="cell"><div class="k">所属省份 / 区域</div><div class="v">${esc(c.province)} · ${esc(c.region)}</div></div>
+      <div class="cell"><div class="k">专业大类 · 细分专业</div><div class="v">${esc(c.category)} · ${esc(c.sub)}</div></div>
+      <div class="cell"><div class="k">国标分类轨道</div><div class="v">${esc(c.track)}</div></div>
+      <div class="cell"><div class="k">课程教师 / 职称</div><div class="v">${esc(valOr(c.teacher,"待核实"))}${c.teacherTitle&&c.teacherTitle!=="未查明"?(" · "+esc(c.teacherTitle)):" · 职称待核实"}</div></div>
+      <div class="cell"><div class="k">获奖情况</div><div class="v">${esc(valOr(c.honor,"待核实"))}</div></div>
+      <div class="cell"><div class="k">来源平台 / 引用</div><div class="v">${esc(valOr(c.source,"待核实"))}${c.citations?(" · 引用 "+esc(c.citations)):""}</div></div>
+      <div class="cell" style="grid-column:1/-1"><div class="k">课程链接</div><div class="v">${linkOk?`<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.url)}</a>`:'<span class="muted">待核实</span>'}</div></div></div></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="6" y="6" width="12" height="12" rx="2"/><path d="M9 2v3M15 2v3M9 19v3M15 19v3M2 9h3M2 15h3M19 9h3M19 15h3" stroke-linecap="round"/></svg>技术与特色</h5><table class="dimtable">
+      <tr><td class="kk">知识组织</td><td>${dimVal(c.knowledge)}</td></tr>
+      <tr><td class="kk">AI / 技术工具</td><td>${dimVal(c.ai)}</td></tr>
+      <tr><td class="kk">数据驱动与评价</td><td>${dimVal(c.data)}</td></tr>
+      <tr><td class="kk">虚拟仿真 / 场景化</td><td>${dimVal(c.simulation)}</td></tr>
+      <tr><td class="kk">智慧技术标签</td><td>${c.tech.map(t=>`<span class="tag ${MODEL_TAGS.includes(t)?'model':'tech'}">${t}</span>`).join(" ")||'<span class="muted">技术待核实</span>'}</td></tr>
+      <tr><td class="kk">教学模式</td><td>${c.models.map(t=>`<span class="tag model">${t}</span>`).join(" ")||'<span class="muted">未明确提及</span>'}</td></tr>
+      <tr><td class="kk">课程关键词</td><td>${c.feats.map(f=>`<span class="tag feat">${esc(f)}</span>`).join(" ")}</td></tr></table></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 3a6 6 0 0 1 4 10.5c-.7.6-1 1-1 2v.5H9V15c0-1-.3-1.4-1-2A6 6 0 0 1 12 3z" stroke-linejoin="round"/></svg>可借鉴点</h5><ul class="reflist">${refPoints(c).map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3 6-6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/></svg>适用条件</h5><ul class="reflist">${applicability(c).map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17l5-5 4 3 7-8" stroke-linecap="round" stroke-linejoin="round"/></svg>顾问研判</h5><div class="kv">
+      <div class="cell"><div class="k">推荐指数（展示价值）</div><div class="v"><span class="rec rec-${c.rec.grade}">荐 ${c.rec.grade}</span> ${c.rec.value}</div></div>
+      <div class="cell"><div class="k">建设难度</div><div class="v">${diffLevel(c)}</div></div>
+      <div class="cell"><div class="k">推荐技术路线</div><div class="v"><b>${esc(techRoute(c).name)}</b></div></div>
+      <div class="cell"><div class="k">建设目标</div><div class="v">${c.goals.map(g=>`<span class="tag goal">${esc(g)}</span>`).join(" ")}</div></div>
+      <div class="cell" style="grid-column:1/-1"><div class="k">可迁移模块（按落地成本分级）</div><div class="v tier-wrap">${(()=>{const t=transferTiers(c);const seg=(lbl,cls,arr)=>arr.length?`<div class="tier"><span class="tier-l ${cls}">${lbl}</span>${arr.map(m=>`<span class="tag tech">${esc(m)}</span>`).join(" ")}</div>`:"";return seg("低成本可迁移","t-low",t[1])+seg("中成本可迁移","t-mid",t[2])+seg("高成本可迁移","t-high",t[3]);})()}</div></div></div></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.5"/></svg>适配理由</h5><ul class="reflist">${matchReasons(c).map(p=>`<li>${p}</li>`).join("")}</ul></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M10.3 3.2L1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.2a2 2 0 0 0-3.4 0z" stroke-linejoin="round"/><path d="M12 9v4M12 17h.01" stroke-linecap="round"/></svg>借鉴风险提示</h5><ul class="reflist risk-list">${riskNotes(c).map(p=>`<li>${esc(p)}</li>`).join("")}</ul></div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M9 11l3 3 6-6" stroke-linecap="round" stroke-linejoin="round"/><circle cx="12" cy="12" r="9"/></svg>数据来源与可信度</h5><div class="kv">
+      <div class="cell"><div class="k">可信度评估</div><div class="v"><span class="cred ${credLevel(c).cls}">${credLevel(c).lv}</span></div></div>
+      <div class="cell"><div class="k">来源平台</div><div class="v">${esc(valOr(c.source,"待核实"))}</div></div>
+      <div class="cell"><div class="k">原始链接</div><div class="v">${linkOk?`<a href="${esc(c.url)}" target="_blank" rel="noopener">可访问</a>`:'<span class="muted">缺失 / 待核实</span>'}</div></div>
+      <div class="cell"><div class="k">字段完整度</div><div class="v">${(()=>{const fs=[["教师",c.teacher],["课程",c.course],["专业",c.major],["知识点",c.knowledge],["荣誉",c.honor],["来源",c.source]];const miss=fs.filter(f=>{const v=(f[1]==null?"":String(f[1])).trim();return !v||/^(未提及|待核实|未查明|未公开|无)$/.test(v);}).map(f=>f[0]);return miss.length?`缺：${miss.join("、")}`:"关键字段较完整";})()}</div></div>
+      <div class="cell" style="grid-column:1/-1"><div class="k">说明</div><div class="v muted" style="font-size:12.5px">可信度为系统依据「链接是否可访问 + 字段完整度」自动评估，<b>非人工核验</b>；缺失信息统一标注「待核实」，不做推断填充。</div></div></div></div></div>
+  <div class="mfoot"><button class="btn" onclick="addCompare(${c._i})">加入对比</button><button class="btn" onclick="openPitch(${c._i})">展示话术</button><button class="btn primary" onclick="openPlan(${c._i})">生成建设方案</button></div>`;
+  $("#detailModal").classList.add("show");}
+function closeModal(id){$("#"+id).classList.remove("show");}
+function openAbout(){
+  const total=CASES.length;
+  const schools=new Set(CASES.map(c=>c.school)).size;
+  const provs=new Set(CASES.map(c=>c.province)).size;
+  $("#aboutBox").innerHTML=`<div class="mhead"><button class="x" onclick="closeModal('aboutModal')" aria-label="关闭">×</button><h3>项目说明</h3><div class="sc">面向职业教育与应用型本科「智慧课程建设」的案例检索 — 匹配研判 — 方案生成 — 客户展示一体化助手</div></div>
+  <div class="mbody">
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M3 17l5-5 4 3 7-8" stroke-linecap="round" stroke-linejoin="round"/></svg>一、项目背景</h5>
+      <p style="color:var(--ink2);line-height:1.75;margin:0 0 12px">智慧课程已成为院校推进教育数字化转型的核心抓手。各校在课程中引入人工智能、虚拟仿真、大数据、知识图谱等智慧技术，沉淀了大量可借鉴的建设案例，但在推广落地中存在三个痛点：</p>
+      <ul class="reflist">
+        <li><b>案例散、找不到</b>——优秀案例分散在各校各专业，缺少统一、结构化、可检索的载体，难以快速定位与自身相似、可直接对标的案例。</li>
+        <li><b>看得见、用不上</b>——即便找到案例，也多为表层信息，缺少「为什么适配我、技术怎么落地、哪些模块可迁移」的决策级研判。</li>
+        <li><b>讲不清、转化难</b>——面向客户/评审时需把案例快速转化为建设方案、汇报话术与 PPT 大纲，人工整理效率低且不一致。</li>
+      </ul>
+      <p style="color:var(--ink2);line-height:1.75;margin:12px 0 10px">本项目以真实智慧课程建设知识库为数据底座，构建完全离线、开箱即用的网页智能体，把「找—研判—生成—展示」全链路整合到一个页面。当前知识库规模：</p>
+      <div class="kv">
+        <div class="cell"><div class="k">收录案例</div><div class="v"><b>${total}</b> 个</div></div>
+        <div class="cell"><div class="k">覆盖院校</div><div class="v"><b>${schools}</b> 所</div></div>
+        <div class="cell"><div class="k">覆盖省级行政区</div><div class="v"><b>${provs}</b> 个</div></div>
+        <div class="cell"><div class="k">数据原则</div><div class="v">来源于真实记录，不杜撰，缺失标「待核实」</div></div>
+      </div>
+    </div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M12 21s-7-4.5-7-10a7 7 0 0 1 14 0c0 5.5-7 10-7 10z" stroke-linejoin="round"/><circle cx="12" cy="11" r="2.5"/></svg>二、产品定位</h5>
+      <p style="color:var(--ink2);line-height:1.75;margin:0 0 12px">智慧课程经理的「案例参谋」——给一个专业、一个学校层次、一个建设目标，它能告诉你「该看哪些案例、为什么、怎么落地、怎么讲给客户」。四类角色视角下的价值：</p>
+      <ul class="reflist">
+        <li><b>课程经理 / 教研</b>：按专业目录、技术、质量等级快速筛案例，看到可迁移模块与技术路线，沉淀建设思路。</li>
+        <li><b>售前 / 销售经理</b>：一句话描述客户需求即得推荐清单与适配理由，一键生成建设方案与汇报话术。</li>
+        <li><b>产品经理</b>：通过数据洞察看清案例在专业、层次、区域上的分布与空白，指导产品与内容规划。</li>
+        <li><b>终端客户 / 评审</b>：通过 3D 地图、对标对比、可视化洞察直观感知建设广度与代表性。</li>
+      </ul>
+    </div>
+    <div class="block"><h5><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>三、主要功能</h5>
+      <div class="kv">
+        <div class="cell"><div class="k">1 · 智能推荐引擎</div><div class="v">按专业/层次/内容/目标/技术/地区加权匹配（含 2-gram 模糊），输出推荐案例、推荐指数与适配理由。</div></div>
+        <div class="cell"><div class="k">2 · 真 3D 可旋转中国地图</div><div class="v">可旋转缩放立体地图，完整覆盖 34 省级区并内嵌南海诸岛九段线；点击省份聚焦并标注高校与案例数。</div></div>
+        <div class="cell"><div class="k">3 · 专业目录检索</div><div class="v">国家专业目录标准（本科 12 门类 + 高职专业大类 + 通识），下拉逐级筛选。</div></div>
+        <div class="cell"><div class="k">4 · 多维筛选 + 一句话找案例</div><div class="v">区域/层次/技术/质量/目标下拉收纳；自然语言即时解析为筛选条件。</div></div>
+        <div class="cell"><div class="k">5 · 案例详情：顾问研判</div><div class="v">适配理由、技术路线、可迁移模块 + 全部原始字段，缺失标「待核实」。</div></div>
+        <div class="cell"><div class="k">6 · 对标对比</div><div class="v">多案例并排对比，识别差异与共性，辅助选型。</div></div>
+        <div class="cell"><div class="k">7 · 一键生成</div><div class="v">一键转建设方案 / PPT 大纲 / 展示话术，支持复制落地。</div></div>
+        <div class="cell"><div class="k">8 · 案例数据洞察</div><div class="v">按专业大类 / 学校层次 / 区域三组环形图，悬停高亮、点击钻取，配色与地图联动。</div></div>
+      </div>
+    </div>
+  </div>
+  <div class="mfoot"><button class="btn primary" onclick="closeModal('aboutModal')">开始使用</button></div>`;
+  $("#aboutModal").classList.add("show");
+}
+
+/* ================= 对比 ================= */
+function addCompare(i){if(state.compare.includes(i)){toast("该案例已在对比栏中");return;}if(state.compare.length>=3){toast("最多支持同时对比 3 个案例");return;}state.compare.push(i);renderCmpBar();toast("已加入对比");}
+function removeCompare(i){state.compare=state.compare.filter(x=>x!==i);renderCmpBar();}
+function renderCmpBar(){const bar=$("#cmpBar");$("#cmpCount").textContent=state.compare.length+"/3";const slots=[];for(let k=0;k<3;k++){if(state.compare[k]!=null){const c=CASES[state.compare[k]];slots.push(`<div class="cmpslot"><span style="overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${esc(c.course||c.school)}</span><span class="rm" onclick="removeCompare(${c._i})">×</span></div>`);}else slots.push(`<div class="cmpslot ph">案例 ${k+1}</div>`);}$("#cmpSlots").innerHTML=slots.join("");if(state.compare.length)bar.classList.add("show");else bar.classList.remove("show");}
+function simLevel(c){const t=c.simulation||"";if(/数字孪生|VR|AR|虚拟现实|元宇宙/.test(t))return"高（数字孪生/VR级）";if(/虚拟仿真|仿真实验|虚拟实验|虚拟展厅/.test(t))return"中（仿真实验级）";if(c.tech.includes("虚拟仿真"))return"中（含仿真应用）";if(!t||t==="未提及")return"未明确提及";return"低（情境模拟）";}
+function diffLevel(c){let s=c.techCount+(c.research?1:0)+(simLevel(c).startsWith("高")?1:0);if(s>=7)return"高";if(s>=4)return"中";return"低";}
+function startCompare(){if(state.compare.length<2){toast("请至少选择 2 个案例进行对比");return;}const cs=state.compare.map(i=>CASES[i]);
+  const dims=[["学校 / 层次",c=>esc(c.school)+"<br><span class='muted'>"+esc(c.levelLbl)+"</span>"],["专业方向",c=>esc(c.category)+"<br><span class='muted'>"+esc(c.sub)+"</span>"],["课程名称",c=>esc(c.course||"待核实")],["智慧技术组合",c=>c.tech.map(t=>`<span class="tag ${MODEL_TAGS.includes(t)?'model':'tech'}">${t}</span>`).join(" ")||"待核实"],["知识图谱",c=>c.tech.includes("知识图谱")?"✅ 已建设":"—"],["AI 工具应用",c=>c.tech.includes("AI助教")?"✅ 含 AI 助教/智能体":"—"],["虚拟仿真程度",c=>simLevel(c)],["问题图谱设计",c=>c.tech.includes("问题图谱")?"✅ 含问题图谱/问题链":"—"],["教学模式",c=>c.models.join(" / ")||"<span class='muted'>未明确提及</span>"],["获奖 / 质量",c=>`<span class="badge ${c.award.cls}">${c.award.label}</span> <span class="badge ${c.quality.cls}">${c.quality.label}</span>`],["实施难度",c=>diffLevel(c)],["适合借鉴对象",c=>esc(applicability(c)[0])]];
+  const rows=dims.map(([d,fn])=>`<tr><td class="dim">${d}</td>${cs.map(c=>`<td>${fn(c)}</td>`).join("")}</tr>`).join("");
+  const byTech=cs.slice().sort((a,b)=>b.techCount-a.techCount)[0];const byEasy=cs.slice().sort((a,b)=>({低:0,中:1,高:2}[diffLevel(a)]-{低:0,中:1,高:2}[diffLevel(b)]))[0];const byBench=cs.slice().sort((a,b)=>(QUALITY_ORDER[b.quality.label]||0)-(QUALITY_ORDER[a.quality.label]||0))[0];
+  const reuse=cs.slice().sort((a,b)=>{const sa=(QUALITY_ORDER[a.quality.label]||0)+({低:2,中:1,高:0}[diffLevel(a)])+(a.lflags.isGaozhi?1:0);const sb=(QUALITY_ORDER[b.quality.label]||0)+({低:2,中:1,高:0}[diffLevel(b)])+(b.lflags.isGaozhi?1:0);return sb-sa;})[0];
+  const allTech=new Set();cs.forEach(c=>c.tech.forEach(t=>allTech.add(t)));const fusion=Array.from(allTech).slice(0,4).join(" + ");
+  const concl=[`最适合直接复用：<strong>${esc(reuse.course||reuse.school)}</strong>（质量与实施难度综合最优${reuse.lflags.isGaozhi?"，且为同层次高职案例":""}）`,`技术最完整：<strong>${esc(byTech.course||byTech.school)}</strong>（覆盖 ${byTech.techCount} 项智慧技术）`,`实施难度最低：<strong>${esc(byEasy.course||byEasy.school)}</strong>（难度评估为「${diffLevel(byEasy)}」）`,`最适合作为标杆参考：<strong>${esc(byBench.course||byBench.school)}</strong>（${byBench.award.label} · ${byBench.quality.label}）`,`可融合创新方向：组合各案例优势模块，构建「${esc(fusion||"知识图谱 + AI助教")}」一体化课程建设方案`];
+  $("#cmpBox").innerHTML=`<div class="mhead"><button class="x" onclick="closeModal('cmpModal')" aria-label="关闭">×</button><h3>案例横向对比（${cs.length} 个）</h3><div class="sc">对比结论由系统依据派生维度自动生成，仅供参考</div></div><div class="mbody"><div style="overflow:auto"><table class="cmptable"><tr><th class="dim">对比维度</th>${cs.map(c=>`<th>${esc(c.school)}</th>`).join("")}</tr>${rows}</table></div><div class="cmp-concl"><h5>📊 自动对比结论</h5><ul>${concl.map(x=>`<li>${x}</li>`).join("")}</ul></div></div><div class="mfoot"><button class="btn primary" onclick="closeModal('cmpModal')">关闭</button></div>`;
+  $("#cmpModal").classList.add("show");}
+
+/* ================= 建设建议（固定五维度） ================= */
+const DI={design:'<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9L12 3z" stroke-linejoin="round"/><path d="M12 8v8M8 10v4M16 10v4" stroke-linecap="round"/>',res:'<path d="M4 7h6l2 2h8v10H4z" stroke-linejoin="round"/>',teach:'<path d="M3 8l9-4 9 4-9 4-9-4z" stroke-linejoin="round"/><path d="M7 10v5c0 1.4 2.2 2.5 5 2.5s5-1.1 5-2.5v-5" stroke-linecap="round"/>',eff:'<path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6" stroke-linecap="round" stroke-linejoin="round"/>',opt:'<path d="M12 2v3M12 19v3M2 12h3M19 12h3M5 5l2 2M17 17l2 2M19 5l-2 2M7 17l-2 2" stroke-linecap="round"/><circle cx="12" cy="12" r="4"/>'};
+const DSTYLE={
+ 工学:{scene:"真实工程项目与复杂工程问题",sim:"虚拟仿真 / 数字孪生工程实训",res:"工程案例库与仿真实训系统",model:"项目式教学 + 产教融合"},
+ 医学:{scene:"临床路径与典型病例",sim:"虚拟仿真病例 / 虚拟实验",res:"标准化病例库与虚拟诊疗资源",model:"案例教学 + 临床实训"},
+ 理学:{scene:"核心概念与推理论证链",sim:"可视化仿真 / 虚拟实验",res:"知识图谱与分层题库",model:"探究式 + 问题驱动"},
+ 管理:{scene:"业务流程与岗位任务",sim:"实训软件 / 业务沙盘仿真",res:"实训案例与业务沙盘",model:"项目式 + 岗课赛证"},
+ 文法:{scene:"经典文本与论证思辨",sim:"情境模拟 / 数字展厅",res:"案例库与文献语料库",model:"研讨式 + 课程思政"},
+ 教育:{scene:"真实教学情境与课例",sim:"虚拟教研 / 微格仿真",res:"课例库与教学智能体",model:"做中学 + 翻转课堂"},
+ 艺术:{scene:"创作项目与作品迭代",sim:"数字创作 / 虚拟展演",res:"作品案例库与 AIGC 工具",model:"工作室制 + 项目式"},
+ 农林:{scene:"生产过程与田间实践",sim:"虚拟仿真生产实训",res:"生产案例与仿真资源",model:"工学结合 + 产教融合"},
+ 旅游:{scene:"服务流程与真实场景",sim:"情境仿真 / 虚拟场景漫游",res:"服务案例与实训资源",model:"岗课赛证 + 工学结合"},
+ 通识:{scene:"真实议题与跨学科情境",sim:"情境模拟 / 数字资源",res:"主题案例与多模态素材",model:"混合式 + 课程思政"},
+ 通用:{scene:"真实问题与典型任务",sim:"虚拟仿真 / 场景化资源",res:"案例库与数字资源",model:"项目式 + 混合式"}};
+function discStyle(cat){if(!cat)return DSTYLE.通用;if(DSTYLE[cat])return DSTYLE[cat];
+  if(/工学|装备制造|能源动力|交通运输|土木建筑|资源环境|电子信息/.test(cat))return DSTYLE.工学;
+  if(/医|药|护理|卫生/.test(cat))return DSTYLE.医学;
+  if(cat==="理学")return DSTYLE.理学;
+  if(/管理|经济|财经商贸/.test(cat))return DSTYLE.管理;
+  if(/文学|历史|哲学|法学/.test(cat))return DSTYLE.文法;
+  if(/教育/.test(cat))return DSTYLE.教育;
+  if(/艺术|文化艺术/.test(cat))return DSTYLE.艺术;
+  if(/农|林|牧渔/.test(cat))return DSTYLE.农林;
+  if(/旅游/.test(cat))return DSTYLE.旅游;
+  if(/通识/.test(cat))return DSTYLE.通识;return DSTYLE.通用;}
+function suggContext(){let list=CASES.filter(passFilters);
+  if(state.mode==="major"&&state.category)list=list.filter(c=>c.category===state.category&&(!state.sub||c.sub===state.sub));
+  else if(state.mode==="map"&&state.province)list=list.filter(c=>c.province===state.province);
+  const total=list.length;
+  let scope="全部案例";
+  if(state.mode==="major"&&state.category)scope=state.category+(state.sub?" · "+state.sub:"");
+  else if(state.mode==="map"&&state.province)scope=state.province;
+  else if(state.search.trim())scope="“"+state.search.trim()+"”";
+  else if(Object.values(state.filters).some(s=>s.size))scope="当前筛选范围";
+  const o={"高职":0,"职业本科":0,"应用型本科":0,"研究型":0,"普通本科":0};
+  list.forEach(c=>{const f=c.lflags;if(f.isGaozhi)o["高职"]++;else if(f.isVocBen)o["职业本科"]++;else if(c.research)o["研究型"]++;else if(f.isAppBen)o["应用型本科"]++;else o["普通本科"]++;});
+  const orient=total?Object.keys(o).sort((a,b)=>o[b]-o[a])[0]:"普通本科";
+  const cc={};list.forEach(c=>cc[c.category]=(cc[c.category]||0)+1);const domCat=Object.keys(cc).sort((a,b)=>cc[b]-cc[a])[0]||"";
+  const tech=["知识图谱","问题图谱","AI助教","虚拟仿真","学情诊断","岗课赛证","课证融通","产教融合"];
+  const tcov={};tech.forEach(t=>tcov[t]=total?list.filter(c=>c.tech.includes(t)).length/total:0);
+  const q={"标杆级":0,"优秀级":0,"合格级":0,"潜力案例":0,"待核实":0};list.forEach(c=>q[c.quality.label]++);
+  const benchTop=sortCases(list.filter(c=>c.quality.label==="标杆级"))[0]||null;
+  const core=["知识图谱","问题图谱","AI助教","虚拟仿真","学情诊断"];const weakest=core.slice().sort((a,b)=>tcov[a]-tcov[b])[0];
+  const top=tech.slice().sort((a,b)=>tcov[b]-tcov[a]).filter(t=>tcov[t]>0).slice(0,3);
+  return {list,total,scope,orient,domCat,style:discStyle(domCat),tcov,q,benchTop,weakest,top,research:o["研究型"]};}
+function buildSuggestions(x){const pct=r=>Math.round((r||0)*100);const s=x.style;
+  const orientLine={"高职":"以<b>岗位能力点</b>为起点拆解知识点—技能点，紧扣职业标准与 1+X 证书","职业本科":"以<b>复杂岗位任务</b>为起点，强化技术技能的系统性与综合性","应用型本科":"贯通<b>理论体系与真实工程问题</b>，标注知识认知层级与前后序","普通本科":"以<b>学科知识体系</b>为主线，结合真实问题提升应用能力","研究型":"以<b>学科前沿与科研问题</b>牵引，侧重思维方法与研究能力"}[x.orient];
+  const teachLine={"高职":"贯通<b>岗课赛证 / 课证融通 / 产教融合</b>，对接真实岗位与生产流程","职业本科":"以<b>综合项目与工程任务</b>驱动，深化产教融合与技术应用","应用型本科":"强化<b>综合性项目与真实工程问题</b>，兼顾应用与理论深度","普通本科":"结合 <b>BOPPPS / 翻转课堂</b> 提升课堂参与与深度学习","研究型":"以<b>科研反哺教学</b>、研讨与项目结合，慎用标准化流水线"}[x.orient];
+  const benchText=x.benchTop?`可对标本范围标杆案例 <b>${esc(x.benchTop.school)}·${esc((x.benchTop.course||"").slice(0,16))}</b>，对齐其建设深度与量化成效；`:`本范围暂无标杆级案例，建议先建立基础量化指标并向全国标杆对齐；`;
+  return [
+  {ic:DI.design,acc:"var(--primary)",t:"课程设计",s:"面向"+(x.domCat||"多学科")+"的教学逻辑重构",items:[
+    `面向「${s.scene}」反向设计课程目标，建立 <b>知识图谱 + 能力图谱 + 问题图谱</b> 多谱协同骨架；`,
+    `${orientLine}；`,
+    `按「基础认知—综合应用—创新挑战」设计三级问题链 / 任务链，形成进阶路径；`,
+    `课程思政以属性标签嵌入图谱，实现价值塑造与知识传授同频。`]},
+  {ic:DI.res,acc:"var(--teal)",t:"资源建设",s:"沉淀适配本专业的数智化资源",items:[
+    `重点沉淀<b>${s.res}</b>，配套微课、分层题库与课程案例库；`,
+    x.total?`本范围 <b>虚拟仿真</b> 覆盖率 ${pct(x.tcov["虚拟仿真"])}%，${x.tcov["虚拟仿真"]<0.4?`建议优先补建 <b>${s.sim}</b>`:`可深化 <b>${s.sim}</b> 至数字孪生级`}；`:`针对高风险、高成本场景，建设 <b>${s.sim}</b>；`,
+    x.tcov["AI助教"]>0.5?`已有较好 AI 助教基础（覆盖 ${pct(x.tcov["AI助教"])}%），可扩展为<b>多智能体协同</b>；`:`训练课程专属 <b>AI 助教 / 学伴</b>，绑定知识库支撑 7×24 答疑与个性化推送；`,
+    `资源与图谱节点动态绑定，保证找得到、连得上、可更新。`]},
+  {ic:DI.teach,acc:"var(--green)",t:"教学应用",s:"贴合"+x.orient+"的课堂实施",items:[
+    `采用 <b>${s.model}</b> 教学组织，构建「教师主导—学生主体—AI 赋能」三元协同；`,
+    `${teachLine}；`,
+    `课前学情诊断定位薄弱点，课中分层引导与即时测评，课后差异化推送资源；`,
+    x.tcov["学情诊断"]<0.4?`学情诊断覆盖偏低（${pct(x.tcov["学情诊断"])}%），建议补齐过程性数据采集。`:`持续用学情数据驱动教学迭代，替代经验驱动。`]},
+  {ic:DI.eff,acc:"var(--gold)",t:"落地成效",s:"对标质量等级的成效证明",items:[
+    `建立「数据采集→智能诊断→精准推送→反馈改进」评价闭环；`,
+    benchText,
+    `当前质量结构：标杆 ${x.q["标杆级"]} / 优秀 ${x.q["优秀级"]} / 合格 ${x.q["合格级"]} / 潜力 ${x.q["潜力案例"]}，${x.q["潜力案例"]>=x.q["标杆级"]?"重点把潜力案例补强为合格及以上":"巩固优势并冲击国家级 / 省级认定"}；`,
+    `成果沉淀为一流课程、教学成果奖、示范案例等可认定标志性成果。`]},
+  {ic:DI.opt,acc:"var(--purple)",t:"优化方向",s:"补短板与风险规避",items:[
+    `优先补强覆盖最弱的 <b>${x.weakest}</b>（当前覆盖率 ${pct(x.tcov[x.weakest])}%）；`,
+    x.research>0?`本范围含 <b>${x.research}</b> 个学术研究型大学案例，建议借鉴理念 / 技术架构，<b>勿直接照搬</b>培养目标与实训条件；`:`紧扣<b>${x.orient}</b>培养定位选型，避免盲目对标更高层次院校；`,
+    `警惕「重技术堆砌、轻教学设计」，所有工具都应服务于学习目标；`,
+    `完善数据安全与 AI 使用规范，确保教师、链接、成效等信息真实可核。`]}];}
+function renderSuggestions(){const x=suggContext();
+  const txt=!x.total?`当前范围（<b>${esc(x.scope)}</b>）暂无匹配案例：以下为通用建设框架，放宽筛选后将按命中结果定制。`
+    :`当前范围：<b>${esc(x.scope)}</b>（${x.total} 个案例），以 <b>${x.orient}</b> 为主、<b>${esc(x.domCat||"多学科")}</b> 居多；主流技术 <b>${x.top.join("、")||"待统计"}</b>。下方五维度已据专业、层次、技术与质量定制。`;
+  $("#suggInsight").innerHTML=`<div class="sugg-insight"><div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4" stroke-linecap="round"/></svg>智能定制建议</div><div class="t">${txt}</div></div>`;
+  const dims=buildSuggestions(x);
+  $("#dimGrid").innerHTML=`<div class="dim-list">`+dims.map((d,i)=>`<div class="dim-row" style="--acc:${d.acc}"><div class="lead"><span class="idx">0${i+1}</span><span class="ic"><svg viewBox="0 0 24 24" fill="none">${d.ic}</svg></span></div><div class="body"><h4>${d.t}</h4><div class="sub">${esc(d.s)}</div><ul>${d.items.map(it=>`<li>${it}</li>`).join("")}</ul></div></div>`).join("")+`</div>`;}
+
+/* ================= 切换 / 渲染 ================= */
+function setNavActive(go){$$("#navMenu button").forEach(b=>b.classList.toggle("active",b.dataset.go===go));}
+function switchMode(m){state.mode=m;$$("#modeSwitch button").forEach(b=>b.classList.toggle("active",b.dataset.mode===m));setNavActive(m);
+  $("#mapMode").classList.toggle("hidden",m!=="map");$("#majorMode").classList.toggle("hidden",m!=="major");$("#recoMode").classList.toggle("hidden",m!=="reco");
+  $("#filterBar").classList.toggle("hidden",m==="reco");$("#parseHint").classList.toggle("hidden",m==="reco");$("#activeCond").classList.toggle("hidden",m==="reco");
+  if(m!=="map")hideSchoolAnno();document.getElementById("explore").scrollIntoView({behavior:"smooth",block:"start"});rerender();}
+function switchView(v){state.mapView=v;$$("#viewSwitch button").forEach(b=>b.classList.toggle("active",b.dataset.view===v));$("#geoView").classList.toggle("hidden",v!=="geo");$("#listView").classList.toggle("hidden",v!=="list");$("#nanhaiInset").classList.toggle("hidden",v!=="geo");if(v!=="geo")hideSchoolAnno();renderMap();if(v==="geo"&&state.province)showSchoolAnno(state.province);}
+/* ================= 智能推荐引擎（目标驱动加权匹配） ================= */
+function kwGrams(s){const g=[];for(let i=0;i<s.length-1;i++){const x=s.slice(i,i+2);if(/[一-龥]{2}/.test(x))g.push(x);}return g;}
+function recoMatch(c,r){const kw=(r.kw||"").trim().toLowerCase();const grams=kw?kwGrams(kw):[];
+  let mj=0.6;if(kw){const sub=(c.sub||"").toLowerCase(),hay=((c.category||"")+" "+(c.sub||"")+" "+(c.major||"")).toLowerCase();
+    if(sub.includes(kw))mj=1;else if(hay.includes(kw))mj=0.85;else{const dc=deriveCategory(r.kw).cat;if(dc&&dc===c.category)mj=0.7;else mj=grams.some(g=>hay.includes(g))?0.55:0.18;}}
+  let sc=0.6;if(r.schoolType){const f=c.lflags;const map={"高职":f.isGaozhi,"职业本科":f.isVocBen,"应用型本科":f.isAppBen,"普通本科":(f.isPlainBen&&!c.research),"研究型":c.research};
+    if(map[r.schoolType])sc=1;else{const adj={"高职":["职业本科"],"职业本科":["高职","应用型本科"],"应用型本科":["职业本科","普通本科"],"普通本科":["应用型本科"],"研究型":["普通本科"]}[r.schoolType]||[];sc=adj.some(a=>map[a])?0.62:0.3;}}
+  let cc=0.5;if(kw){const hay=((c.course||"")+" "+(c.knowledge||"")+" "+(c.keywords||"")).toLowerCase();if((c.course||"").toLowerCase().includes(kw))cc=1;else if(hay.includes(kw))cc=0.66;else cc=grams.some(g=>hay.includes(g))?0.45:0.22;}
+  let gl=0.6;if(r.goals.size){let h=0;r.goals.forEach(g=>{if(c.goals.includes(g))h++;});gl=h/r.goals.size;}
+  let tc=0.6;if(r.tech.size){let h=0;r.tech.forEach(t=>{if(c.tech.includes(t))h++;});tc=h/r.tech.size;}
+  let rg=0.6;if(r.region)rg=(c.region===r.region)?1:0.25;
+  return {mj,sc,cc,gl,tc,rg};}
+const RECO_STRAT={
+  "综合匹配":{w:{mj:30,sc:20,cc:20,gl:15,tc:10,rg:5},bonus:null,desc:"专业 / 层次 / 内容 / 目标 / 技术 / 地区综合加权"},
+  "同专业优先":{w:{mj:42,sc:14,cc:20,gl:12,tc:7,rg:5},bonus:null,desc:"强化专业一致性，优先同 / 相近专业案例"},
+  "同层次优先":{w:{mj:22,sc:36,cc:18,gl:12,tc:7,rg:5},bonus:null,desc:"强化办学层次一致性，建设条件更可比"},
+  "同技术路线优先":{w:{mj:22,sc:12,cc:18,gl:15,tc:28,rg:5},bonus:null,desc:"强化技术可迁移性，按技术路线匹配"},
+  "高质量标杆优先":{w:{mj:28,sc:18,cc:18,gl:14,tc:10,rg:4},bonus:c=>({S:12,A:6,B:0,C:-6}[c.rec.grade]||0),desc:"优先国家级 / 标杆成果，适合客户展示"},
+  "可迁移性优先":{w:{mj:26,sc:20,cc:16,gl:14,tc:14,rg:4},bonus:c=>(({低:10,中:3,高:-6})[diffLevel(c)]||0)+(c.lflags.isGaozhi?3:0),desc:"优先低成本、易落地的案例"}};
+const DIM_META={mj:["专业匹配","专业大类 / 细分专业的契合度"],sc:["学校层次","办学类型与建设条件的相近度"],cc:["课程内容","课程 / 知识点 / 关键词的相关度"],gl:["建设目标","命中所选建设目标的比例"],tc:["技术匹配","命中所选智慧技术的比例"],rg:["地区匹配","是否同区域（弱偏好）"]};
+function recoPct(m,strat){const w=strat.w;let s=0,tot=0;for(const k of["mj","sc","cc","gl","tc","rg"]){s+=m[k]*w[k];tot+=w[k];}return Math.round(s/tot*100);}
+function recoEval(c,r,strat){const m=recoMatch(c,r);let pct=recoPct(m,strat);const pen=[];
+  const catResolved=r.kw.trim()?(deriveCategory(r.kw).cat||null):null;
+  const crossCat=catResolved&&c.category!==catResolved&&m.mj<0.7;
+  if(crossCat){pct-=25;pen.push({t:"跨专业大类",d:-25});}
+  const goalMiss=r.goals.size>0&&[...r.goals].every(g=>!c.goals.includes(g));
+  if(goalMiss){pct-=15;pen.push({t:"未命中任一建设目标",d:-15});}
+  const bonus=strat.bonus?strat.bonus(c):0;if(bonus)pen.push({t:"策略加权（"+state.reco.strategy+"）",d:bonus});
+  pct=Math.max(0,Math.min(100,pct+bonus));
+  return {c,m,pct,pen,crossCat,goalMiss};}
+function recoBreakdown(ev,strat){const w=strat.w;let tot=0;for(const k in w)tot+=w[k];
+  const rows=["mj","sc","cc","gl","tc","rg"].map(k=>{const wt=Math.round(w[k]/tot*100);const got=Math.round(ev.m[k]*w[k]/tot*100);return `<tr><td>${DIM_META[k][0]}</td><td class="num">${got}/${wt}</td><td class="ds">${DIM_META[k][1]}</td></tr>`;}).join("");
+  const pens=ev.pen.map(p=>`<tr class="${p.d<0?'neg':'pos'}"><td>${esc(p.t)}</td><td class="num">${p.d>0?'+':''}${p.d}</td><td class="ds">${p.d<0?'硬约束扣减':'策略偏好加成'}</td></tr>`).join("");
+  return `<table class="rb-table"><tr><th>匹配维度</th><th>得分/权重</th><th>说明</th></tr>${rows}${pens}<tr class="tot"><td>综合匹配度</td><td class="num">${ev.pct}</td><td class="ds">硬约束 + 软匹配 + 策略加权</td></tr></table>`;}
+function recoPriority(m){
+  if(m.mj>=0.85&&m.sc>=0.85)return{lv:1,label:"第一优先级",use:"同专业、同类型院校，建议作为客户直接展示的主案例"};
+  if(m.mj>=0.85)return{lv:2,label:"第二优先级",use:"同专业方向，可作专业建设与课程设计参考"};
+  if(m.mj>=0.6||m.tc>=0.5)return{lv:3,label:"第三优先级",use:"相近专业 / 同技术路线，可作技术方案参考"};
+  return{lv:4,label:"第四优先级",use:"跨专业优秀案例，可用于展示建设理念与趋势"};}
+function recoReasons(c,m,r){const o=[];
+  if(m.mj>=0.85)o.push(`专业高度一致（${esc(c.category)} · ${esc(c.sub)}）`);else if(m.mj>=0.6)o.push(`专业相近（同属 ${esc(c.category)}）`);
+  if(m.sc>=0.85)o.push(`同属「${esc(r.schoolType)}」，办学类型一致`);else if(r.schoolType&&m.sc>=0.6)o.push(`学校类型相近，建设条件可迁移`);
+  if(m.cc>=0.66)o.push(`课程内容相关（命中「${esc(r.kw)}」）`);
+  if(r.goals.size){const hit=[...r.goals].filter(g=>c.goals.includes(g));if(hit.length)o.push(`建设目标匹配 ${hit.length}/${r.goals.size}：${hit.map(esc).join("、")}`);}
+  if(r.tech.size){const hit=[...r.tech].filter(t=>c.tech.includes(t));if(hit.length)o.push(`技术可迁移：${hit.map(esc).join("、")}`);}
+  if(r.region&&m.rg===1)o.push(`同区域（${esc(r.region)}）`);
+  o.push(`展示价值 ${c.rec.grade} 级 · 已获「${esc(c.award.label)}」`);
+  return o.slice(0,5);}
+function recoSummary(r){const p=[];if(r.kw.trim())p.push("专业/课程「"+esc(r.kw.trim())+"」");if(r.schoolType)p.push(esc(r.schoolType));if(r.goals.size)p.push([...r.goals].map(esc).join("/"));if(r.tech.size)p.push([...r.tech].map(esc).join("/"));if(r.region)p.push(esc(r.region));return p.length?p.join(" · "):"未指定（按综合展示价值排序）";}
+function recoCardHtml(ev,r,strat){const c=ev.c,m=ev.m,pr=recoPriority(m);const tags=c.tech.slice(0,5).map(t=>`<span class="tag ${MODEL_TAGS.includes(t)?'model':'tech'}">${t}</span>`).join("");
+  const flags=[];if(ev.crossCat)flags.push('<span class="rflag">跨专业大类</span>');if(ev.goalMiss)flags.push('<span class="rflag">未命中目标</span>');
+  return `<div class="reco-card">
+    <div class="reco-rank"><span class="prio prio-${pr.lv}">${pr.label}</span><span class="match"><b>${ev.pct}%</b>匹配度</span><span class="rec rec-${c.rec.grade}">荐 ${c.rec.grade}</span>${flags.join("")}</div>
+    <div class="reco-main">
+      <div class="rc-title" title="${esc(c.course||'待核实')}">${esc(c.course||"待核实")}</div>
+      <div class="school">${esc(c.school)} · ${esc(c.levelLbl)} · <span class="majr">${esc(c.category)}·${esc(c.sub)}</span> · ${esc(c.province)}</div>
+      <div class="row"><span class="badge ${c.award.cls}">${c.award.label}</span><span class="badge ${c.quality.cls}">${c.quality.label}</span><span class="cred ${credLevel(c).cls}" title="${esc(credLevel(c).tip)}">${credLevel(c).lv}</span>${tags}</div>
+      <ul class="reco-reasons">${recoReasons(c,m,r).map(x=>`<li>${x}</li>`).join("")}</ul>
+      <details class="rb-details"><summary>推荐指数拆解</summary>${recoBreakdown(ev,strat)}</details>
+      <div class="rc-use">用途建议：${pr.use}</div>
+      <div class="cfoot"><button class="btn primary" onclick="openDetail(${c._i})">查看详情</button><button class="btn" onclick="addCompare(${c._i})">加入对比</button><button class="btn" onclick="openPitch(${c._i})">展示话术</button><button class="btn" onclick="openPlan(${c._i})">生成方案</button></div>
+    </div></div>`;}
+function runReco(){const r=state.reco;r.done=true;const box=$("#recoResults");
+  const hasInput=r.kw.trim()||r.schoolType||r.goals.size||r.tech.size||r.region;
+  if(!hasInput){box.innerHTML=emptyHtml("请先描述你的建设需求","填写专业/课程、学校类型、建设目标或技术，或在上方用一句话描述，再点击「生成推荐」。",[]);return;}
+  const strat=RECO_STRAT[r.strategy]||RECO_STRAT["综合匹配"];
+  const scored=CASES.map(c=>recoEval(c,r,strat)).sort((a,b)=>b.pct-a.pct||b.c._rs-a.c._rs);
+  const top=scored.slice(0,6);const related=scored.filter(s=>s.pct>=40).length;const exact=scored.filter(s=>s.m.mj>=0.85).length;
+  let note="";if(r.kw.trim()&&exact===0)note=`<div class="warn" style="margin-bottom:14px">未检索到与「${esc(r.kw.trim())}」完全对应的公开案例，以下为<b>同专业大类 / 相近专业 / 同技术路线</b>的高相关案例，可作参考与迁移。</div>`;
+  box.innerHTML=`<div class="res-head"><span class="pname">智能推荐结果</span><span class="meta">策略：${esc(r.strategy)} · 已识别：${recoSummary(r)} · 相关案例 ${related} 个 · 展示 Top ${top.length}</span></div>${note}`+top.map(s=>recoCardHtml(s,r,strat)).join("");}
+function renderRecoFields(){const r=state.reco;
+  const chipRow=(label,key,arr,single)=>`<div class="rf-row"><span class="rf-label">${label}</span><div class="chips">${arr.map(v=>`<span class="chip ${(single?r[key]===v:r[key].has(v))?'on':''}" data-rk="${key}" data-rv="${esc(v)}" data-single="${single?1:0}">${esc(v)}</span>`).join("")}</div></div>`;
+  $("#recoFields").innerHTML=`<div class="rf-row"><span class="rf-label">专业/课程</span><input class="rf-kw" id="recoKw" placeholder="如：护理 / 计算机 / 物流客户服务 / 金属切削原理与刀具" value="${esc(r.kw)}"/></div>`
+    +chipRow("学校类型","schoolType",["高职","职业本科","应用型本科","普通本科","研究型"],true)
+    +chipRow("建设目标","goals",GOAL_ALL.filter(g=>g!=="智慧课程"),false)
+    +chipRow("智慧技术","tech",TECH_DEFS.map(d=>d[0]),false)
+    +chipRow("地区","region",Object.keys(REGIONS),true)
+    +`<div class="rf-row"><span class="rf-label">推荐策略</span><div class="chips strat-chips">${Object.keys(RECO_STRAT).map(k=>`<span class="chip strat ${r.strategy===k?'on':''}" data-strat="${k}" title="${esc(RECO_STRAT[k].desc)}">${k}</span>`).join("")}</div></div>`
+    +`<div class="strat-desc">策略说明：${esc(RECO_STRAT[r.strategy].desc)}</div>`;
+  const kwEl=$("#recoKw");kwEl.addEventListener("input",e=>{r.kw=e.target.value;});
+  $$("#recoFields .chip:not(.strat)").forEach(ch=>ch.addEventListener("click",()=>{const k=ch.dataset.rk,v=ch.dataset.rv;if(ch.dataset.single==="1"){r[k]=(r[k]===v)?null:v;}else{if(r[k].has(v))r[k].delete(v);else r[k].add(v);}renderRecoFields();}));
+  $$("#recoFields .chip.strat").forEach(ch=>ch.addEventListener("click",()=>{r.strategy=ch.dataset.strat;renderRecoFields();if(r.done)runReco();}));}
+function parseRecoText(){const r=state.reco;const q=($("#recoText").value||"").trim();if(!q){toast("请输入一句话需求");return;}
+  [["高职","高职"],["职业本科","职业本科"],["职教本科","职业本科"],["应用型","应用型本科"],["普通本科","普通本科"],["双一流","研究型"],["985","研究型"],["211","研究型"]].forEach(([k,v])=>{if(q.includes(k))r.schoolType=v;});
+  Object.keys(REGIONS).forEach(rg=>{if(q.includes(rg))r.region=rg;});Object.keys(PROV_REGION).forEach(p=>{if(q.includes(p))r.region=PROV_REGION[p];});
+  [["知识图谱","知识图谱"],["问题图谱","问题图谱"],["AI助教","AI助教"],["智能体","AI助教"],["数字人","数字人"],["虚拟仿真","虚拟仿真"],["数字孪生","虚拟仿真"],["学情","学情诊断"],["岗课赛证","岗课赛证"],["课证融通","课证融通"],["混合式","混合式教学"],["产教融合","产教融合"]].forEach(([k,v])=>{if(q.includes(k))r.tech.add(v);});
+  [["一流课程","国家级一流课程"],["精品","省级一流/精品"],["在线精品","在线精品课程"],["慕课","在线精品课程"],["思政","课程思政示范"],["虚拟仿真","虚拟仿真实训"],["产教融合","产教融合"]].forEach(([k,v])=>{if(q.includes(k))r.goals.add(v);});
+  const m=q.match(/《([^》]+)》/);if(m)r.kw=m[1];else{const m2=q.match(/([一-龥]{2,10})专业/);if(m2)r.kw=m2[1];}
+  renderRecoFields();runReco();$("#recoResults").scrollIntoView({behavior:"smooth",block:"start"});}
+function resetReco(){state.reco={kw:"",schoolType:null,goals:new Set(),tech:new Set(),region:null,strategy:"综合匹配",done:false};const t=$("#recoText");if(t)t.value="";renderRecoFields();$("#recoResults").innerHTML="";}
+const CATPAL=["oklch(0.52 0.12 162)","oklch(0.62 0.10 192)","oklch(0.69 0.11 145)","oklch(0.73 0.13 80)","oklch(0.63 0.15 42)","oklch(0.56 0.13 300)","oklch(0.66 0.025 235)"];
+const LVPAL=["oklch(0.50 0.12 162)","oklch(0.60 0.10 188)","oklch(0.68 0.10 205)","oklch(0.73 0.12 82)","oklch(0.64 0.15 44)","oklch(0.56 0.13 300)","oklch(0.62 0.12 332)","oklch(0.66 0.025 235)","oklch(0.70 0.09 140)"];
+function primaryLevel(c){const f=c.lflags;if(f.is985)return"985";if(f.is211)return"211";if(f.isSyl)return"双一流";if(f.isVocBen)return"职业本科";if(f.isAppBen)return"应用型本科";if(f.isNatGao)return"国家级双高";if(f.isProvGao)return"省级双高";if(f.isGaozhi)return"普通高职";if(f.isPlainBen)return"普通本科";return"其他";}
+function donutPanel(title,sub,entries,fk){
+  if(!entries.length)return `<div class="ins-panel" data-fk="${fk}"><div class="ins-t">${title}</div><p class="muted" style="font-size:12.5px">暂无数据</p></div>`;
+  const total=entries.reduce((s,e)=>s+e.n,0)||1;const R=52,C=2*Math.PI*R,cx=68,cy=68,sw=18;let off=0;
+  const segs=entries.map((e,i)=>{const len=e.n/total*C;const s=`<circle class="ds" data-idx="${i}" cx="${cx}" cy="${cy}" r="${R}" fill="none" stroke="${e.color}" stroke-width="${sw}" stroke-dasharray="${len.toFixed(2)} ${(C-len).toFixed(2)}" stroke-dashoffset="${(-off).toFixed(2)}" transform="rotate(-90 ${cx} ${cy})"/>`;off+=len;return s;}).join("");
+  const svg=`<svg viewBox="0 0 136 136" class="donut">${segs}<text x="68" y="63" class="dn-total">${total}</text><text x="68" y="83" class="dn-lbl">案例</text></svg>`;
+  const rows=entries.map((e,i)=>{const on=fk!=="cat"&&state.filters[fk]&&state.filters[fk].has(e.v);return `<div class="dn-li ${on?'on':''}" data-idx="${i}" data-v="${esc(e.v)}"><i style="background:${e.color}"></i><span class="nm" title="${esc(e.label)}">${esc(e.label)}</span><span class="ct">${e.n}</span><span class="pc">${Math.round(e.n/total*100)}%</span></div>`;}).join("");
+  return `<div class="ins-panel" data-fk="${fk}"><div class="ins-t">${title}<span>${sub}</span></div><div class="dn-wrap">${svg}<div class="dn-legend">${rows}</div></div></div>`;}
+function renderInsight(){const list=CASES.filter(passFilters);
+  const cc={};list.forEach(c=>cc[c.category]=(cc[c.category]||0)+1);const cs=Object.keys(cc).sort((a,b)=>cc[b]-cc[a]);
+  const catE=cs.slice(0,6).map((k,i)=>({label:k,v:k,n:cc[k],color:CATPAL[i]}));const oth=cs.slice(6).reduce((s,k)=>s+cc[k],0);if(oth>0)catE.push({label:"其他",v:"__other__",n:oth,color:CATPAL[6]});
+  const lvc={};list.forEach(c=>{const k=primaryLevel(c);lvc[k]=(lvc[k]||0)+1;});const lvE=Object.keys(lvc).sort((a,b)=>lvc[b]-lvc[a]).map((k,i)=>({label:k,v:k,n:lvc[k],color:LVPAL[i%LVPAL.length]}));
+  const rg={};list.forEach(c=>{if(c.region!=="其他")rg[c.region]=(rg[c.region]||0)+1;});const rgE=Object.keys(REGIONS).filter(r=>rg[r]).map(r=>({label:r,v:r,n:rg[r],color:`rgb(${REGION_RGB[r].join(",")})`})).sort((a,b)=>b.n-a.n);
+  $("#insightGrid").innerHTML=donutPanel("按专业大类","Top 6 · 点击切换专业",catE,"cat")+donutPanel("按学校层次","点击筛选",lvE,"level")+donutPanel("按区域","与地图同色 · 点击筛选",rgE,"region");
+  $$("#insightGrid .ins-panel").forEach(p=>{const fk=p.dataset.fk;const segs=p.querySelectorAll(".ds");
+    const dim=i=>segs.forEach((s,j)=>s.classList.toggle("dim",i!=null&&j!==i));
+    segs.forEach(s=>{s.addEventListener("mouseenter",()=>dim(+s.dataset.idx));s.addEventListener("mouseleave",()=>dim(null));});
+    p.querySelectorAll(".dn-li").forEach(li=>{const idx=+li.dataset.idx,v=li.dataset.v;
+      li.addEventListener("mouseenter",()=>dim(idx));li.addEventListener("mouseleave",()=>dim(null));
+      li.addEventListener("click",()=>{if(fk==="cat"){if(v==="__other__")return;switchMode("major");state.category=v;state.sub=null;updateMajPickBtns();renderCatList();renderSubList();renderMajorResults();scrollToMajRes();return;}
+        const set=state.filters[fk];if(set.has(v))set.delete(v);else set.add(v);syncFilterChips();rerender();document.getElementById("explore").scrollIntoView({behavior:"smooth"});});});});
+  const nat=list.filter(c=>c.award.cls==="b-nat").length;const sg=list.filter(c=>c.rec.grade==="S").length;const ag=list.filter(c=>c.rec.grade==="A").length;
+  const catKeys=Object.keys(cc);
+  const sByCat={};list.forEach(c=>{if(c.rec.grade==="S")sByCat[c.category]=(sByCat[c.category]||0)+1;});
+  const topSCat=Object.keys(sByCat).sort((a,b)=>sByCat[b]-sByCat[a])[0];
+  const natByRegion={};list.forEach(c=>{if(c.award.cls==="b-nat"&&c.region!=="其他")natByRegion[c.region]=(natByRegion[c.region]||0)+1;});
+  const topNatRegion=Object.keys(natByRegion).sort((a,b)=>natByRegion[b]-natByRegion[a])[0];
+  const techT=["知识图谱","AI助教","虚拟仿真","学情诊断","问题图谱"].map(t=>[t,list.filter(c=>c.tech.includes(t)).length]).sort((a,b)=>b[1]-a[1]);
+  const lowCat=catKeys.filter(k=>k!=="通识").sort((a,b)=>cc[a]-cc[b])[0];
+  const emptyRegions=Object.keys(REGIONS).filter(r=>!(rg[r]>0));
+  const lvTop=Object.keys(lvc).sort((a,b)=>lvc[b]-lvc[a])[0];
+  const ins=[];
+  ins.push(`<b>数据概览</b>：当前范围 <b>${list.length}</b> 个案例，国家级荣誉 <b>${nat}</b> 个，可直接展示（S 级）<b>${sg}</b> 个、可作参考（A 级）<b>${ag}</b> 个。`);
+  if(topSCat)ins.push(`<b>高质量分布</b>：S 级案例最集中于 <b>${esc(topSCat)}</b>${topNatRegion?`，国家级荣誉以 <b>${esc(topNatRegion)}</b> 区域居多`:""}，适合作为标杆展示的重点领域。`);
+  if(techT[0]&&techT[0][1])ins.push(`<b>技术趋势</b>：${techT.filter(t=>t[1]>0).map(t=>`${esc(t[0])} ${t[1]}`).join(" · ")}——${esc(techT[0][0])}应用最广，是当前最成熟的可迁移方向。`);
+  if(lowCat||emptyRegions.length)ins.push(`<b>空白领域</b>：${lowCat?`<b>${esc(lowCat)}</b> 案例最少（${cc[lowCat]} 个）`:""}${emptyRegions.length?`${lowCat?"；":""}<b>${emptyRegions.join("、")}</b> 区域暂无收录`:""}，可作为下一批案例补充方向。`);
+  ins.push(`<b>建设机会</b>：当前以 <b>${esc(lvTop||"普通本科")}</b> 案例为主，建议在${lowCat?`「${esc(lowCat)}」等案例较少的领域`:"案例较少的领域"}优先筛选「可迁移模块」而非整体复制标杆，结合${techT[0]?`${esc(techT[0][0])}`:"成熟技术"}快速形成差异化成果。`);
+  $("#insightLead").innerHTML=`<div class="sugg-insight"><div class="h"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor"><path d="M4 19V5M4 19h16M8 16l3-4 3 2 4-6" stroke-linecap="round" stroke-linejoin="round"/></svg>自动洞察结论</div><ul class="ins-list">${ins.map(x=>`<li>${x}</li>`).join("")}</ul><div class="ins-foot">点击下方环图或图例可一键筛选 / 定位相关案例。</div></div>`;}
+const MAP_THEMES=[["国家级一流课程","goal","国家级一流课程"],["标杆级案例","quality","标杆级"],["AI助教","tech","AI助教"],["虚拟仿真","tech","虚拟仿真"],["知识图谱","tech","知识图谱"]];
+function renderMapThemes(){const box=$("#mapThemes");if(!box)return;box.querySelectorAll(".mt").forEach(e=>e.remove());
+  MAP_THEMES.forEach(([lbl,fk,fv])=>{const on=state.filters[fk]&&state.filters[fk].has(fv);const sp=document.createElement("span");sp.className="mt"+(on?" on":"");sp.textContent=lbl;sp.onclick=()=>{const set=state.filters[fk];if(set.has(fv))set.delete(fv);else set.add(fv);syncFilterChips();rerender();};box.appendChild(sp);});}
+const FK_LABEL={region:"区域",level:"学校层次",goal:"建设目标",tech:"智慧技术",quality:"质量等级"};
+function renderActiveCond(){const box=$("#activeCond");if(!box)return;const items=[];
+  Object.keys(state.filters).forEach(fk=>state.filters[fk].forEach(v=>items.push([fk,v])));
+  if(state.mode==="map"&&state.province)items.unshift(["__prov__",state.province]);
+  if(state.mode==="major"&&state.category)items.unshift(["__cat__",state.category+(state.sub?" · "+state.sub:"")]);
+  if(state.search.trim())items.unshift(["__q__",state.search.trim()]);
+  if(!items.length){box.classList.remove("show");box.innerHTML="";return;}
+  box.classList.add("show");
+  box.innerHTML=`<span class="ac-l">已选条件</span>`+items.map(([fk,v])=>`<span class="ac-chip" data-fk="${fk}" data-v="${esc(v)}">${esc(FK_LABEL[fk]||({__prov__:"省份",__cat__:"专业",__q__:"搜索"})[fk]||"")}${FK_LABEL[fk]||({__prov__:"省份",__cat__:"专业",__q__:"搜索"})[fk]?"：":""}${esc(v)}<i>×</i></span>`).join("")+`<button class="ac-clear">清除全部</button>`;
+  box.querySelectorAll(".ac-chip").forEach(ch=>ch.addEventListener("click",()=>{const fk=ch.dataset.fk,v=ch.dataset.v;
+    if(fk==="__prov__")state.province=null;else if(fk==="__cat__"){state.category=null;state.sub=null;}else if(fk==="__q__"){state.search="";const g=$("#globalSearch");if(g)g.value="";}else state.filters[fk].delete(v);
+    syncFilterChips();rerender();}));
+  box.querySelector(".ac-clear").addEventListener("click",()=>{Object.values(state.filters).forEach(s=>s.clear());state.province=null;state.category=null;state.sub=null;state.search="";const g=$("#globalSearch");if(g)g.value="";syncFilterChips();rerender();});}
+function rerender(){updateFilterCount();renderParseHint();renderActiveCond();if(state.mode==="map"){renderMapThemes();renderMap();renderMapResults();}else if(state.mode==="major"){updateMajPickBtns();renderCatList();renderSubList();renderMajorResults();}renderInsight();}
+
+/* ================= 初始化 ================= */
+function init(){if(!window.RAW_CASES){alert("未能加载案例数据 cases-data.js，请确保它与本网页在同一目录。");return;}
+  buildCases();renderStats();renderFilterBar();renderRecoFields();
+  $("#geoView").classList.remove("hidden");$("#listView").classList.add("hidden");rerender();
+  $("#heroReco").addEventListener("click",()=>switchMode("reco"));
+  $("#recoRun").addEventListener("click",runReco);
+  $("#recoReset").addEventListener("click",resetReco);
+  $("#recoParseBtn").addEventListener("click",parseRecoText);
+  $("#recoText").addEventListener("keydown",e=>{if(e.key==="Enter")parseRecoText();});
+  $("#modeSwitch").addEventListener("click",e=>{const b=e.target.closest("button");if(b)switchMode(b.dataset.mode);});
+  $("#viewSwitch").addEventListener("click",e=>{const b=e.target.closest("button");if(b)switchView(b.dataset.view);});
+  $("#navMenu").addEventListener("click",e=>{const b=e.target.closest("button");if(!b)return;const go=b.dataset.go;if(go==="map"||go==="major"||go==="reco"){switchMode(go);}else if(go==="compareOpen"){if(state.compare.length<2)toast("请先在卡片上「加入对比」至少 2 个案例");else startCompare();}else if(go==="insight"){setNavActive("insight");document.getElementById("insight").scrollIntoView({behavior:"smooth"});}else if(go==="about"){openAbout();}});
+  // dropdowns
+  document.addEventListener("click",e=>{const btn=e.target.closest(".dd-btn");if(btn){if(btn.disabled)return;const dd=btn.closest(".dd");const open=dd.classList.contains("open");closeAllDD();if(!open){dd.classList.add("open");btn.setAttribute("aria-expanded","true");}return;}if(e.target.closest(".dd-panel"))return;closeAllDD();});
+  // fullscreen
+  $("#fsBtn").addEventListener("click",()=>{const st=$("#mapStage");if(!document.fullscreenElement){(st.requestFullscreen?st.requestFullscreen():st.webkitRequestFullscreen&&st.webkitRequestFullscreen());}else document.exitFullscreen();});
+  document.addEventListener("fullscreenchange",()=>{if(state.mapView==="geo"){setTimeout(map3dResize,60);setTimeout(map3dResize,260);}});
+  $("#fsExit").addEventListener("click",()=>document.exitFullscreen&&document.exitFullscreen());
+  let st;$("#globalSearch").addEventListener("input",e=>{clearTimeout(st);st=setTimeout(()=>{state.search=e.target.value;rerender();},180);});
+  $("#cmpClear").addEventListener("click",()=>{state.compare=[];renderCmpBar();});
+  $("#cmpStart").addEventListener("click",startCompare);
+  ["detailModal","cmpModal","planModal","pitchModal","aboutModal"].forEach(id=>$("#"+id).addEventListener("click",e=>{if(e.target.id===id)closeModal(id);}));
+  document.addEventListener("keydown",e=>{if(e.key==="Escape"){["detailModal","cmpModal","planModal","pitchModal","aboutModal"].forEach(closeModal);closeAllDD();}});
+  $("#uploadJson").addEventListener("change",e=>{const f=e.target.files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{let data;const txt=r.result.trim();if(txt.startsWith("window.RAW_CASES")){data=JSON.parse(txt.replace(/^window\.RAW_CASES\s*=\s*/,"").replace(/;?\s*$/,""));}else data=JSON.parse(txt);if(!Array.isArray(data))throw new Error("数据应为数组");window.RAW_CASES=data;state.province=null;state.category=null;state.sub=null;state.compare=[];buildCases();renderStats();rerender();renderCmpBar();toast("数据已更新：共 "+CASES.length+" 个案例");}catch(err){alert("数据解析失败："+err.message);}};r.readAsText(f,"utf-8");});
+}
+// 启动:优先从云数据库(Supabase)加载,失败则回退本地 cases-data.js
+window.addEventListener("DOMContentLoaded",async()=>{
+  try{
+    if(window.SCDB && window.SCDB.isConfigured()){
+      const rows=await window.SCDB.fetchCases();
+      if(rows&&rows.length){window.RAW_CASES=rows;window.__DATA_SOURCE="supabase";}
+    }
+  }catch(err){console.warn("[云数据库] 加载失败,已回退本地数据:",err);}
+  init();
+  try{
+    if(typeof toast==="function"){
+      toast(window.__DATA_SOURCE==="supabase"
+        ? ("已连接云数据库 · 共 "+(window.RAW_CASES||[]).length+" 个案例")
+        : "当前为本地数据(未配置云数据库,详见 README)");
+    }
+  }catch(e){}
+});
+</script>
+</body>
+</html>
